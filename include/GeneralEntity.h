@@ -8,6 +8,9 @@ class GeneralEntity {
 		virtual void onMouseUp(sf::Event::MouseButtonEvent);		
 		virtual void onKeyDown(sf::Event::KeyEvent);		
 		virtual void onKeyUp(sf::Event::KeyEvent);		
+		
+		virtual void update();
+		
 };
 
 #endif
