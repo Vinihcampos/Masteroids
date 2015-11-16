@@ -2,8 +2,9 @@
 #define _PENTITY_
 
 #include "MathVector.h"
+#include "GeneralEntity.h"
 
-class PhysicalEntity : public GeneralEntity, sf::Drawable {
+class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 
 	private:
 		MathVector velocity;

@@ -30,7 +30,7 @@ DEBUG = -g
 LIBOPTS = -lsfml-system -lsfml-window -lsfml-graphics
 LIBFLAG = -L $(LIBDIR) $(LIBOPTS)
 INCFLAG = -I $(INCDIR)
-LFLAGS = $(DEBUG) $(WARN) $(INCFLAGS) $(LIBFLAGS)
+LFLAGS = $(DEBUG) $(WARN) $(INCFLAG) $(LIBFLAG)
 # COMPILATION FLAGS
 CFLAGS = $(DEBUG) -c $(WARN) -std=c++11
 

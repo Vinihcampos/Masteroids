@@ -6,17 +6,17 @@ Player::Player() : PhysicalEntity(), ActionTarget(_playerInputs) {
 	// Set initial states if necessary
 
 	// Thrust
-	bind(PlayerInputs::Up, [this](const sf::Events &) {
+	bind(PlayerInputs::Up, [this](const sf::Event &) {
 		
 	});
 	
 	// Turn left	
-	bind(PlayerInputs::Left, [this](const sf::Events &) {
+	bind(PlayerInputs::Left, [this](const sf::Event &) {
 
 	});
 	
 	// Turn right
-	bind(PlayerInputs::Right, [this](const sf::Events &) {
+	bind(PlayerInputs::Right, [this](const sf::Event &) {
 
 	});
 }
@@ -27,11 +27,16 @@ void Player::setDefaultInputs() {
 	_playerInputs.map(PlayerInputs::Right, Action(sf::Keyboard::Right));
 }
 
-Player::proccessEvents() {
+void Player::proccessEvents() {
 	// set initial variable states
 	//ActionTarget<T>::proccessEvents();	
 }
 
-Player::update(sf::Time deltaTime) {
+void Player::update(sf::Time deltaTime) {
 	
+}
+
+void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+
+
 }

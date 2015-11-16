@@ -2,12 +2,14 @@
 #define _ENTITY_
 
 #include <SFML/System.hpp>
+#include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
 
 class GeneralEntity {
 	public:
-		virtual void update(int minFramesPerSec);
+		GeneralEntity() { /*Empty*/ };
+		virtual void update(sf::Time deltaTime) = 0;
 		
 };
 

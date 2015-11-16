@@ -9,12 +9,9 @@ class Masteroids : public GameEntity {
 	public:
 		Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { /* Empty */ }
 		
-		virtual void setup();
-		virtual void run(int minFramesPerSec);
-		virtual void processEvents();
+		virtual void proccessEvents();
 		virtual void update(sf::Time deltaTime);
-		virtual void render();
-		virtual void teardown();
+		virtual void render(); 
 	
 	public:
 		Player spaceship;

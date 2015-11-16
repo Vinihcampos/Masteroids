@@ -7,8 +7,8 @@
 /*! \brief Represents the player of the game.
  */
 
-///template<typename T>
-//class ActionTarget;
+template<typename T>
+class ActionTarget;
 
 class Player : public PhysicalEntity, public ActionTarget<int> {
 	public:
@@ -20,7 +20,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		virtual void update(sf::Time deltaTime);
 		virtual void proccessEvents();
 		
-		enum PlayerInputs { Up, Left, Right }
+		enum PlayerInputs { Up, Left, Right };
 		static void setDefaultInputs();
 	private:
 		virtual void draw(sf::RenderTarget & target, 

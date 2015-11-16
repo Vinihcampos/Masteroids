@@ -19,7 +19,6 @@ class Action {
 	
 		Action(const sf::Keyboard::Key & key, int type = Type::RealTime | Type::Pressed);
 		Action(const sf::Mouse::Button & button, int type = Type::RealTime | Type::Pressed);
-	
 		
 		/*! \brief Comparison operator, by events */
 		bool operator==(const sf::Event & event) const;
@@ -29,7 +28,9 @@ class Action {
 		bool test() const;
 	
 	private:
+		template <typename T>
 		friend class ActionTarget;
+		
 		sf::Event _event;
 		int _type;
 

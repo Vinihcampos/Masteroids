@@ -1,21 +1,21 @@
 #ifndef _GENTITY_
 #define _GENTITY_
 
+#include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
 #include "GeneralEntity.h"
 
-class GameEntity : public GeneralEntity, sf::RenderWindow {
+class GameEntity : public GeneralEntity, public sf::RenderWindow {
 
 	public:
 		GameEntity (int width, int height, std::string const & title) : 
 				GeneralEntity(), 
 			   	sf::RenderWindow (sf::VideoMode(width, height), title) { /* Empty */ }; 
 		
-		virtual void setup();
 		virtual void run(int minFramesPerSec);
-		virtual void proccessEvents();
+		virtual void proccessEvents() = 0;
 		virtual void update(sf::Time deltaTime);
 		virtual void render();
-		virtual void teardown();
 };
 
 #endif

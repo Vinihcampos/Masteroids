@@ -29,7 +29,7 @@ void ActionTarget<T>::proccessEvents() const {
 template <typename T>
 void ActionTarget<T>::bind(const T & key, const FuncType & callback) {
 	Action action = _actionMap.get(key);
-	if (action._type & Action::Type::RealTime) {
+	if (action._type & Action::Type::RealTime) 
 		_eventsRealTime.emplace_back(action, callback);
 	else
 		_eventsPoll.emplace_back(action, callback);
@@ -38,10 +38,10 @@ void ActionTarget<T>::bind(const T & key, const FuncType & callback) {
 template <typename T>
 void ActionTarget<T>::unbind(const T & key) {
 	Action action = _actionMap.get(key);
-	auto remove_func = [&action] (const std::pair<T, FuncType> & pair) -> bool
+	auto remove_func = [&action] (const std::pair<Action, FuncType> & pair) -> bool
 	{
 		return pair.first == action;
-	}
+	};
 	
 	if (action._type & Action::Type::RealTime)
 		_eventsRealTime.remove_if(remove_func);

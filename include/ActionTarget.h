@@ -28,8 +28,8 @@ class ActionTarget {
 		void unbind(const T & key);
 		
 	private:
-		std::list<std::pair<T, FuncType>> _eventsRealTime;
-		std::list<std::pair<T, FuncType>> _eventsPoll;
+		std::list<std::pair<Action, FuncType>> _eventsRealTime;
+		std::list<std::pair<Action, FuncType>> _eventsPoll;
 
 		const ActionMap<T> & _actionMap;
 

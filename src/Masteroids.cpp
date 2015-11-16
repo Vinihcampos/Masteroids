@@ -1,15 +1,19 @@
 #include "Masteroids.h"
 
-Masteroids::proccessEvents() {
+void Masteroids::proccessEvents() {
 	sf::Event e;
-	while (poolEvent(e)) {
-		switch (e) {
+	while (this->pollEvent(e)) {
+		//switch (e) {
 			
-		}
+		//}
 	}
 }
 
-Masteroids::update (int deltaTime) {
+void Masteroids::update (sf::Time deltaTime) {
 
+
+}
+
+void Masteroids::render() {
 
 }
