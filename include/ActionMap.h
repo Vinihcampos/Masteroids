@@ -2,6 +2,7 @@
 #define _ACTIONMAP_
 
 #include <unordered_map>
+#include "Action.h"
 
 template <typename T = int>
 class ActionMap {
@@ -19,9 +20,8 @@ class ActionMap {
 	private:
 		std::unordered_map<T, Action> _map;
 		
-
 };
 
-#include "../src/ActionMap.tpl"
+#include "../src/ActionMap.inl"
 
 #endif

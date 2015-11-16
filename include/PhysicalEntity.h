@@ -1,6 +1,8 @@
 #ifndef _PENTITY_
 #define _PENTITY_
 
+#include "MathVector.h"
+
 class PhysicalEntity : public GeneralEntity, sf::Drawable {
 
 	private:
@@ -15,4 +17,6 @@ class PhysicalEntity : public GeneralEntity, sf::Drawable {
 	protected:
 
 };
+
 #endif
+

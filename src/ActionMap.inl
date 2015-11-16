@@ -6,6 +6,6 @@ void ActionMap<T>::map(const T & key, const Action & action) {
 }
 
 template <typename T>
-const Action & ActionMap<T>get(const T & key) const {
+const Action & ActionMap<T>::get(const T & key) const {
 	return _map.at(key);
 }

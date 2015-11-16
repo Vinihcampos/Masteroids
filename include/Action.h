@@ -1,5 +1,7 @@
 #ifndef _ACTION_
 #define _ACTION_
+#include <string.h>
+#include <SFML/Window/Event.hpp>
 
 class Action {
 	
@@ -8,12 +10,12 @@ class Action {
 			RealTime = 1,
 			Pressed = 1 << 1,
 			Released = 1 << 2
-		}
+		};
 	
 		Action(const Action & other);
 		
 		/*! \brief Copy operator */
-		Action & operator=(const Action & other) const;
+		Action & operator=(const Action & other);
 	
 		Action(const sf::Keyboard::Key & key, int type = Type::RealTime | Type::Pressed);
 		Action(const sf::Mouse::Button & button, int type = Type::RealTime | Type::Pressed);

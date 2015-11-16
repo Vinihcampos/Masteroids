@@ -1,19 +1,22 @@
 #include "Player.h"
 
-Player::Player() : PhysicalEntity(), ActionTarget() {
+ActionMap<int> Player::_playerInputs;
+
+Player::Player() : PhysicalEntity(), ActionTarget(_playerInputs) {
+	// Set initial states if necessary
 
 	// Thrust
-	bind(Action(PlayerInputs::Up, [this](const sf::Events &)) {
+	bind(PlayerInputs::Up, [this](const sf::Events &) {
 		
 	});
 	
 	// Turn left	
-	bind(Action(PlayerInputs::Left, [this](const sf::Events &) {
+	bind(PlayerInputs::Left, [this](const sf::Events &) {
 
 	});
 	
 	// Turn right
-	bind(Action(PlayerInputs::Right, [this](const sf::Events &) {
+	bind(PlayerInputs::Right, [this](const sf::Events &) {
 
 	});
 }
@@ -26,9 +29,9 @@ void Player::setDefaultInputs() {
 
 Player::proccessEvents() {
 	// set initial variable states
-	ActionTarget::proccessEvents();	
+	//ActionTarget<T>::proccessEvents();	
 }
 
-Player::update() {
+Player::update(sf::Time deltaTime) {
 	
 }

@@ -1,6 +1,11 @@
 #ifndef _ATARGET_
 #define _ATARGET_
 
+#include <functional>
+#include <utility>
+#include <list>
+#include "ActionMap.h"
+
 template <typename T = int>
 class ActionTarget {
 
@@ -20,7 +25,7 @@ class ActionTarget {
 		void proccessEvents() const;
 
 		void bind(const T & key, const FuncType & callback);
-		void unbind(const T & action);
+		void unbind(const T & key);
 		
 	private:
 		std::list<std::pair<T, FuncType>> _eventsRealTime;
@@ -28,7 +33,8 @@ class ActionTarget {
 
 		const ActionMap<T> & _actionMap;
 
-
 };
+
+#include "../src/ActionTarget.inl"
 
 #endif

@@ -22,6 +22,6 @@ class MathVector {
 		 */
 		double size() const;
 
-}
+};
 
 #endif

@@ -1,8 +1,10 @@
 #include "ActionTarget.h"
 
-ActionTarget::ActionTarget() { /* Empty */ }
+template <typename T>
+ActionTarget<T>::ActionTarget(const ActionMap<T> & map) : _actionMap {map} { /* Empty */ }
 
-bool ActionTarget::proccessEvent(const sf::Event & event) const {
+template <typename T>
+bool ActionTarget<T>::proccessEvent(const sf::Event & event) const {
 	bool res = false;
 	
 	for (auto & action : _eventsPoll) {
@@ -15,7 +17,8 @@ bool ActionTarget::proccessEvent(const sf::Event & event) const {
 	}
 }
 
-void ActionTarget::proccessEvents() const {
+template <typename T>
+void ActionTarget<T>::proccessEvents() const {
 	for (auto & action : _eventsRealTime) {
 		if (action.first.test()) {
 			action.second(action.first._event);
@@ -23,15 +26,19 @@ void ActionTarget::proccessEvents() const {
 	}
 }
 
-void ActionTarget::bind(const Action & action, const FuncType & callback) {
+template <typename T>
+void ActionTarget<T>::bind(const T & key, const FuncType & callback) {
+	Action action = _actionMap.get(key);
 	if (action._type & Action::Type::RealTime) {
 		_eventsRealTime.emplace_back(action, callback);
 	else
 		_eventsPoll.emplace_back(action, callback);
 }
 
-void ActionTarget::unbind(const Action & action) {
-	auto remove_func = [&action] (const std::pair<Action, FuncType> & pair) -> bool
+template <typename T>
+void ActionTarget<T>::unbind(const T & key) {
+	Action action = _actionMap.get(key);
+	auto remove_func = [&action] (const std::pair<T, FuncType> & pair) -> bool
 	{
 		return pair.first == action;
 	}
