@@ -1,5 +1,8 @@
 #include "ActionMap.h"
 
+template<typename T>
+ActionMap<T>::ActionMap(const ActionMap<T> & map) : _map {map._map} { /* Empty */}
+
 template <typename T>
 void ActionMap<T>::map(const T & key, const Action & action) {
 	_map.emplace(key, action);

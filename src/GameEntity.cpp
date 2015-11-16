@@ -17,10 +17,3 @@ void GameEntity::run(int minFramesPerSec) {
 		render();
 	}
 }
-
-void GameEntity::render() {
-}
-
-void GameEntity::update(sf::Time deltaTime) {
-
-}

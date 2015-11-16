@@ -6,6 +6,15 @@
 #include <list>
 #include "ActionMap.h"
 
+/*! \brief Every entity that reacts to Actions (events) extends this class.
+ *  \details Contains methods for binding and unbinding functionalities
+ *  to Actions. Thanks to this approach, it becomes easy to change the way
+ *  an entity answers to events. 
+ *  It keeps an ActionMap for relating Actions to keys.
+ *  \authors Vitor Greati, Vinicius Campos
+ *  \date 16/11/2015
+ *  \version 1.0
+ */
 template <typename T = int>
 class ActionTarget {
 

@@ -14,7 +14,7 @@ class Masteroids : public GameEntity {
 		virtual void render(); 
 	
 	public:
-		Player spaceship;
+		Player player;
 };
 
 #endif

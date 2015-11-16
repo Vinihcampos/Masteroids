@@ -2,11 +2,12 @@
 
 void Masteroids::proccessEvents() {
 	sf::Event e;
-	while (this->pollEvent(e)) {
+	while (pollEvent(e)) {
 		//switch (e) {
 			
 		//}
 	}
+	player.proccessEvents();
 }
 
 void Masteroids::update (sf::Time deltaTime) {
@@ -15,5 +16,5 @@ void Masteroids::update (sf::Time deltaTime) {
 }
 
 void Masteroids::render() {
-
+	display();
 }

@@ -14,8 +14,8 @@ class GameEntity : public GeneralEntity, public sf::RenderWindow {
 		
 		virtual void run(int minFramesPerSec);
 		virtual void proccessEvents() = 0;
-		virtual void update(sf::Time deltaTime);
-		virtual void render();
+		virtual void update(sf::Time deltaTime) = 0;
+		virtual void render() = 0;
 };
 
 #endif

@@ -6,7 +6,7 @@ Player::Player() : PhysicalEntity(), ActionTarget(_playerInputs) {
 	// Set initial states if necessary
 
 	// Thrust
-	bind(PlayerInputs::Up, [this](const sf::Event &) {
+	/*bind(PlayerInputs::Up, [this](const sf::Event &) {
 		
 	});
 	
@@ -18,7 +18,7 @@ Player::Player() : PhysicalEntity(), ActionTarget(_playerInputs) {
 	// Turn right
 	bind(PlayerInputs::Right, [this](const sf::Event &) {
 
-	});
+	});*/
 }
 
 void Player::setDefaultInputs() {
@@ -29,7 +29,7 @@ void Player::setDefaultInputs() {
 
 void Player::proccessEvents() {
 	// set initial variable states
-	//ActionTarget<T>::proccessEvents();	
+	ActionTarget::proccessEvents();	
 }
 
 void Player::update(sf::Time deltaTime) {
@@ -37,6 +37,5 @@ void Player::update(sf::Time deltaTime) {
 }
 
 void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const {
-
 
 }

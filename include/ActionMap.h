@@ -7,7 +7,7 @@
 template <typename T = int>
 class ActionMap {
 	public:
-		ActionMap(const ActionMap<T> &) = delete;
+		ActionMap(const ActionMap<T> &);
 	
 		ActionMap<T> & operator=(const ActionMap<T> &) = delete;
 

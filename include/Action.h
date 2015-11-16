@@ -3,6 +3,14 @@
 #include <string.h>
 #include <SFML/Window/Event.hpp>
 
+/*! \brief Encapsulates an Event, and adds custom operators to it.
+ *  \details Allows Event classification and direct comparison
+ *  with Events and Actions. 
+ *  \authors Vitor Greati, Vinicius Campos
+ *  \date 16/11/2015
+ *  \version 1.0
+ */
+
 class Action {
 	
 	public:
