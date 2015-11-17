@@ -1,4 +1,5 @@
 #include "ActionTarget.h"
+#include <iostream>
 
 template <typename T>
 ActionTarget<T>::ActionTarget(const ActionMap<T> & map) : _actionMap {map} { /* Empty */ }
@@ -29,9 +30,9 @@ void ActionTarget<T>::proccessEvents() const {
 template <typename T>
 void ActionTarget<T>::bind(const T & key, const FuncType & callback) {
 	Action action = _actionMap.get(key);
-	if (action._type & Action::Type::RealTime) 
+	if (action._type & Action::Type::RealTime) {
 		_eventsRealTime.emplace_back(action, callback);
-	else
+	} else
 		_eventsPoll.emplace_back(action, callback);
 }
 

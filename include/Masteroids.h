@@ -12,6 +12,7 @@ class Masteroids : public GameEntity {
 		virtual void proccessEvents();
 		virtual void update(sf::Time deltaTime);
 		virtual void render(); 
+		virtual void run(int minFramesPerSec); 
 	
 	public:
 		Player player;

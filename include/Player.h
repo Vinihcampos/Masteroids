@@ -2,6 +2,7 @@
 #define _PLAYER_
 
 #include "ActionTarget.h"
+#include "Configuration.h"
 #include "PhysicalEntity.h"
 
 /*! \brief Represents the player of the game.
@@ -24,13 +25,12 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		virtual void update(sf::Time deltaTime);
 		virtual void proccessEvents();
 		
-		enum PlayerInputs { Up, Left, Right };
-		static void setDefaultInputs();
 	private:
 		virtual void draw(sf::RenderTarget & target, 
 				  sf::RenderStates states) const override;
-		bool _thrusting;	
-		static ActionMap<int> _playerInputs;
+		sf::Sprite ship;
+		bool thrusting;	
+		
 }; 
 
 #endif

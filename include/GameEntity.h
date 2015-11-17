@@ -3,6 +3,7 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include "Configuration.h"
 #include "GeneralEntity.h"
 
 class GameEntity : public GeneralEntity, public sf::RenderWindow {

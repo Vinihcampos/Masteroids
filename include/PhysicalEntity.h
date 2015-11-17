@@ -6,11 +6,12 @@
 
 class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 
-	private:
+	protected:
 		MathVector velocity;
 		MathVector position;
 		MathVector acceleration;
 		MathVector angleAcceleration;	
+		double angle;
 
 	public:
 		PhysicalEntity() : GeneralEntity(), sf::Drawable() { /* Empty */ };
