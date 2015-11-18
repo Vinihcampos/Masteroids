@@ -10,7 +10,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		MathVector velocity;
 		MathVector position;
 		MathVector acceleration;
-		MathVector angleAcceleration;	
+		double angleVelocity;	
 		double angle;
 
 	public:

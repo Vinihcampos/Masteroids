@@ -18,7 +18,9 @@ class Configuration {
 			Thrust, 
 			StopThrust,
 			TurnLeft, 
+			StopTurnLeft, 
 			TurnRight, 
+			StopTurnRight, 
 			Shoot,
 			Hyperspace
 		};
