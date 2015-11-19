@@ -34,7 +34,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	
 	// Shoot
 	bind(Configuration::PlayerInputs::Shoot, [this](const sf::Event &) {
-		BulletShip newBullet (*this, universe);	
+		universe.getBullets().push_back(new BulletShip {*this, universe});	
 	});
 }
 
