@@ -17,7 +17,11 @@ class Configuration {
 		Configuration(const Configuration &) = delete;
 		Configuration & operator=(const Configuration &) = delete;
 		
-		enum Textures : int {Player};
+		enum Textures : int {
+			Player,
+			SimpleBullet
+		};
+		
 		static ResourceManager<sf::Texture, int> textures;
 
 		enum PlayerInputs : int { 

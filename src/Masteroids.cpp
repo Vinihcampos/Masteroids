@@ -1,5 +1,10 @@
 #include "Masteroids.h"
 
+Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
+	universe.getPlayers().push_back(new Player(universe));
+	std::cout << universe.getPlayers().size() << std::endl;
+}
+
 void Masteroids::run(int minFramesPerSec) {
 	sf::Clock clock;
 	sf::Time timeSinceLastUpdate;
@@ -25,16 +30,15 @@ void Masteroids::proccessEvents() {
 			
 		//}
 	}
-	player.proccessEvents();
+	universe.proccessEvents();
 }
 
 void Masteroids::update (sf::Time deltaTime) {
-	player.update(deltaTime);
-
+	universe.update(deltaTime);
 }
 
 void Masteroids::render() {
 	clear();
-	draw(player);
+	draw(universe);
 	display();
 }

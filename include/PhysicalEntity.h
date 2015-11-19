@@ -4,6 +4,8 @@
 #include "MathVector.h"
 #include "GeneralEntity.h"
 
+class Universe;
+
 class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 
 	protected:
@@ -12,12 +14,22 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		MathVector acceleration;
 		double angleVelocity;	
 		double angle;
+		
+		Universe & universe;		
+
+		sf::Sprite sprite;
 
 	public:
-		PhysicalEntity() : GeneralEntity(), sf::Drawable() { /* Empty */ };
-
-	protected:
-
+		PhysicalEntity(Universe &);
+		MathVector getPosition() const;
+		double getRotationRad() const;
+		double getWidth() const;
+		double getHeight() const;
+	
+	private:
+		friend class Universe;
+		virtual void draw(sf::RenderTarget & target, 
+				  sf::RenderStates states) const override;
 };
 
 #endif

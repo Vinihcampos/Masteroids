@@ -1,18 +1,20 @@
 #include "Player.h"
+#include "BulletShip.h"
+#include "Universe.h"
 #include <cmath>
 #include <iostream>
 
-Player::Player() : PhysicalEntity(), ActionTarget(Configuration::playerInputs) {
+Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(Configuration::playerInputs) {
 	angleVelocity = 0.0;
 	thrusting = false;
 	
 	position.vertical = 100;
 	position.horizontal = 100;
 	
-	ship.setTexture(Configuration::textures.get(Configuration::Textures::Player));
-	ship.setOrigin(ship.getGlobalBounds().width / 2,
-		       ship.getGlobalBounds().height / 2);
-	ship.setRotation(0);
+	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2,
+		       sprite.getGlobalBounds().height / 2);
+	sprite.setRotation(0);
 
 
 	// Thrust
@@ -30,6 +32,10 @@ Player::Player() : PhysicalEntity(), ActionTarget(Configuration::playerInputs) {
 		angleVelocity = 1;
 	});
 	
+	// Shoot
+	bind(Configuration::PlayerInputs::Shoot, [this](const sf::Event &) {
+		BulletShip newBullet (*this, universe);	
+	});
 }
 
 void Player::proccessEvents() {
@@ -42,7 +48,7 @@ void Player::update(sf::Time deltaTime) {
 	float seconds = deltaTime.asSeconds();
 	
 	if (thrusting) {
-		angle = ship.getRotation() / 180 * M_PI; 
+		angle = sprite.getRotation() / 180 * M_PI; 
 		acceleration.horizontal = std::cos(angle) * .1;
 		acceleration.vertical = std::sin(angle) *.1;
 	} else {
@@ -51,7 +57,7 @@ void Player::update(sf::Time deltaTime) {
 	} 
 
 	// Angle update
-	ship.rotate(angleVelocity);
+	sprite.rotate(angleVelocity);
 
 	// Updating velocity
 	velocity.horizontal += acceleration.horizontal;
@@ -60,18 +66,18 @@ void Player::update(sf::Time deltaTime) {
 	// Updating position
 	position.horizontal = (position.horizontal + velocity.horizontal); //% Configuration::WINDOW_WIDTH;// * seconds;
 	position.vertical = (position.vertical + velocity.vertical); //% Configuration::WINDOW_HEIGHT;// seconds;
-	ship.setPosition(position.horizontal, position.vertical);
+	sprite.setPosition(position.horizontal, position.vertical);
 
 	// Setting Euclidean Torus
-	if (position.horizontal <= ship.getGlobalBounds().width / 2) 
-		position.horizontal = Configuration::WINDOW_WIDTH - ship.getGlobalBounds().width / 2; 
-	else if (position.horizontal >= Configuration::WINDOW_WIDTH - ship.getGlobalBounds().width / 2) 
-		position.horizontal = ship.getGlobalBounds().width / 2; 
+	if (position.horizontal <= sprite.getGlobalBounds().width / 2) 
+		position.horizontal = Configuration::WINDOW_WIDTH - sprite.getGlobalBounds().width / 2; 
+	else if (position.horizontal >= Configuration::WINDOW_WIDTH - sprite.getGlobalBounds().width / 2) 
+		position.horizontal = sprite.getGlobalBounds().width / 2; 
 
-	if (position.vertical <= ship.getGlobalBounds().height / 2) 
-		position.vertical =  Configuration::WINDOW_HEIGHT - ship.getGlobalBounds().height / 2; 
-	else if (position.vertical >= Configuration::WINDOW_HEIGHT - ship.getGlobalBounds().height / 2) 
-		position.vertical = ship.getGlobalBounds().height / 2; 
+	if (position.vertical <= sprite.getGlobalBounds().height / 2) 
+		position.vertical =  Configuration::WINDOW_HEIGHT - sprite.getGlobalBounds().height / 2; 
+	else if (position.vertical >= Configuration::WINDOW_HEIGHT - sprite.getGlobalBounds().height / 2) 
+		position.vertical = sprite.getGlobalBounds().height / 2; 
 	
 	// Decrease velocity
 	velocity.horizontal *= .99;
@@ -79,6 +85,3 @@ void Player::update(sf::Time deltaTime) {
 
 }
 
-void Player::draw(sf::RenderTarget & target, sf::RenderStates states) const {
-	target.draw(ship, states);
-}

@@ -15,10 +15,12 @@ void Configuration::initialize() {
 
 void Configuration::initTextures() {
 	textures.load(Textures::Player, "media/Player/spaceship.png");
+	textures.load(Textures::SimpleBullet, "media/Bullets/bullet.png");
 }
 
 void Configuration::initPlayerInputs() {
 	playerInputs.map(PlayerInputs::Thrust, Action(sf::Keyboard::Up));
 	playerInputs.map(PlayerInputs::TurnLeft, Action(sf::Keyboard::Left));
 	playerInputs.map(PlayerInputs::TurnRight, Action(sf::Keyboard::Right));
+	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::Space));
 }
