@@ -5,12 +5,13 @@
 Player::Player() : PhysicalEntity(), ActionTarget(Configuration::playerInputs) {
 	angleVelocity = 0.0;
 	thrusting = false;
+	
 	position.vertical = 100;
 	position.horizontal = 100;
+	
 	ship.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	ship.setOrigin(ship.getGlobalBounds().width / 2,
 		       ship.getGlobalBounds().height / 2);
-	ship.setPosition(100.0,100.0);
 	ship.setRotation(0);
 
 

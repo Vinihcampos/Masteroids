@@ -22,11 +22,8 @@ class Configuration {
 
 		enum PlayerInputs : int { 
 			Thrust, 
-			StopThrust,
 			TurnLeft, 
-			StopTurnLeft, 
 			TurnRight, 
-			StopTurnRight, 
 			Shoot,
 			Hyperspace
 		};
