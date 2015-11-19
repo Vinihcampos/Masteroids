@@ -7,6 +7,12 @@
 class Configuration {
 
 	public:
+
+		static int WINDOW_WIDTH;
+		static int WINDOW_HEIGHT;
+		static std::string GAME_TITLE;
+		static int GAME_FPS;
+
 		Configuration() = delete;
 		Configuration(const Configuration &) = delete;
 		Configuration & operator=(const Configuration &) = delete;

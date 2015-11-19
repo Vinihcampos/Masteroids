@@ -1,5 +1,10 @@
 #include "Configuration.h"
 
+int Configuration::WINDOW_WIDTH = 800;
+int Configuration::WINDOW_HEIGHT = 600;
+std::string Configuration::GAME_TITLE = "Masteroids";
+int Configuration::GAME_FPS = 60;
+
 ResourceManager<sf::Texture, int> Configuration::textures;
 ActionMap<int> Configuration::playerInputs;
 

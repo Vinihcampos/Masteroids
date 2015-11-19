@@ -5,8 +5,8 @@ int main() {
 	
 	Configuration::initialize();	
 
-	Masteroids masteroids(800, 600, "Masteroids");
-	masteroids.run(60);
+	Masteroids masteroids(Configuration::WINDOW_WIDTH, Configuration::WINDOW_HEIGHT, Configuration::GAME_TITLE);
+	masteroids.run(Configuration::GAME_FPS);
 
 	return 0;
 }
