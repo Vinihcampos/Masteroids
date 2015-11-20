@@ -10,7 +10,6 @@ void Universe::draw(sf::RenderTarget & target,
 		target.draw(*e, states);
 }
 
-
 std::list<Player*> & Universe::getPlayers() {
 	return playersList;
 }
@@ -29,5 +28,12 @@ void Universe::update(sf::Time deltaTime) {
 		p->update(deltaTime);
 	for (auto p : bulletList)
 		p->update(deltaTime);
+
+	for (auto i = bulletList.begin(); i != bulletList.end();) {
+		if (not ((*i)->isAlive())) {
+			delete *i;
+			i = bulletList.erase(i);
+		} else i++;
+	}
 }
 

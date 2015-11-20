@@ -16,6 +16,7 @@ class Bullet : public PhysicalEntity {
 
 	protected:
 		int bulletLevel;
+		sf::Time currentDuration;
 		sf::Time timeToLive;
 
 };

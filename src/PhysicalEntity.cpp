@@ -2,6 +2,7 @@
 #include "Universe.h"
 
 PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Drawable(), universe (_universe) { 
+	alive = true;
 };
 
 MathVector PhysicalEntity::getPosition() const {
@@ -26,6 +27,10 @@ double PhysicalEntity::getWidth() const {
 
 double PhysicalEntity::getHeight() const {
 	return sprite.getGlobalBounds().height; 
+}
+
+bool PhysicalEntity::isAlive() const {
+	return alive;
 }
 
 void PhysicalEntity::draw(sf::RenderTarget & target, sf::RenderStates states) const {

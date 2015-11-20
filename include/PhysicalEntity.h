@@ -28,7 +28,9 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		double getWidth() const;
 		double getHeight() const;
 		virtual void update(sf::Time deltaTime) = 0;
-	
+		bool isAlive() const;	
+	protected:
+		bool alive;
 	private:
 		friend class Universe;
 		virtual void draw(sf::RenderTarget & target, 
