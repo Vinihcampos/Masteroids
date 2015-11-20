@@ -7,16 +7,15 @@
 Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(Configuration::playerInputs) {
 	angleVelocity = 0.0;
 	thrusting = false;
+	hasShot = false;
 	
 	position.vertical = 100;
 	position.horizontal = 100;
 	
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
-	sprite.setOrigin(sprite.getGlobalBounds().width / 2,
-		       sprite.getGlobalBounds().height / 2);
 	sprite.setRotation(0);
-
-
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+	
 	// Thrust
 	bind(Configuration::PlayerInputs::Thrust, [this](const sf::Event &) {
 		thrusting = true;	
@@ -34,7 +33,10 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	
 	// Shoot
 	bind(Configuration::PlayerInputs::Shoot, [this](const sf::Event &) {
-		universe.getBullets().push_back(new BulletShip {*this, universe});	
+		if (timeLastShot > sf::seconds(0.3)) {	
+			universe.getBullets().push_back(new BulletShip {*this, universe});	
+			timeLastShot = sf::Time::Zero;
+		}
 	});
 }
 
@@ -47,6 +49,8 @@ void Player::proccessEvents() {
 void Player::update(sf::Time deltaTime) {
 	float seconds = deltaTime.asSeconds();
 	
+	timeLastShot += deltaTime;
+
 	if (thrusting) {
 		angle = sprite.getRotation() / 180 * M_PI; 
 		acceleration.horizontal = std::cos(angle) * .1;

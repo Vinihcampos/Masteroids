@@ -22,9 +22,12 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 	public:
 		PhysicalEntity(Universe &);
 		MathVector getPosition() const;
+		MathVector getVelocity() const;
 		double getRotationRad() const;
+		double getRotationDegree() const;
 		double getWidth() const;
 		double getHeight() const;
+		virtual void update(sf::Time deltaTime) = 0;
 	
 	private:
 		friend class Universe;

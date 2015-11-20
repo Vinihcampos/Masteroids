@@ -12,6 +12,7 @@ class Bullet : public PhysicalEntity {
 		Bullet & operator=(const Bullet &) = delete;
 
 		Bullet(Player &, Universe &);
+		virtual void update(sf::Time deltaTime) = 0;	
 
 	protected:
 		int bulletLevel;

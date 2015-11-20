@@ -27,5 +27,7 @@ void Universe::proccessEvents() {
 void Universe::update(sf::Time deltaTime) {
 	for (auto p : playersList)
 		p->update(deltaTime);
+	for (auto p : bulletList)
+		p->update(deltaTime);
 }
 
