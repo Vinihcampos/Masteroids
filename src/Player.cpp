@@ -93,8 +93,10 @@ void Player::update(sf::Time deltaTime) {
 
 bool Player::isColliding(const PhysicalEntity & other) const {
 	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr) {
-		if (CollisionTools::circleCollision(*this, other))
+		if (CollisionTools::circleCollision(*this, other)) {
+			std::cout << "OI!!" << std::endl;
 			return true;
+		}
 	}
 	return false;
 }

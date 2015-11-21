@@ -21,7 +21,11 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe) : Enemy(_univer
 
 void Asteroid::update(sf::Time deltaTime) {
 	sprite.rotate(angleVelocity);
-	sprite.move(velocity.horizontal, velocity.vertical);
+
+	// Updating position
+	position.horizontal = (position.horizontal + velocity.horizontal); //% Configuration::WINDOW_WIDTH;// * seconds;
+	position.vertical = (position.vertical + velocity.vertical); //% Configuration::WINDOW_HEIGHT;// seconds;
+	sprite.setPosition(position.horizontal, position.vertical);
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
