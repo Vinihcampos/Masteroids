@@ -26,9 +26,12 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		double getRotationRad() const;
 		double getRotationDegree() const;
 		double getWidth() const;
-		double getHeight() const;
+		double getHeigth() const;
 		virtual void update(sf::Time deltaTime) = 0;
 		bool isAlive() const;	
+	
+		virtual bool isColliding(const PhysicalEntity &) const = 0;
+		virtual void onCollide(const PhysicalEntity &) = 0;
 	protected:
 		bool alive;
 	private:

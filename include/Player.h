@@ -25,6 +25,8 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 
 		virtual void update(sf::Time deltaTime);
 		virtual void proccessEvents();
+		bool isColliding(const PhysicalEntity &) const;
+		void onCollide(const PhysicalEntity &);
 		
 	private:
 		bool thrusting;	

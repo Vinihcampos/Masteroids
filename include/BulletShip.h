@@ -13,6 +13,8 @@ class BulletShip : public Bullet {
 		BulletShip(Player &, Universe &);
 
 		virtual void update(sf::Time deltaTime);
+		bool isColliding(const PhysicalEntity &) const;
+		void onCollide(const PhysicalEntity &);
 };
 
 #endif

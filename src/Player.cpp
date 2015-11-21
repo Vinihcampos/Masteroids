@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "BulletShip.h"
 #include "Universe.h"
+#include "CollisionTools.h"
 #include <cmath>
 #include <iostream>
 
@@ -89,3 +90,14 @@ void Player::update(sf::Time deltaTime) {
 
 }
 
+bool Player::isColliding(const PhysicalEntity & other) const {
+	if (dynamic_cast<const Player*>(&other) == nullptr) {
+		if (CollisionTools::circleCollision(*this, other))
+			return true;
+	}
+	return false;
+}
+
+void Player::onCollide(const PhysicalEntity & other) {
+	alive = false;
+}

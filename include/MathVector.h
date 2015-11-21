@@ -10,7 +10,16 @@
  *  \version 1.0
  */
 class MathVector {
+	private:
+		struct Point {
+			double x, y;
+			Point (double _x, double _y) : x {_x}, y{_y} {};
+		};
+
 	public:
+		MathVector() {};
+		MathVector(double hor, double vert) : horizontal { hor }, vertical { vert } {};
+		
 		double horizontal;	/*!< Horizontal component's norm (x axis) */
 		double vertical;	/*!< Vertical component's norm (y axis) */
 		
@@ -21,6 +30,13 @@ class MathVector {
 		 * \return Vector's norm.
 		 */
 		double size() const;
+	
+		/*! \brief Calculates the norm of a vector defined by two points
+		 *  \details Simply uses the distance between two points for
+		 *   getting the result.  	
+		 *  \return Vector's norm.
+		 */
+		static double size (Point origin, Point end); 
 
 };
 

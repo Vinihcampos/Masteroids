@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Bullet.h"
+#include "Asteroid.h"
 #include "PhysicalEntity.h"
 
 class Universe : public sf::Drawable {
@@ -17,6 +18,7 @@ class Universe : public sf::Drawable {
 		void update(sf::Time deltaTime);
 		std::list<Player*> & getPlayers();
 		std::list<Bullet*> & getBullets();
+		std::list<Asteroid*> & getAsteroids();
 
 	private:
 		virtual void draw(sf::RenderTarget & target, 
@@ -24,6 +26,7 @@ class Universe : public sf::Drawable {
 		
 		std::list<Bullet*> bulletList;	
 		std::list<Player*> playersList;	
+		std::list<Asteroid*> asteroidList;
 };
 
 #endif

@@ -19,7 +19,8 @@ class Configuration {
 		
 		enum Textures : int {
 			Player,
-			SimpleBullet
+			SimpleBullet,
+			ClassicAsteroid
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

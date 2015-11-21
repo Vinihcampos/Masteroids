@@ -1,6 +1,7 @@
 #include "BulletShip.h"
 #include "Player.h"
 #include "Universe.h"
+#include "CollisionTools.h"
 #include <cmath>
 
 BulletShip::BulletShip(Player & player, Universe & _universe) : Bullet { player, _universe } { 
@@ -27,3 +28,17 @@ void BulletShip::update(sf::Time deltaTime) {
 	position.vertical = (position.vertical + velocity.vertical); 
 	sprite.setPosition(position.horizontal, position.vertical);
 }
+
+bool BulletShip::isColliding(const PhysicalEntity & other) const {
+	if (dynamic_cast<const BulletShip*>(&other) == nullptr) {
+		if (CollisionTools::circleCollision(*this, other))
+			return true;
+	}
+	return false;
+}
+
+void BulletShip::onCollide(const PhysicalEntity & other) {
+	alive = false;
+}
+
+

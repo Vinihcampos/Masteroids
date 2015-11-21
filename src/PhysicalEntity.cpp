@@ -22,11 +22,11 @@ double PhysicalEntity::getRotationDegree() const {
 }
 
 double PhysicalEntity::getWidth() const {
-	return sprite.getGlobalBounds().width; 
+	return sprite.getTextureRect().width * sprite.getScale().x; 
 }
 
-double PhysicalEntity::getHeight() const {
-	return sprite.getGlobalBounds().height; 
+double PhysicalEntity::getHeigth() const {
+	return sprite.getTextureRect().height * sprite.getScale().y; 
 }
 
 bool PhysicalEntity::isAlive() const {
