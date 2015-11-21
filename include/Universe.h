@@ -16,6 +16,10 @@ class Universe : public sf::Drawable {
 
 		void proccessEvents();
 		void update(sf::Time deltaTime);
+
+		void addEntity(PhysicalEntity::EntityType, PhysicalEntity * newEntity);
+
+		std::multimap<PhysicalEntity::EntityType, PhysicalEntity*> & getEntities();
 		std::list<Player*> & getPlayers();
 		std::list<Bullet*> & getBullets();
 		std::list<Asteroid*> & getAsteroids();
@@ -23,6 +27,9 @@ class Universe : public sf::Drawable {
 	private:
 		virtual void draw(sf::RenderTarget & target, 
 				  sf::RenderStates states) const override;
+		
+		std::multimap<PhysicalEntity::EntityType, PhysicalEntity*> entitiesList;
+		std::multimap<PhysicalEntity::EntityType, PhysicalEntity*> entitiesList_temp;
 		
 		std::list<Bullet*> bulletList;	
 		std::list<Player*> playersList;	

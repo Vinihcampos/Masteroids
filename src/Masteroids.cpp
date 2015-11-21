@@ -1,9 +1,11 @@
 #include "Masteroids.h"
 
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
-	universe.getPlayers().push_back(new Player(universe));
+	//universe.getPlayers().push_back(new Player(universe));
+	universe.addEntity(PhysicalEntity::EntityType::Player, new Player(universe));
 	MathVector * newPos = new MathVector {200.0, 200.0};
-	universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
+	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe));
+	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 }
 
 void Masteroids::run(int minFramesPerSec) {

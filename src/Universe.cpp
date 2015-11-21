@@ -1,15 +1,26 @@
 #include "Universe.h"
+#include <map>
 
 Universe::Universe() {};
 
 void Universe::draw(sf::RenderTarget & target, 
 				  sf::RenderStates states) const {
-	for (auto e : bulletList)
+	for (auto e : entitiesList)
+		target.draw(*(e.second), states);
+	/*for (auto e : bulletList)
 		target.draw(*e, states);
 	for (auto e : playersList)
 		target.draw(*e, states);
 	for (auto e : asteroidList)
-		target.draw(*e, states);
+		target.draw(*e, states);*/
+}
+
+void Universe::addEntity (PhysicalEntity::EntityType entType, PhysicalEntity * newEntity) {
+	entitiesList_temp.emplace(entType, newEntity);
+}
+
+std::multimap<PhysicalEntity::EntityType, PhysicalEntity*> & Universe::getEntities() {
+	return entitiesList;
 }
 
 std::list<Player*> & Universe::getPlayers() {
@@ -25,40 +36,43 @@ std::list<Asteroid*> & Universe::getAsteroids() {
 }
 
 void Universe::proccessEvents() {
-	for (auto p : playersList)
-		p->proccessEvents();
+	std::pair<std::multimap<PhysicalEntity::EntityType, PhysicalEntity*>::iterator, std::multimap<PhysicalEntity::EntityType, PhysicalEntity*>::iterator> range; 
+	range = entitiesList.equal_range(PhysicalEntity::EntityType::Player);
+	for (auto ip (range.first); ip != range.second; ip++) {
+		((Player*)((*ip)).second)->proccessEvents();
+	}
 }
 
 void Universe::update(sf::Time deltaTime) {
-	for (auto p : playersList)
-		p->update(deltaTime);
-	for (auto p : bulletList)
-		p->update(deltaTime);
-	for (auto p : asteroidList)
-		p->update(deltaTime);
-
-	// Collisions
-	for (auto i = asteroidList.begin(); i != asteroidList.end(); i++) {
-		for (auto j = bulletList.begin(); j != bulletList.end(); j++) {
-			//if ((*i)->isAlive() && (*i)->isColliding(**j)) (*i)->onCollide(**j);
-			if ((*j)->isAlive() && (*j)->isColliding(**i)) { 
-				(*j)->onCollide(**i);
-				(*i)->onCollide(**j);
-			}	
+	if(entitiesList_temp.size() > 0)
+		entitiesList.insert(entitiesList_temp.begin(), entitiesList_temp.end());
+	
+	entitiesList_temp.clear();
+	
+	for (auto p : entitiesList)
+		(p.second)->update(deltaTime);
+	
+	const auto end (entitiesList.end());
+	for (auto i = entitiesList.begin(); i != end; ++i) {
+		PhysicalEntity & ie = *((*i).second);
+		auto j ( i );
+		j++;
+		while (j != end) {	
+			PhysicalEntity & je = *((*j).second);
+			std::cout << ie.isAlive() << std::endl;
+			if (ie.isAlive() && je.isAlive() && ie.isColliding(je)) {
+				ie.onCollide(je);
+				je.onCollide(ie);
+			}
+			j++;
 		}
 	}
 
-	for (auto i = bulletList.begin(); i != bulletList.end();) {
-		if (not ((*i)->isAlive())) {
-			delete *i;
-			i = bulletList.erase(i);
-		} else i++;
-	}
-	
-	for (auto i = asteroidList.begin(); i != asteroidList.end();) {
-		if (not ((*i)->isAlive())) {
-			delete *i;
-			i = asteroidList.erase(i);
+	for (auto i = entitiesList.begin(); i != entitiesList.end();) {
+		if (not (((*i).second)->isAlive())) {
+			std::cout << "oi" << std::endl;
+			delete (*i).second;
+			i = entitiesList.erase(i);
 		} else i++;
 	}
 }

@@ -5,6 +5,7 @@
 #include "CollisionTools.h"
 
 Asteroid::Asteroid(MathVector & _position, Universe & _universe) : Enemy(_universe) {
+	alive = true;
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
 	// Setting movement direction
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);

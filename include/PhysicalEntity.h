@@ -20,6 +20,13 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		sf::Sprite sprite;
 
 	public:
+	
+		enum class EntityType : int {
+			Player,
+			Asteroid,
+			Bullet
+		};
+
 		PhysicalEntity(Universe &);
 		MathVector getPosition() const;
 		MathVector getVelocity() const;

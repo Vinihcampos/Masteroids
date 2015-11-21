@@ -9,6 +9,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
+	alive = true;
 	
 	position.vertical = 100;
 	position.horizontal = 100;
@@ -35,7 +36,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	// Shoot
 	bind(Configuration::PlayerInputs::Shoot, [this](const sf::Event &) {
 		if (timeLastShot > sf::seconds(0.3)) {	
-			universe.getBullets().push_back(new BulletShip {*this, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, universe});	
 			timeLastShot = sf::Time::Zero;
 		}
 	});
@@ -91,7 +92,7 @@ void Player::update(sf::Time deltaTime) {
 }
 
 bool Player::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Player*>(&other) == nullptr) {
+	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
