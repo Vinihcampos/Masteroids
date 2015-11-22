@@ -3,6 +3,9 @@
 #include "Universe.h"
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
 
 Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : Enemy(_universe) {
 	alive = true;
@@ -13,13 +16,15 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 	// Setting position
 	position = _position;
 	// Setting velocity;
-	velocity.horizontal = .5;
-	velocity.vertical = .5;
+	velocity.horizontal = 1;
+	velocity.vertical = 1;
 	// Setting angle
 	angleVelocity = 1;
 	// Setting the type of asteroid
 	type = _type;
-
+	radius = 200;
+	angle.horizontal = 1;
+	angle.vertical = 1;
 	switch(type){
 		case Type::CLASSIC:
 			life = 4;
@@ -45,14 +50,16 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, floa
 	// Setting the type of asteroid
 	type = _type;
 	life = _life;
+	radius = 200;
+	angle.horizontal = 1;
+	angle.vertical = 1;
 }
 
 void Asteroid::update(sf::Time deltaTime) {
 	sprite.rotate(angleVelocity);
-
 	// Updating position
-	position.horizontal = (position.horizontal + velocity.horizontal); //% Configuration::WINDOW_WIDTH;// * seconds;
-	position.vertical = (position.vertical + velocity.vertical); //% Configuration::WINDOW_HEIGHT;// seconds;
+	position.horizontal += velocity.horizontal * angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
+	position.vertical += velocity.vertical * angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
 	sprite.setPosition(position.horizontal, position.vertical);
 }
 
@@ -76,5 +83,32 @@ void Asteroid::onCollide(const PhysicalEntity & other) {
 			break;
 		default:
 			alive = false;
+	}
+}
+
+bool Asteroid::isClosing(const PhysicalEntity & other) const {
+	
+	if (dynamic_cast<const Player*>(&other) != nullptr) {
+		float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
+						  	   std::pow(position.vertical - other.getPosition().vertical, 2));
+		if(dist <= radius)
+			return true;	
+	}
+	return false;
+}
+
+void Asteroid::onClose(const PhysicalEntity & other) {
+	double _angle = std::atan2(other.getPosition().vertical - position.vertical,
+							   other.getPosition().horizontal - position.horizontal);
+
+	std::cout<<_angle<<"\n";
+
+	switch(type){
+		case Type::FOLLOWER:
+			angle.horizontal = std::sin(-1 * _angle);
+			angle.vertical = std::cos(-1 * _angle);
+			break;
+		default:
+			return; 
 	}
 }

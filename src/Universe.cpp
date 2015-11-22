@@ -64,6 +64,10 @@ void Universe::update(sf::Time deltaTime) {
 				ie.onCollide(je);
 				je.onCollide(ie);
 			}
+			if(ie.isAlive() && je.isAlive() && ie.isClosing(je)){
+				ie.onClose(je);
+				je.onClose(ie);
+			}
 			j++;
 		}
 	}

@@ -27,6 +27,9 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		virtual void proccessEvents();
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
+		bool isClosing(const PhysicalEntity &) const;
+		void onClose(const PhysicalEntity &);
+
 		
 	private:
 		bool thrusting;	

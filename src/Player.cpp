@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Asteroid.h"
 #include "BulletShip.h"
 #include "Universe.h"
 #include "CollisionTools.h"
@@ -11,6 +12,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	hasShot = false;
 	alive = true;
 	isInHyperspace = false;
+	radius = 200;
 	
 	position.vertical = 100;
 	position.horizontal = 100;
@@ -109,4 +111,18 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 
 void Player::onCollide(const PhysicalEntity & other) {
 	alive = false;
+}
+
+bool Player::isClosing(const PhysicalEntity & other) const {
+	if (dynamic_cast<const Asteroid*>(&other) != nullptr) {
+		float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
+						  	   std::pow(position.vertical - other.getPosition().vertical, 2));
+		if(dist <= radius)
+			return true;
+	}
+	return false;
+}
+
+void Player::onClose(const PhysicalEntity & other) {
+	return;
 }

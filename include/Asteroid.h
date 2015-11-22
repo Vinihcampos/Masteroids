@@ -3,6 +3,7 @@
 
 #include "Enemy.h"
 
+class Player;
 class MathVector;
 class Universe;
 class PhysicalEntity;
@@ -25,10 +26,14 @@ class Asteroid : public Enemy {
 		void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
+		bool isClosing(const PhysicalEntity &) const;
+		void onClose(const PhysicalEntity &);
+
 
 	private:
 		int type;
 		int life;
+		MathVector angle;
 };
 
 #endif

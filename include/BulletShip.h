@@ -15,6 +15,8 @@ class BulletShip : public Bullet {
 		virtual void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
+		bool isClosing(const PhysicalEntity &) const{ return false;};
+		void onClose(const PhysicalEntity &){return;};
 };
 
 #endif
