@@ -57,6 +57,9 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, floa
 
 void Asteroid::update(sf::Time deltaTime) {
 	sprite.rotate(angleVelocity);
+	// Updating velocity
+	velocity.horizontal += acceleration.horizontal;
+	velocity.vertical += acceleration.vertical;
 	// Updating position
 	position.horizontal += velocity.horizontal * angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
 	position.vertical += velocity.vertical * angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
@@ -105,8 +108,10 @@ void Asteroid::onClose(const PhysicalEntity & other) {
 
 	switch(type){
 		case Type::FOLLOWER:
-			angle.horizontal = std::sin(-1 * _angle);
-			angle.vertical = std::cos(-1 * _angle);
+			//angle.horizontal = std::sin(-1 * _angle);
+			//angle.vertical = std::cos(-1 * _angle);
+			acceleration.horizontal = std::cos(_angle) * .01;
+			acceleration.vertical = std::sin(_angle) *.01;
 			break;
 		default:
 			return; 
