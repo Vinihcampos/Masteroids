@@ -17,7 +17,7 @@ namespace V2Game {
 			struct SizeEvent {
 				unsigned int width;
 				unsigned int heigth;
-			}
+			};
 
 			enum class EventType {
 				CLOSED,

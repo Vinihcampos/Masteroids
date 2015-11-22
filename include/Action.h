@@ -25,7 +25,7 @@ class Action {
 		/*! \brief Copy operator */
 		Action & operator=(const Action & other);
 	
-		Action(const sf::Keyboard::Key & key, int type = Type::RealTime | Type::Pressed);
+		Action(const sf::Keyboard::Key & key, int type = Type::RealTime | Type::Pressed | Type::Released);
 		Action(const sf::Mouse::Button & button, int type = Type::RealTime | Type::Pressed);
 		
 		/*! \brief Comparison operator, by events */

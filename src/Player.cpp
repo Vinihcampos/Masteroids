@@ -10,6 +10,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	thrusting = false;
 	hasShot = false;
 	alive = true;
+	isInHyperspace = false;
 	
 	position.vertical = 100;
 	position.horizontal = 100;
@@ -40,6 +41,11 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 			timeLastShot = sf::Time::Zero;
 		}
 	});
+
+	bind(Configuration::PlayerInputs::Hyperspace, [this](const sf::Event &) {
+		position.horizontal = rand() % 800;
+		position.vertical = rand() % 600;
+	});
 }
 
 void Player::proccessEvents() {
@@ -51,7 +57,7 @@ void Player::proccessEvents() {
 void Player::update(sf::Time deltaTime) {
 	float seconds = deltaTime.asSeconds();
 	
-	timeLastShot += deltaTime;
+	timeLastShot += deltaTime;	
 
 	if (thrusting) {
 		angle = sprite.getRotation() / 180 * M_PI; 

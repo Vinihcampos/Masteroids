@@ -4,7 +4,7 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.getPlayers().push_back(new Player(universe));
 	universe.addEntity(PhysicalEntity::EntityType::Player, new Player(universe));
 	MathVector * newPos = new MathVector {200.0, 200.0};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe));
+	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::CLASSIC));
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 }
 

@@ -4,7 +4,7 @@
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
 
-Asteroid::Asteroid(MathVector & _position, Universe & _universe) : Enemy(_universe) {
+Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : Enemy(_universe) {
 	alive = true;
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
 	// Setting movement direction
@@ -17,6 +17,34 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe) : Enemy(_univer
 	velocity.vertical = .5;
 	// Setting angle
 	angleVelocity = 1;
+	// Setting the type of asteroid
+	type = _type;
+
+	switch(type){
+		case Type::CLASSIC:
+			life = 4;
+			break;
+		default:
+			life = 1;
+	}
+}
+
+Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, float _velX, float _velY, int _life) : Enemy(_universe) {
+	alive = true;
+	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
+	// Setting movement direction
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+	sprite.setRotation(0.0);
+	// Setting position
+	position = _position;
+	// Setting velocity;
+	velocity.horizontal = _velX;
+	velocity.vertical = _velY;
+	// Setting angle
+	angleVelocity = 1;
+	// Setting the type of asteroid
+	type = _type;
+	life = _life;
 }
 
 void Asteroid::update(sf::Time deltaTime) {
@@ -37,5 +65,16 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 }
 
 void Asteroid::onCollide(const PhysicalEntity & other) {
-	alive = false;
+	switch(type){
+		case Type::CLASSIC:
+			if(life > 1){
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal, velocity.vertical * (-1), life - 1));
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal * (-1), velocity.vertical, life - 1));
+			}
+			life = 0;
+			alive = false;
+			break;
+		default:
+			alive = false;
+	}
 }

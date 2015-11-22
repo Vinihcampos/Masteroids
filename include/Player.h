@@ -31,6 +31,9 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 	private:
 		bool thrusting;	
 		bool hasShot;
+		bool isInHyperspace;
+		float randX;
+		float randY;
 		sf::Time timeLastShot;
 		
 }; 

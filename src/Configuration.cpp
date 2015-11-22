@@ -24,4 +24,5 @@ void Configuration::initPlayerInputs() {
 	playerInputs.map(PlayerInputs::TurnLeft, Action(sf::Keyboard::Left));
 	playerInputs.map(PlayerInputs::TurnRight, Action(sf::Keyboard::Right));
 	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::Space));
+	playerInputs.map(PlayerInputs::Hyperspace, Action(sf::Keyboard::H));
 }
