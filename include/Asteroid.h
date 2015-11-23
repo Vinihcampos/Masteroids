@@ -33,6 +33,8 @@ class Asteroid : public Enemy {
 	private:
 		int type;
 		int life;
+		bool isFollowing;
+		const Player * toFollow;
 		MathVector angle;
 };
 

@@ -57,12 +57,15 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, floa
 
 void Asteroid::update(sf::Time deltaTime) {
 	sprite.rotate(angleVelocity);
-	// Updating velocity
-	velocity.horizontal += acceleration.horizontal;
-	velocity.vertical += acceleration.vertical;
+	if (isFollowing) {
+		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
+							   toFollow->getPosition().horizontal - position.horizontal);
+		velocity.horizontal = std::cos(_angle) * 1;
+		velocity.vertical = std::sin(_angle) * 1;
+	}
 	// Updating position
-	position.horizontal += velocity.horizontal * angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
-	position.vertical += velocity.vertical * angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
+	position.horizontal += velocity.horizontal; //* angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
+	position.vertical += velocity.vertical; //* angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
 	sprite.setPosition(position.horizontal, position.vertical);
 }
 
@@ -101,17 +104,13 @@ bool Asteroid::isClosing(const PhysicalEntity & other) const {
 }
 
 void Asteroid::onClose(const PhysicalEntity & other) {
-	double _angle = std::atan2(other.getPosition().vertical - position.vertical,
-							   other.getPosition().horizontal - position.horizontal);
-
-	std::cout<<_angle<<"\n";
 
 	switch(type){
 		case Type::FOLLOWER:
-			//angle.horizontal = std::sin(-1 * _angle);
-			//angle.vertical = std::cos(-1 * _angle);
-			acceleration.horizontal = std::cos(_angle) * .01;
-			acceleration.vertical = std::sin(_angle) *.01;
+			if (dynamic_cast<const Player*>(&other) != nullptr) {
+				toFollow = dynamic_cast<const Player*>(&other);
+				isFollowing = true;
+			}
 			break;
 		default:
 			return; 
