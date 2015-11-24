@@ -15,9 +15,18 @@ template<typename T>
 class ActionTarget;
 
 class Universe;
+class BulletShip;
 
 class Player : public PhysicalEntity, public ActionTarget<int> {
 	public:
+		enum ShotLevel {
+			SIMPLE,
+			DOUBLE,
+			TRIPLE,
+			POWERFULL,
+			LASER
+		};
+
 		Player(const Player &) = delete;
 		Player & operator=(const Player &) = delete;
 
@@ -29,6 +38,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		void onCollide(const PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
+		void shot();
 		
 	private:
 		bool thrusting;	
@@ -37,6 +47,8 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		float randX;
 		float randY;
 		sf::Time timeLastShot;
+		ShotLevel shotLevel;
+
 		
 }; 
 

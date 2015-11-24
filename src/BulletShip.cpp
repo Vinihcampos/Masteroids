@@ -4,10 +4,31 @@
 #include "CollisionTools.h"
 #include <cmath>
 
-BulletShip::BulletShip(Player & player, Universe & _universe) : Bullet { player, _universe } { 
-	// Setting initial position
-	position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
-	position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::SpawnPoint _spawnPoint, Universe & _universe) 
+					   : Bullet { player, _universe }, type {_type}, spawnPoint {_spawnPoint} { 
+	switch (spawnPoint) {
+		case BulletShip::SpawnPoint::FRONT:
+			// Setting initial position
+			position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
+			position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+		break;
+		case BulletShip::SpawnPoint::LEFT:
+			// Setting initial position
+			position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
+			position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+		break;
+		case BulletShip::SpawnPoint::RIGHT:
+			// Setting initial position
+			position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
+			position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+		break;
+		default: return;
+	}
+
+	//switch (type) {
+
+	//}
+
 	// Setting movement direction
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	sprite.setRotation(player.getRotationDegree());

@@ -17,6 +17,8 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	
 	position.vertical = 400;
 	position.horizontal = 300;
+
+	lifePoints = 100;
 	
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	sprite.setRotation(0);
@@ -40,7 +42,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	// Shoot
 	bind(Configuration::PlayerInputs::Shoot, [this](const sf::Event &) {
 		if (timeLastShot > sf::seconds(0.3)) {	
-			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, universe});	
+			shot();
 			timeLastShot = sf::Time::Zero;
 		}
 	});
@@ -112,8 +114,12 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 
 void Player::onCollide(const PhysicalEntity & other) {
 	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
-	
-	} else alive = false;
+		
+	} else{
+		lifePoints -= 30;
+		if(lifePoints <= 0)
+			alive = false;
+	} 
 }
 
 bool Player::isClosing(const PhysicalEntity & other) const {
@@ -128,4 +134,30 @@ bool Player::isClosing(const PhysicalEntity & other) const {
 
 void Player::onClose(PhysicalEntity & other) {
 	return;
+}
+
+void Player::shot () {
+	switch(shotLevel) {
+		case ShotLevel::SIMPLE:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::FRONT, universe});	
+		break;
+		case ShotLevel::DOUBLE:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::LEFT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::RIGHT, universe});	
+		break;
+		case ShotLevel::TRIPLE:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::LEFT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::RIGHT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::FRONT, universe});	
+		break;
+		case ShotLevel::POWERFULL:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::LEFT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::RIGHT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::FRONT, universe});	
+		break;
+		case ShotLevel::LASER:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::LASER, BulletShip::SpawnPoint::FRONT, universe});	
+		break;
+		default: return;
+	}
 }

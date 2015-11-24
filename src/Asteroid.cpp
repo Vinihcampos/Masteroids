@@ -29,14 +29,14 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 	angle.vertical = 1;
 	switch(type){
 		case Type::CLASSIC:
-			life = 4;
+			lifePoints = 4;
 			break;
 		default:
-			life = 1;
+			lifePoints = 1;
 	}
 }
 
-Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, float _velX, float _velY, int _life) : Enemy(_universe) {
+Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, float _velX, float _velY, int _lifePoints) : Enemy(_universe) {
 	alive = true;
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
 	// Setting movement direction
@@ -51,7 +51,7 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, floa
 	angleVelocity = 1;
 	// Setting the type of asteroid
 	type = _type;
-	life = _life;
+	lifePoints = _lifePoints;
 	radius = 200;
 	angle.horizontal = 1;
 	angle.vertical = 1;
@@ -82,11 +82,11 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 void Asteroid::onCollide(const PhysicalEntity & other) {
 	switch(type){
 		case Type::CLASSIC:
-			if(life > 1){
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal, velocity.vertical * (-1), life - 1));
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal * (-1), velocity.vertical, life - 1));
+			if(lifePoints > 1){
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal, velocity.vertical * (-1), lifePoints - 1));
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal * (-1), velocity.vertical, lifePoints - 1));
 			}
-			life = 0;
+			lifePoints = 0;
 			alive = false;
 			break;
 		case Type::EXPLOSIVE:

@@ -16,6 +16,9 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		double angle;
 		int radius;
 		bool exploded;
+		int lifePoints;
+		int damagePoint;
+		int type;
 		
 		Universe & universe;		
 
