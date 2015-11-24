@@ -101,10 +101,9 @@ void Player::update(sf::Time deltaTime) {
 }
 
 bool Player::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr &&
-	    dynamic_cast<const Collectable*>(&other) == nullptr) {
+	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other)) {
-			std::cout << "OI!!" << std::endl;
+			std::cout << "ola" << std::endl;
 			return true;
 		}
 	}
@@ -112,7 +111,9 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 }
 
 void Player::onCollide(const PhysicalEntity & other) {
-	alive = false;
+	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
+	
+	} else alive = false;
 }
 
 bool Player::isClosing(const PhysicalEntity & other) const {
