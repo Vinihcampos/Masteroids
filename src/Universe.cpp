@@ -59,7 +59,7 @@ void Universe::update(sf::Time deltaTime) {
 		j++;
 		while (j != end) {	
 			PhysicalEntity & je = *((*j).second);
-			std::cout << ie.isAlive() << std::endl;
+			//std::cout << ie.isAlive() << std::endl;
 			if (ie.isAlive() && je.isAlive() && ie.isColliding(je)) {
 				ie.onCollide(je);
 				je.onCollide(ie);
@@ -68,11 +68,20 @@ void Universe::update(sf::Time deltaTime) {
 				ie.onClose(je);
 				je.onClose(ie);
 			}
+			if(ie.isInsideWindow()){
+				ie.killEntity();
+			}
+			if(je.isInsideWindow()){
+				je.killEntity();
+			}
 			j++;
 		}
 	}
 
 	for (auto i = entitiesList.begin(); i != entitiesList.end();) {
+		if((((*i).second)->isAlive()) && (((*i).second)->isExploded())){
+			(((*i).second)->killEntity());
+		}
 		if (not (((*i).second)->isAlive())) {
 			std::cout << "oi" << std::endl;
 			delete (*i).second;

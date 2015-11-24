@@ -15,6 +15,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		double angleVelocity;	
 		double angle;
 		int radius;
+		bool exploded;
 		
 		Universe & universe;		
 
@@ -42,7 +43,10 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		virtual void onCollide(const PhysicalEntity &) = 0;
 
 		virtual bool isClosing(const PhysicalEntity &) const = 0;
-		virtual void onClose(const PhysicalEntity &) = 0;
+		virtual void onClose(PhysicalEntity &) = 0;
+		bool isExploded() const;
+		void killEntity();
+		bool isInsideWindow();
 
 	protected:
 		bool alive;
