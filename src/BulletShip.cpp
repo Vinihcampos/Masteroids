@@ -1,5 +1,6 @@
 #include "BulletShip.h"
 #include "Player.h"
+#include "Collectable.h"
 #include "Universe.h"
 #include "CollisionTools.h"
 #include <cmath>
@@ -62,7 +63,7 @@ void BulletShip::update(sf::Time deltaTime) {
 }
 
 bool BulletShip::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const BulletShip*>(&other) == nullptr) {
+	if (dynamic_cast<const BulletShip*>(&other) == nullptr && dynamic_cast<const Collectable*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
