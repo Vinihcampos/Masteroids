@@ -22,7 +22,7 @@ class Collectable : public PhysicalEntity {
 		void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
-		void onClose(const PhysicalEntity &);
+		void onClose(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		
 		private:
