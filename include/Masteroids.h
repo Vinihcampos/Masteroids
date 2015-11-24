@@ -5,6 +5,9 @@
 #include "GameEntity.h"
 
 #include "Universe.h"
+#include "Collectable.h"
+
+class Collectable;
 
 class Masteroids : public GameEntity {
 	
