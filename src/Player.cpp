@@ -2,6 +2,7 @@
 #include "Asteroid.h"
 #include "BulletShip.h"
 #include "Universe.h"
+#include "Collectable.h"
 #include "CollisionTools.h"
 #include <cmath>
 #include <iostream>
@@ -100,7 +101,8 @@ void Player::update(sf::Time deltaTime) {
 }
 
 bool Player::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr) {
+	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr &&
+	    dynamic_cast<const Collectable*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other)) {
 			std::cout << "OI!!" << std::endl;
 			return true;

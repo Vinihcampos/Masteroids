@@ -1,18 +1,21 @@
 #include "Masteroids.h"
+#include "Collectable.h"
 
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
 	//universe.getPlayers().push_back(new Player(universe));
 	universe.addEntity(PhysicalEntity::EntityType::Player, new Player(universe));
 	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 }
 

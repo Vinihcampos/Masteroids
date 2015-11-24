@@ -10,13 +10,12 @@
  *  \version 1.0
  */
 class MathVector {
-	private:
+	public:
 		struct Point {
 			double x, y;
 			Point (double _x, double _y) : x {_x}, y{_y} {};
 		};
-
-	public:
+		
 		MathVector() {};
 		MathVector(double hor, double vert) : horizontal { hor }, vertical { vert } {};
 		

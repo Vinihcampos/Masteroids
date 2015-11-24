@@ -17,6 +17,7 @@ void Configuration::initTextures() {
 	textures.load(Textures::Player, "media/Player/spaceship.png");
 	textures.load(Textures::SimpleBullet, "media/Bullets/bullet.png");
 	textures.load(Textures::ClassicAsteroid, "media/Asteroids/classicAsteroid.png");
+	textures.load(Textures::Collectables, "media/Items/collectables.png");
 }
 
 void Configuration::initPlayerInputs() {
