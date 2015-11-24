@@ -5,7 +5,7 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.getPlayers().push_back(new Player(universe));
 	universe.addEntity(PhysicalEntity::EntityType::Player, new Player(universe));
 	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::INDESTRUCTIBLE));
+	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	newPos = new MathVector {200,200};
@@ -34,6 +34,9 @@ void Masteroids::run(int minFramesPerSec) {
 void Masteroids::proccessEvents() {
 	sf::Event e;
 	while (pollEvent(e)) {
+		if((e.type == sf::Event::Closed) || ((e.type == sf::Event::KeyPressed) && (e.key.code == sf::Keyboard::Escape))){
+			close();
+		}
 		//switch (e) {
 			
 		//}

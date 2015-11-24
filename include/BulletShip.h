@@ -14,7 +14,7 @@ class BulletShip : public Bullet {
 		};
 
 		enum SpawnPoint {
-			FRONT,
+			FRONT = 0,
 			LEFT,
 			RIGHT
 		};

@@ -20,7 +20,7 @@ class BulletShip;
 class Player : public PhysicalEntity, public ActionTarget<int> {
 	public:
 		enum ShotLevel {
-			SIMPLE,
+			SIMPLE = 0,
 			DOUBLE,
 			TRIPLE,
 			POWERFULL,
@@ -38,6 +38,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		void onCollide(const PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
+		void decreaseShotLevel();
 		void shot();
 		
 	private:
@@ -47,7 +48,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		float randX;
 		float randY;
 		sf::Time timeLastShot;
-		ShotLevel shotLevel;
+		int shotLevel;
 
 		
 }; 

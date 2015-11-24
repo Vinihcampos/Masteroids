@@ -11,6 +11,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
+	shotLevel = 2;
 	alive = true;
 	isInHyperspace = false;
 	radius = 200;
@@ -21,6 +22,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	lifePoints = 100;
 	
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
+	
 	sprite.setRotation(0);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	
@@ -112,10 +114,18 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 	return false;
 }
 
+void Player::decreaseShotLevel() {
+	if (shotLevel > 0)
+		//shotLevel = (ShotLevel)((int) shotLevel - 1);
+		shotLevel--;
+
+}
+
 void Player::onCollide(const PhysicalEntity & other) {
 	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
 		
 	} else{
+		decreaseShotLevel();
 		lifePoints -= 30;
 		if(lifePoints <= 0)
 			alive = false;

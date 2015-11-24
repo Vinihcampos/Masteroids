@@ -26,7 +26,10 @@ class Configuration {
 			PrecisionUp,
 			Indestructible,
 			SlowAsteroid,
-			ByPass
+			ByPass,
+			SimpleShot,
+			PowerfullShot,
+			LaserShot
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

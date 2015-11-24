@@ -1,3 +1,5 @@
+#include <iostream>
+
 template <typename Resource, typename Identifier>
 template <typename ... Args>
 void ResourceManager<Resource, Identifier>::load(const Identifier & id, Args && ... args) {

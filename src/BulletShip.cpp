@@ -14,21 +14,31 @@ BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::Spaw
 		break;
 		case BulletShip::SpawnPoint::LEFT:
 			// Setting initial position
-			position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
-			position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+			position.horizontal = player.getPosition().horizontal + player.getWidth()*.8 * std::cos(player.getRotationRad() + M_PI/2) / 2;
+			position.vertical = player.getPosition().vertical + player.getWidth()*.8 * std::sin(player.getRotationRad() + M_PI/2) / 2;
 		break;
 		case BulletShip::SpawnPoint::RIGHT:
 			// Setting initial position
-			position.horizontal = player.getPosition().horizontal + player.getWidth() * std::cos(player.getRotationRad()) / 2;
-			position.vertical = player.getPosition().vertical + player.getWidth() * std::sin(player.getRotationRad()) / 2;
+			position.horizontal = player.getPosition().horizontal + player.getWidth() * .8 * std::cos(player.getRotationRad() - M_PI/2) / 2;
+			position.vertical = player.getPosition().vertical + player.getWidth() *.8 * std::sin(player.getRotationRad() - M_PI/2) / 2;
 		break;
 		default: return;
 	}
 
-	//switch (type) {
+	Configuration::Textures texture;
+	switch (type) {
+		case BulletShip::Type::SIMPLE:
+			texture = Configuration::Textures::SimpleShot;
+		break;
+		case BulletShip::Type::POWERFULL:
+			texture = Configuration::Textures::PowerfullShot;
+		break;
+		case BulletShip::Type::LASER:
+			texture = Configuration::Textures::LaserShot;
+		break;
+	}
 
-	//}
-
+	sprite.setTexture(Configuration::textures.get(texture));
 	// Setting movement direction
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	sprite.setRotation(player.getRotationDegree());
