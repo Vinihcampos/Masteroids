@@ -27,7 +27,7 @@ class Asteroid : public Enemy {
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
-		void onClose(const PhysicalEntity &);
+		void onClose(PhysicalEntity &);
 
 
 	private:

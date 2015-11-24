@@ -15,8 +15,8 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	isInHyperspace = false;
 	radius = 200;
 	
-	position.vertical = 100;
-	position.horizontal = 100;
+	position.vertical = 400;
+	position.horizontal = 300;
 	
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	sprite.setRotation(0);
@@ -126,6 +126,6 @@ bool Player::isClosing(const PhysicalEntity & other) const {
 	return false;
 }
 
-void Player::onClose(const PhysicalEntity & other) {
+void Player::onClose(PhysicalEntity & other) {
 	return;
 }

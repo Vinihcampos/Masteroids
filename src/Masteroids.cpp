@@ -5,13 +5,7 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.getPlayers().push_back(new Player(universe));
 	universe.addEntity(PhysicalEntity::EntityType::Player, new Player(universe));
 	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
-	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
+	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::INDESTRUCTIBLE));
 	newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	newPos = new MathVector {200,200};

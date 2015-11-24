@@ -1,8 +1,10 @@
 #include "Asteroid.h"
 #include "MathVector.h"
 #include "Universe.h"
+#include "BulletShip.h"
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
+#include "Configuration.h"
 #include <cmath>
 #include <cstdlib>
 #include <iostream>
@@ -87,29 +89,38 @@ void Asteroid::onCollide(const PhysicalEntity & other) {
 			life = 0;
 			alive = false;
 			break;
+		case Type::EXPLOSIVE:
+			exploded = true;
+			break;
+		case Type::INDESTRUCTIBLE:
+			return;
 		default:
 			alive = false;
 	}
 }
 
 bool Asteroid::isClosing(const PhysicalEntity & other) const {
-	
-	if (dynamic_cast<const Player*>(&other) != nullptr) {
-		float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
-						  	   std::pow(position.vertical - other.getPosition().vertical, 2));
+	float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
+						  	   std::pow(position.vertical - other.getPosition().vertical, 2));	
+	if (dynamic_cast<const Asteroid*>(&other) == nullptr || type == Type::EXPLOSIVE) {
 		if(dist <= radius)
 			return true;	
 	}
+
 	return false;
 }
 
-void Asteroid::onClose(const PhysicalEntity & other) {
-
+void Asteroid::onClose(PhysicalEntity & other) {
 	switch(type){
 		case Type::FOLLOWER:
 			if (dynamic_cast<const Player*>(&other) != nullptr) {
 				toFollow = dynamic_cast<const Player*>(&other);
 				isFollowing = true;
+			}
+			break;
+		case Type::EXPLOSIVE:
+			if(exploded){
+				other.killEntity();
 			}
 			break;
 		default:

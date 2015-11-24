@@ -28,7 +28,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
-		void onClose(const PhysicalEntity &);
+		void onClose(PhysicalEntity &);
 		
 	private:
 		bool thrusting;	

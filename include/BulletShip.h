@@ -16,7 +16,7 @@ class BulletShip : public Bullet {
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(const PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const{ return false;};
-		void onClose(const PhysicalEntity &){return;};
+		void onClose(PhysicalEntity &){return;};
 };
 
 #endif

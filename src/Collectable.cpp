@@ -36,6 +36,6 @@ bool Collectable::isClosing(const PhysicalEntity & other) const {
 	return false;  
 }
 
-void Collectable::onClose(const PhysicalEntity & other) {
-
+void Collectable::onClose(PhysicalEntity & other) {
+	return;
 }
