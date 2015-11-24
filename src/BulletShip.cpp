@@ -6,6 +6,7 @@
 
 BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::SpawnPoint _spawnPoint, Universe & _universe) 
 					   : Bullet { player, _universe }, type {_type}, spawnPoint {_spawnPoint} { 
+	damagePoints = (int) type;
 	switch (spawnPoint) {
 		case BulletShip::SpawnPoint::FRONT:
 			// Setting initial position

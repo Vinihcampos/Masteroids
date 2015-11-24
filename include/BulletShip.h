@@ -8,9 +8,9 @@ class BulletShip : public Bullet {
 
 	public:
 		enum Type {
-			SIMPLE = 5,
-			POWERFULL = 10,
-			LASER = 20
+			SIMPLE = 2,
+			POWERFULL = 5,
+			LASER = 10
 		};
 
 		enum SpawnPoint {

@@ -17,7 +17,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		int radius;
 		bool exploded;
 		int lifePoints;
-		int damagePoint;
+		int damagePoints;
 		int type;
 		
 		Universe & universe;		
@@ -50,6 +50,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		virtual void onClose(PhysicalEntity &) = 0;
 		bool isExploded() const;
 		void killEntity();
+		int getDamagePoints() const;
 		bool isInsideWindow();
 
 	protected:

@@ -48,6 +48,10 @@ void PhysicalEntity::killEntity(){
 	alive = false;
 }
 
+int PhysicalEntity::getDamagePoints() const {
+	return damagePoints;
+}
+
 bool PhysicalEntity::isInsideWindow(){
 	if(position.horizontal * 2 - getWidth()  < 0 || position.horizontal * 2 + getWidth()> Configuration::WINDOW_WIDTH || 
 	position.vertical * 2 - getHeigth() || position.vertical * 2 + getHeigth() > Configuration::WINDOW_HEIGHT){

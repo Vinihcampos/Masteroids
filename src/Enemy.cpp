@@ -3,7 +3,6 @@
 
 Enemy::Enemy(Universe & _universe) : PhysicalEntity {_universe} {
 	lifeBar.setSize(sf::Vector2f(30, 3));
-	lifeBar.setPosition(position.horizontal + 10, position.vertical + 10);	
 	lifeBar.setFillColor(sf::Color::Green);
 }
 

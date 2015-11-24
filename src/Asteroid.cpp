@@ -4,6 +4,7 @@
 #include "BulletShip.h"
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
+#include "Collectable.h"
 #include "Configuration.h"
 #include <cmath>
 #include <cstdlib>
@@ -82,10 +83,13 @@ void Asteroid::update(sf::Time deltaTime) {
 	//Lifebar update
 	lifeBar.setPosition(position.horizontal, position.vertical + 30);	
 	lifeBar.setSize(sf::Vector2f(lifePoints*30/3, 3)); // curLife * BAR_SIZE / MAX_LIFE
+
+	if (lifePoints <= 0) alive = false;
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Asteroid*>(&other) == nullptr) {
+	if (dynamic_cast<const Enemy*>(&other) == nullptr
+	    && dynamic_cast<const Collectable*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
@@ -93,14 +97,18 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 }
 
 void Asteroid::onCollide(const PhysicalEntity & other) {
+	if (dynamic_cast<const Bullet*>(&other) != nullptr) {
+		lifePoints -= other.getDamagePoints();
+	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
+		lifePoints = 0;
+	}
+
 	switch(type){
 		case Type::CLASSIC:
 			if(lifePoints > 1){
 				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal, velocity.vertical * (-1), lifePoints - 1));
 				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal * (-1), velocity.vertical, lifePoints - 1));
 			}
-			lifePoints = 0;
-			alive = false;
 			break;
 		case Type::EXPLOSIVE:
 			exploded = true;

@@ -11,7 +11,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
-	shotLevel = 2;
+	shotLevel = 0;
 	alive = true;
 	isInHyperspace = false;
 	radius = 200;
@@ -116,7 +116,6 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 
 void Player::decreaseShotLevel() {
 	if (shotLevel > 0)
-		//shotLevel = (ShotLevel)((int) shotLevel - 1);
 		shotLevel--;
 
 }
@@ -127,9 +126,9 @@ void Player::onCollide(const PhysicalEntity & other) {
 	} else{
 		decreaseShotLevel();
 		lifePoints -= 30;
-		if(lifePoints <= 0)
-			alive = false;
 	} 
+	if(lifePoints <= 0)
+		alive = false;
 }
 
 bool Player::isClosing(const PhysicalEntity & other) const {
