@@ -9,13 +9,16 @@ class Enemy : public PhysicalEntity {
 		Enemy(const Enemy &) = delete;
 		Enemy & operator=(const Enemy &) = delete;
 
-		Enemy(Universe & _universe) : PhysicalEntity{ _universe } {};
+		Enemy(Universe &);
 	
 		virtual void onDestroy();
 		virtual int getPoints() const;
 		virtual void setPoints(int);
 	private:
+		void draw(sf::RenderTarget & target, sf::RenderStates states) const; 
 		int points;
+	protected:
+		sf::RectangleShape lifeBar;
 
 };
 

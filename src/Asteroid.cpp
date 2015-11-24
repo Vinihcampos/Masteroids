@@ -31,6 +31,15 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 		case Type::CLASSIC:
 			lifePoints = 4;
 			break;
+		case Type::EXPLOSIVE:
+			lifePoints = 6;
+			break;
+		case Type::FOLLOWER:
+			lifePoints = 3;
+			break;
+		case Type::INDESTRUCTIBLE:
+			lifePoints = 500;
+			break;
 		default:
 			lifePoints = 1;
 	}
@@ -69,6 +78,10 @@ void Asteroid::update(sf::Time deltaTime) {
 	position.horizontal += velocity.horizontal; //* angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
 	position.vertical += velocity.vertical; //* angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
 	sprite.setPosition(position.horizontal, position.vertical);
+	
+	//Lifebar update
+	lifeBar.setPosition(position.horizontal, position.vertical + 30);	
+	lifeBar.setSize(sf::Vector2f(lifePoints*30/3, 3)); // curLife * BAR_SIZE / MAX_LIFE
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
