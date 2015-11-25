@@ -16,7 +16,8 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		double angle;
 		int radius;
 		bool exploded;
-		int lifePoints;
+		int maxLifePoints;
+		int currentLifePoints;
 		int damagePoints;
 		int type;
 		
@@ -44,7 +45,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		bool isAlive() const;	
 	
 		virtual bool isColliding(const PhysicalEntity &) const = 0;
-		virtual void onCollide(const PhysicalEntity &) = 0;
+		virtual void onCollide(PhysicalEntity &) = 0;
 
 		virtual bool isClosing(const PhysicalEntity &) const = 0;
 		virtual void onClose(PhysicalEntity &) = 0;
@@ -52,6 +53,9 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		void killEntity();
 		int getDamagePoints() const;
 		bool isInsideWindow();
+
+		int getMaxLifePoints() const;
+		int getCurrentLifePoints() const;
 
 	protected:
 		bool alive;

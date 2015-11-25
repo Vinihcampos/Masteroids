@@ -35,11 +35,13 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		virtual void update(sf::Time deltaTime);
 		virtual void proccessEvents();
 		bool isColliding(const PhysicalEntity &) const;
-		void onCollide(const PhysicalEntity &);
+		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
 		void decreaseShotLevel();
 		void shot();
+		int getScore() const;
+		void increaseScore(int points);
 		
 	private:
 		bool thrusting;	
@@ -49,8 +51,8 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		float randY;
 		sf::Time timeLastShot;
 		int shotLevel;
+		int score;
 
-		
 }; 
 
 #endif

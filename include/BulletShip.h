@@ -26,10 +26,12 @@ class BulletShip : public Bullet {
 
 		virtual void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
-		void onCollide(const PhysicalEntity &);
+		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const{ return false;};
 		void onClose(PhysicalEntity &){return;};
 		void setDamage(int _damage);
+
+		Player * _player;
 	private:
 		Type type;
 		SpawnPoint spawnPoint;

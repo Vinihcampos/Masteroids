@@ -8,6 +8,10 @@ PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Draw
 };
 
 MathVector PhysicalEntity::getPosition() const {
+	std::cout<<"Problem here!!!"<<std::endl;
+	std::cout<<"Horizontal: "<<position.horizontal<<std::endl;
+	std::cout<<"Vertical: "<<position.vertical<<std::endl;
+
 	return position;
 }
 
@@ -60,4 +64,12 @@ bool PhysicalEntity::isInsideWindow(){
 		return true;
 	}
 
+}
+
+int PhysicalEntity::getMaxLifePoints() const{
+	return maxLifePoints;
+}
+
+int PhysicalEntity::getCurrentLifePoints() const{
+	return currentLifePoints;
 }

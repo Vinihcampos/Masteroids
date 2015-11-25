@@ -27,7 +27,7 @@ bool Collectable::isColliding(const PhysicalEntity & other) const {
 	return false;
 }
 
-void Collectable::onCollide(const PhysicalEntity & other) {
+void Collectable::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const Player*>(&other) != nullptr) 
 		alive = false;
 }

@@ -5,6 +5,7 @@
 #include "GameEntity.h"
 
 #include "Universe.h"
+#include "Hud.h"
 #include "Collectable.h"
 
 class Collectable;
@@ -21,6 +22,7 @@ class Masteroids : public GameEntity {
 	
 	private:
 		Universe universe;
+		Hud * hud;
 };
 
 #endif

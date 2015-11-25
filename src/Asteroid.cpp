@@ -30,30 +30,36 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 	angle.vertical = 1;
 	switch(type){
 		case Type::CLASSIC:
-			lifePoints = 4;
+			currentLifePoints = 4;
+			maxLifePoints = 4;
 			break;
 		case Type::EXPLOSIVE:
-			lifePoints = 6;
+			currentLifePoints = 6;
+			maxLifePoints = 6;
 			break;
 		case Type::FOLLOWER:
-			lifePoints = 3;
+			currentLifePoints = 3;
+			maxLifePoints = 3;
 			break;
 		case Type::INDESTRUCTIBLE:
-			lifePoints = 500;
+			currentLifePoints = 500;
+			maxLifePoints = 500;
 			break;
 		default:
-			lifePoints = 1;
+			currentLifePoints = 1;
+			maxLifePoints = 1;
 	}
 }
 
-Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, float _velX, float _velY, int _lifePoints) : Enemy(_universe) {
+Asteroid::Asteroid(int h, int v, Universe & _universe, int _type, float _velX, float _velY, int _LifePoints) : Enemy(_universe) {
 	alive = true;
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
 	// Setting movement direction
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	sprite.setRotation(0.0);
 	// Setting position
-	position = _position;
+	position.horizontal = h;
+	position.vertical = v;
 	// Setting velocity;
 	velocity.horizontal = _velX;
 	velocity.vertical = _velY;
@@ -61,10 +67,13 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type, floa
 	angleVelocity = 1;
 	// Setting the type of asteroid
 	type = _type;
-	lifePoints = _lifePoints;
+	currentLifePoints = _LifePoints;	
+	maxLifePoints = 4;
 	radius = 200;
 	angle.horizontal = 1;
 	angle.vertical = 1;
+
+	std::cout<<"Chegou no final"<<std::endl;
 }
 
 void Asteroid::update(sf::Time deltaTime) {
@@ -82,9 +91,9 @@ void Asteroid::update(sf::Time deltaTime) {
 	
 	//Lifebar update
 	lifeBar.setPosition(position.horizontal, position.vertical + 30);	
-	lifeBar.setSize(sf::Vector2f(lifePoints*30/3, 3)); // curLife * BAR_SIZE / MAX_LIFE
+	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/3, 3)); // curLife * BAR_SIZE / MAX_LIFE
 
-	if (lifePoints <= 0) alive = false;
+	if (currentLifePoints <= 0) alive = false;
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
@@ -96,27 +105,45 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 	return false;
 }
 
-void Asteroid::onCollide(const PhysicalEntity & other) {
-	if (dynamic_cast<const Bullet*>(&other) != nullptr) {
-		lifePoints -= other.getDamagePoints();
+void Asteroid::onCollide(PhysicalEntity & other) {
+	bool bullet = false;
+	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
+		currentLifePoints -= other.getDamagePoints();
+		bullet = true;
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
-		lifePoints = 0;
+		currentLifePoints = 0;
 	}
 
 	switch(type){
 		case Type::CLASSIC:
-			if(lifePoints > 1){
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal, velocity.vertical * (-1), lifePoints - 1));
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, type, velocity.horizontal * (-1), velocity.vertical, lifePoints - 1));
-			}
-			break;
+			if(currentLifePoints > 1 && bullet){
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position.horizontal, position.vertical, universe, type, velocity.horizontal, velocity.vertical * (-1), currentLifePoints - 1));
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position.horizontal, position.vertical, universe, type, velocity.horizontal * (-1), velocity.vertical, currentLifePoints - 1));
+				alive = false;
+				currentLifePoints = 0;
+			}			
+		break;
 		case Type::EXPLOSIVE:
-			exploded = true;
-			break;
+			if(currentLifePoints <= 0){
+				exploded = true;
+			}
+		break;
+		case Type::FOLLOWER:
+			if(currentLifePoints <= 0){
+				alive = false;
+				std::cout<<"entrou aqui! pre-atribuição"<<std::endl;
+				std::cout<<"Bullet: " <<bullet<<std::endl;
+			}
+		break;
 		case Type::INDESTRUCTIBLE:
-			return;
+			break;
 		default:
 			alive = false;
+	}
+
+	if(bullet && currentLifePoints <= 0){
+		std::cout<<"entrou aqui! atribuição"<<std::endl;
+		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
 }
 

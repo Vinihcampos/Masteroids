@@ -21,11 +21,11 @@ class Asteroid : public Enemy {
 		Asteroid & operator=(const Asteroid &) = delete;
 
 		Asteroid(MathVector & position, Universe & _universe, int _type);
-		Asteroid(MathVector & position, Universe & _universe, int _type, float _velX, float _velY, int _life);
+		Asteroid(int h, int v, Universe & _universe, int _type, float _velX, float _velY, int _life);
 
 		void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
-		void onCollide(const PhysicalEntity &);
+		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
 

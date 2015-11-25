@@ -19,7 +19,9 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	position.vertical = 400;
 	position.horizontal = 300;
 
-	lifePoints = 100;
+	currentLifePoints = 100;
+	maxLifePoints = 100;
+	score = 0;
 	
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	
@@ -120,14 +122,14 @@ void Player::decreaseShotLevel() {
 
 }
 
-void Player::onCollide(const PhysicalEntity & other) {
+void Player::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
 		
 	} else{
 		decreaseShotLevel();
-		lifePoints -= 30;
+		currentLifePoints -= 30;
 	} 
-	if(lifePoints <= 0)
+	if(currentLifePoints <= 0)
 		alive = false;
 }
 
@@ -169,4 +171,11 @@ void Player::shot () {
 		break;
 		default: return;
 	}
+}
+
+int Player::getScore() const{
+	return score;
+}
+void Player::increaseScore(int points){
+	score += points;
 }
