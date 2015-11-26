@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <iostream>
 
-Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : Enemy(_universe) {
+Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVector _velocity, int _lifePoints) : Enemy(_universe) {
 	alive = true;
 	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
 	// Setting movement direction
@@ -19,8 +19,9 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 	// Setting position
 	position = _position;
 	// Setting velocity;
-	velocity.horizontal = 1;
-	velocity.vertical = 1;
+	velocity = _velocity;
+	//velocity.horizontal = _velocity.horizontal;
+	//velocity.vertical = _velocity.vertical;
 	// Setting angle
 	angleVelocity = 1;
 	// Setting the type of asteroid
@@ -28,52 +29,26 @@ Asteroid::Asteroid(MathVector & _position, Universe & _universe, int _type) : En
 	radius = 200;
 	angle.horizontal = 1;
 	angle.vertical = 1;
+	currentLifePoints = maxLifePoints = (int) type;
 	switch(type){
 		case Type::CLASSIC:
-			currentLifePoints = 4;
-			maxLifePoints = 4;
+			currentLifePoints = maxLifePoints = 4;
 			break;
+		case Type::SMALL_CLASSIC:
+			currentLifePoints = maxLifePoints = 2;
 		case Type::EXPLOSIVE:
-			currentLifePoints = 6;
-			maxLifePoints = 6;
+			currentLifePoints = maxLifePoints = 6;
 			break;
 		case Type::FOLLOWER:
-			currentLifePoints = 3;
-			maxLifePoints = 3;
+			currentLifePoints = maxLifePoints = 3;
 			break;
 		case Type::INDESTRUCTIBLE:
-			currentLifePoints = 500;
-			maxLifePoints = 500;
+			currentLifePoints = 500; maxLifePoints = 500;
 			break;
 		default:
-			currentLifePoints = 1;
-			maxLifePoints = 1;
+			currentLifePoints = maxLifePoints = 1;
 	}
-}
-
-Asteroid::Asteroid(int h, int v, Universe & _universe, int _type, float _velX, float _velY, int _LifePoints) : Enemy(_universe) {
-	alive = true;
-	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
-	// Setting movement direction
-	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-	sprite.setRotation(0.0);
-	// Setting position
-	position.horizontal = h;
-	position.vertical = v;
-	// Setting velocity;
-	velocity.horizontal = _velX;
-	velocity.vertical = _velY;
-	// Setting angle
-	angleVelocity = 1;
-	// Setting the type of asteroid
-	type = _type;
-	currentLifePoints = _LifePoints;	
-	maxLifePoints = 4;
-	radius = 200;
-	angle.horizontal = 1;
-	angle.vertical = 1;
-
-	std::cout<<"Chegou no final"<<std::endl;
+	std::cout << "criou os bichos!" << std::endl;
 }
 
 void Asteroid::update(sf::Time deltaTime) {
@@ -91,9 +66,10 @@ void Asteroid::update(sf::Time deltaTime) {
 	
 	//Lifebar update
 	lifeBar.setPosition(position.horizontal, position.vertical + 30);	
-	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/3, 3)); // curLife * BAR_SIZE / MAX_LIFE
+	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/maxLifePoints, 3)); // curLife * BAR_SIZE / MAX_LIFE
 
 	if (currentLifePoints <= 0) alive = false;
+	std::cout << "atualizou os bichos!" << std::endl;
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
@@ -116,23 +92,20 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 
 	switch(type){
 		case Type::CLASSIC:
-			if(currentLifePoints > 1 && bullet){
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position.horizontal, position.vertical, universe, type, velocity.horizontal, velocity.vertical * (-1), currentLifePoints - 1));
-				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position.horizontal, position.vertical, universe, type, velocity.horizontal * (-1), velocity.vertical, currentLifePoints - 1));
-				alive = false;
-				currentLifePoints = 0;
-			}			
+			universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal, velocity.vertical * (-1)}, currentLifePoints - 1));
+			universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal * (-1), velocity.vertical}, currentLifePoints - 1));
+			alive = false;
+			currentLifePoints = 0;
 		break;
 		case Type::EXPLOSIVE:
-			if(currentLifePoints <= 0){
+			if(currentLifePoints <= 0) {
 				exploded = true;
 			}
 		break;
+		case Type::SMALL_CLASSIC:
 		case Type::FOLLOWER:
 			if(currentLifePoints <= 0){
 				alive = false;
-				std::cout<<"entrou aqui! pre-atribuição"<<std::endl;
-				std::cout<<"Bullet: " <<bullet<<std::endl;
 			}
 		break;
 		case Type::INDESTRUCTIBLE:
@@ -142,7 +115,6 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 	}
 
 	if(bullet && currentLifePoints <= 0){
-		std::cout<<"entrou aqui! atribuição"<<std::endl;
 		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
 }
