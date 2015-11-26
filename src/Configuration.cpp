@@ -19,6 +19,9 @@ void Configuration::initTextures() {
 	textures.load(Textures::PowerfullShot, "media/Bullets/bullet.png");
 	textures.load(Textures::LaserShot, "media/Bullets/bullet.png");
 	textures.load(Textures::ClassicAsteroid, "media/Asteroids/classicAsteroid.png");
+	textures.load(Textures::ExplosiveAsteroid, "media/Asteroids/explosiveAsteroid.png");
+	textures.load(Textures::FollowerAsteroid, "media/Asteroids/followerAsteroid.png");
+	textures.load(Textures::IndestructibleAsteroid, "media/Asteroids/indestructibleAsteroid.png");
 	textures.load(Textures::Collectables, "media/Items/collectables.png");
 }
 

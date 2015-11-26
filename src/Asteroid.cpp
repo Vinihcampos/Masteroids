@@ -12,10 +12,7 @@
 
 Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVector _velocity, int _lifePoints) : Enemy(_universe) {
 	alive = true;
-	sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
-	// Setting movement direction
-	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-	sprite.setRotation(0.0);
+	isFollowing = false;	
 	// Setting position
 	position = _position;
 	// Setting velocity;
@@ -29,26 +26,49 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 	radius = 200;
 	angle.horizontal = 1;
 	angle.vertical = 1;
-	currentLifePoints = maxLifePoints = (int) type;
 	switch(type){
 		case Type::CLASSIC:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 4;
 			break;
 		case Type::SMALL_CLASSIC:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 2;
+			break;
 		case Type::EXPLOSIVE:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ExplosiveAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 6;
 			break;
 		case Type::FOLLOWER:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::FollowerAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 3;
 			break;
 		case Type::INDESTRUCTIBLE:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::IndestructibleAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = 500; maxLifePoints = 500;
 			break;
 		default:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
+			// Setting movement direction
+			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 1;
 	}
-	std::cout << "criou os bichos!" << std::endl;
 }
 
 void Asteroid::update(sf::Time deltaTime) {
@@ -69,12 +89,10 @@ void Asteroid::update(sf::Time deltaTime) {
 	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/maxLifePoints, 3)); // curLife * BAR_SIZE / MAX_LIFE
 
 	if (currentLifePoints <= 0) alive = false;
-	std::cout << "atualizou os bichos!" << std::endl;
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Enemy*>(&other) == nullptr
-	    && dynamic_cast<const Collectable*>(&other) == nullptr) {
+	if (dynamic_cast<const Enemy*>(&other) == nullptr && dynamic_cast<const Collectable*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
@@ -92,17 +110,19 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 
 	switch(type){
 		case Type::CLASSIC:
-			universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal, velocity.vertical * (-1)}, currentLifePoints - 1));
-			universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal * (-1), velocity.vertical}, currentLifePoints - 1));
+		case Type::SMALL_CLASSIC:
+			if(bullet && currentLifePoints > 0){
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal, velocity.vertical * (-1)}));
+				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal * (-1), velocity.vertical}));
+				currentLifePoints = 0;
+			}
 			alive = false;
-			currentLifePoints = 0;
 		break;
 		case Type::EXPLOSIVE:
 			if(currentLifePoints <= 0) {
 				exploded = true;
 			}
 		break;
-		case Type::SMALL_CLASSIC:
 		case Type::FOLLOWER:
 			if(currentLifePoints <= 0){
 				alive = false;

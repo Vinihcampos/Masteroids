@@ -8,8 +8,8 @@ PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Draw
 };
 
 MathVector PhysicalEntity::getPosition() const {
-	std::cout<<"Problem here!!! getPosition"<<std::endl;
-	std::cout<<"wwProblem here!!! getPosition"<<std::endl;
+	//std::cout<<"Problem here!!! getPosition"<<std::endl;
+	//std::cout<<"wwProblem here!!! getPosition"<<std::endl;
 	//std::cout<<"Horizontal: "<<position.horizontal<<std::endl;
 	//std::cout<<"Vertical: "<<position.vertical<<std::endl;
 	return position;

@@ -17,7 +17,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	radius = 200;
 	
 	position.vertical = 400;
-	position.horizontal = 300;
+	position.horizontal = 600;
 
 	currentLifePoints = 100;
 	maxLifePoints = 100;
