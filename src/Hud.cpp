@@ -8,11 +8,11 @@ Hud::Hud(){}
 Hud::Hud(Player * _player){
 	player = _player;
 
-	maxLife.setSize(sf::Vector2f(player->getMaxLifePoints()* 5, 20));
+	maxLife.setSize(sf::Vector2f(player->getMaxLifePoints(), 10));
 	maxLife.setPosition(10,10);
 	maxLife.setFillColor(sf::Color::Red);
 
-	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints() * 5, 20));
+	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
 	currentLife.setPosition(10,10);
 	currentLife.setFillColor(sf::Color::Green);
 
@@ -33,7 +33,7 @@ void Hud::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 }
 
 void Hud::update(){ 
-	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints()* 5, 20));
+	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
 	score.setString(std::string("Score: " + std::to_string(player->getScore())));
 }
 

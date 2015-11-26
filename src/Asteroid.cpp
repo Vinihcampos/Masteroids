@@ -29,46 +29,32 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 	switch(type){
 		case Type::CLASSIC:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 4;
 			break;
 		case Type::SMALL_CLASSIC:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 2;
 			break;
 		case Type::EXPLOSIVE:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ExplosiveAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 6;
 			break;
 		case Type::FOLLOWER:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::FollowerAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 3;
 			break;
 		case Type::INDESTRUCTIBLE:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::IndestructibleAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
-			currentLifePoints = 500; maxLifePoints = 500;
+			currentLifePoints = maxLifePoints = 1000000;
 			break;
 		default:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
-			// Setting movement direction
-			sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-			sprite.setRotation(0.0);
 			currentLifePoints = maxLifePoints = 1;
 	}
+
+	// Setting movement direction
+	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
+	sprite.setRotation(0.0);
 }
 
 void Asteroid::update(sf::Time deltaTime) {
@@ -105,7 +91,8 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 		currentLifePoints -= other.getDamagePoints();
 		bullet = true;
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
-		currentLifePoints = 0;
+		currentLifePoints *= 9;
+		currentLifePoints /= 10;
 	}
 
 	switch(type){

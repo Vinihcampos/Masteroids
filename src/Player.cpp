@@ -35,12 +35,12 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	
 	// Turn left	
 	bind(Configuration::PlayerInputs::TurnLeft, [this](const sf::Event &) {
-		angleVelocity = -1;
+		angleVelocity = -2;
 	});
 	
 	// Turn right
 	bind(Configuration::PlayerInputs::TurnRight, [this](const sf::Event &) {
-		angleVelocity = 1;
+		angleVelocity = 2;
 	});
 	
 	// Shoot
