@@ -31,7 +31,8 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 			Player,
 			Asteroid,
 			Bullet,
-			Collectable
+			Collectable,
+			Alien
 		};
 
 		PhysicalEntity(Universe &);
