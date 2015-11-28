@@ -39,7 +39,6 @@ bool PhysicalEntity::isAlive() const {
 	return alive;
 }
 
-
 void PhysicalEntity::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 	target.draw(sprite, states);
 }
