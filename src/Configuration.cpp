@@ -23,6 +23,8 @@ void Configuration::initTextures() {
 	textures.load(Textures::FollowerAsteroid, "media/Asteroids/followerAsteroid.png");
 	textures.load(Textures::IndestructibleAsteroid, "media/Asteroids/indestructibleAsteroid.png");
 	textures.load(Textures::Collectables, "media/Items/collectables.png");
+	textures.load(Textures::ClassicAlien, "media/Aliens/classicAlien.png");
+	textures.load(Textures::ShooterAlien, "media/Aliens/shooterAlien.png");
 }
 
 void Configuration::initPlayerInputs() {

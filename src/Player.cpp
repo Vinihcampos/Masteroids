@@ -134,7 +134,7 @@ void Player::onCollide(PhysicalEntity & other) {
 }
 
 bool Player::isClosing(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Asteroid*>(&other) != nullptr) {
+	if (dynamic_cast<const Enemy*>(&other) != nullptr ) {
 		float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
 						  	   std::pow(position.vertical - other.getPosition().vertical, 2));
 		if(dist <= radius)

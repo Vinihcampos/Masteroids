@@ -13,6 +13,9 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 
+	newPos = new MathVector {0,300};
+	universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
+
 	hud = new Hud(player);
 }
 

@@ -32,7 +32,9 @@ class Configuration {
 			ByPass,
 			SimpleShot,
 			PowerfullShot,
-			LaserShot
+			LaserShot,
+			ShooterAlien,
+			ClassicAlien
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

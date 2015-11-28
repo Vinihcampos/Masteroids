@@ -35,6 +35,10 @@ std::list<Asteroid*> & Universe::getAsteroids() {
 	return asteroidList;
 }
 
+std::list<Alien*> & Universe::getAliens() {
+	return alienList;
+}
+
 void Universe::proccessEvents() {
 	std::pair<std::multimap<PhysicalEntity::EntityType, PhysicalEntity*>::iterator, std::multimap<PhysicalEntity::EntityType, PhysicalEntity*>::iterator> range; 
 	range = entitiesList.equal_range(PhysicalEntity::EntityType::Player);
