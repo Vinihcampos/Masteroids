@@ -34,7 +34,8 @@ class Configuration {
 			PowerfullShot,
 			LaserShot,
 			ShooterAlien,
-			ClassicAlien
+			ClassicAlien,
+			SimpleAlienShot
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

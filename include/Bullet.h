@@ -4,6 +4,7 @@
 #include "PhysicalEntity.h"
 
 class Player;
+class Alien;
 class Universe;
 
 class Bullet : public PhysicalEntity {
@@ -12,6 +13,7 @@ class Bullet : public PhysicalEntity {
 		Bullet & operator=(const Bullet &) = delete;
 
 		Bullet(Player &, Universe &);
+		Bullet(Alien &, Universe &);
 		virtual void update(sf::Time deltaTime) = 0;	
 
 	protected:

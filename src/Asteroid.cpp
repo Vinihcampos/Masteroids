@@ -87,9 +87,12 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 
 void Asteroid::onCollide(PhysicalEntity & other) {
 	bool bullet = false;
-	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
+	if (dynamic_cast<const Bullet*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
-		bullet = true;
+		if(dynamic_cast<const BulletShip*>(&other) != nullptr){
+			std::cout<<"Chegou here!!!\n";
+			bullet = true;
+		}
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
 		currentLifePoints *= 9;
 		currentLifePoints /= 10;
@@ -121,7 +124,7 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 			alive = false;
 	}
 
-	if(bullet && currentLifePoints <= 0){
+	if(bullet && currentLifePoints <= 0){	
 		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
 }

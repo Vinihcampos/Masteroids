@@ -1,6 +1,7 @@
 #include "Alien.h"
 #include "MathVector.h"
 #include "Universe.h"
+#include "BulletAlien.h"
 #include "BulletShip.h"
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
@@ -23,7 +24,7 @@ Alien::Alien(MathVector _position, Universe & _universe, int _type, MathVector _
 	angleVelocity = 0;
 	// Setting the type of Alien
 	type = _type;
-	radius = 200;
+	radius = Configuration::WINDOW_WIDTH;
 	angle.horizontal = 1;
 	angle.vertical = 1;
 	switch(type){
@@ -43,14 +44,22 @@ Alien::Alien(MathVector _position, Universe & _universe, int _type, MathVector _
 	// Setting movement direction
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	sprite.setRotation(0.0);
+	timeLastShot = sf::Time::Zero;
 }
 
 void Alien::update(sf::Time deltaTime) {
 	if (isFollowing) {
 		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
 							   toFollow->getPosition().horizontal - position.horizontal);
-		sprite.setRotation((180 * _angle / M_PI) - 90);
+		sprite.setRotation(180 * _angle / M_PI);
 	}
+
+	if(timeLastShot > sf::seconds(1)){
+		timeLastShot = sf::Time::Zero;
+		shot();
+	}
+
+	timeLastShot += deltaTime;
 	// Updating position
 	position.horizontal += velocity.horizontal; //* angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
 	position.vertical += velocity.vertical; //* angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
@@ -91,11 +100,9 @@ bool Alien::isClosing(const PhysicalEntity & other) const {
 						   std::pow(position.vertical - other.getPosition().vertical, 2));	
 	
 	if(dist <= radius){
-		std::cout<<dist<<std::endl;
 		return true;	
 	}
 	else{
-		std::cout<<dist<<std::endl;
 		return false;
 	}
 }
@@ -104,5 +111,16 @@ void Alien::onClose(PhysicalEntity & other) {
 	if (dynamic_cast<const Player*>(&other) != nullptr) {
 		toFollow = dynamic_cast<const Player*>(&other);
 		isFollowing = true;
+	}
+}
+
+void Alien::shot () {
+	switch(type) {
+		case Type::SHOOTER:
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::LEFT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::RIGHT, universe});	
+			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::FRONT, universe});	
+		break;
+		default: return;
 	}
 }

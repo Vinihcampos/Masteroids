@@ -26,12 +26,15 @@ class Alien : public Enemy {
 		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
+		void shot();
 
 
 	private:
 		bool isFollowing;
 		const Player * toFollow;
 		MathVector angle;
+		int type;
+		sf::Time timeLastShot;
 };
 
 #endif

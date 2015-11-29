@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Asteroid.h"
 #include "BulletShip.h"
+#include "BulletAlien.h"
 #include "Universe.h"
 #include "Collectable.h"
 #include "CollisionTools.h"
@@ -11,7 +12,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
-	shotLevel = 0;
+	shotLevel = Player::ShotLevel::POWERFULL;
 	alive = true;
 	isInHyperspace = false;
 	radius = 200;
@@ -125,7 +126,10 @@ void Player::decreaseShotLevel() {
 void Player::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
 		
-	} else{
+	}else if(dynamic_cast<const BulletAlien*>(&other) != nullptr){
+		decreaseShotLevel();
+		currentLifePoints -= dynamic_cast<const BulletAlien*>(&other)->getType();
+	}else{
 		decreaseShotLevel();
 		currentLifePoints -= 30;
 	} 
@@ -162,8 +166,8 @@ void Player::shot () {
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		case ShotLevel::POWERFULL:
-			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::LEFT, universe});	
-			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::RIGHT, universe});	
+			//universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::LEFT, universe});	
+			//universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::RIGHT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		case ShotLevel::LASER:
