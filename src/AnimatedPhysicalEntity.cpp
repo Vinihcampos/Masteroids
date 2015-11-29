@@ -8,7 +8,20 @@ AnimatedPhysicalEntity::AnimatedPhysicalEntity(sf::Texture & _texture, Universe 
 	sprite.setTexture(_texture);
 }
 
-
+void AnimatedPhysicalEntity::setAnimation(sf::Texture _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration) {
+	framesRects.clear();
+	sprite.setTexture(_texture);
+	frameWidth = _frameWidth;
+	frameHeigth = _frameHeigth;
+	frameDuration = _frameDuration;
+	int countX = _texture.getSize().x / _frameWidth;	
+	int countY = _texture.getSize().y / _frameHeigth;	
+	for (int i = 0; i < countX; ++i) {
+		for (int j = 0; j < countY; ++j) {
+			framesRects.push_back(sf::IntRect(i * _frameWidth, j * _frameHeigth, _frameWidth, _frameHeigth));	
+		}
+	}
+}
 
 void AnimatedPhysicalEntity::play() {
 	on = true;
@@ -39,11 +52,25 @@ bool AnimatedPhysicalEntity::isLooping() const {
 	return looping;
 }
 
+int AnimatedPhysicalEntity::countFrames() const {
+	return framesRects.size();
+}
+
 void AnimatedPhysicalEntity::setFrameDuration(sf::Time _frameDuration) {
 	frameDuration = _frameDuration;
 }
 
+void AnimatedPhysicalEntity::update(sf::Time deltaTime) {	
+	if (on and not paused) {
+		currentTime += deltaTime;
+		if (currentTime >= frameDuration) {
+			currentFrame = (currentFrame + 1) % countFrames(); 
+			sprite.setTextureRect(framesRects[currentFrame]);
+			currentTime = sf::Time::Zero;
+		}
+	}
+}
+
 void AnimatedPhysicalEntity::draw(sf::RenderTarget & target, sf::RenderStates states) const {
-	sprite.setTextureRect(getRectFromFrame(currentFrame));
 	target.draw(sprite, states);
 }
