@@ -5,6 +5,7 @@
 PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Drawable(), universe (_universe) { 
 	alive = true;
 	exploded = false;
+	angleAdjustment = 0;
 };
 
 MathVector PhysicalEntity::getPosition() const {
@@ -20,11 +21,11 @@ MathVector PhysicalEntity::getVelocity() const {
 }
 
 double PhysicalEntity::getRotationRad() const {
-	return sprite.getRotation() / 180 * M_PI;
+	return (sprite.getRotation() - angleAdjustment) / 180 * M_PI;
 }
 
 double PhysicalEntity::getRotationDegree() const {
-	return sprite.getRotation();
+	return sprite.getRotation() - angleAdjustment;
 }
 
 double PhysicalEntity::getWidth() const {

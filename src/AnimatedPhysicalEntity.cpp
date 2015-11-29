@@ -5,15 +5,17 @@ AnimatedPhysicalEntity::AnimatedPhysicalEntity(sf::Texture & _texture, Universe 
 	paused = false;
 	looping = true;	
 	currentFrame = 0;
-	sprite.setTexture(_texture);
+	currentTime = sf::Time::Zero;
+	setAnimation(_texture, _frameWidth, _frameHeigth, _frameDuration);
 }
 
-void AnimatedPhysicalEntity::setAnimation(sf::Texture _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration) {
+void AnimatedPhysicalEntity::setAnimation(sf::Texture & _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration) {
 	framesRects.clear();
 	sprite.setTexture(_texture);
 	frameWidth = _frameWidth;
 	frameHeigth = _frameHeigth;
 	frameDuration = _frameDuration;
+	currentFrame = 0;
 	int countX = _texture.getSize().x / _frameWidth;	
 	int countY = _texture.getSize().y / _frameHeigth;	
 	for (int i = 0; i < countX; ++i) {
@@ -21,6 +23,7 @@ void AnimatedPhysicalEntity::setAnimation(sf::Texture _texture, double _frameWid
 			framesRects.push_back(sf::IntRect(i * _frameWidth, j * _frameHeigth, _frameWidth, _frameHeigth));	
 		}
 	}
+	sprite.setTextureRect(framesRects[currentFrame]);
 }
 
 void AnimatedPhysicalEntity::play() {
@@ -66,6 +69,7 @@ void AnimatedPhysicalEntity::update(sf::Time deltaTime) {
 		if (currentTime >= frameDuration) {
 			currentFrame = (currentFrame + 1) % countFrames(); 
 			sprite.setTextureRect(framesRects[currentFrame]);
+			std::cout << currentFrame << std::endl;
 			currentTime = sf::Time::Zero;
 		}
 	}

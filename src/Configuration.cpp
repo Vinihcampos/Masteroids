@@ -14,7 +14,7 @@ void Configuration::initialize() {
 }
 
 void Configuration::initTextures() {
-	textures.load(Textures::Player, "media/Player/player1.png");
+	textures.load(Textures::Player, "media/Player/ship.png");
 	textures.load(Textures::SimpleShot, "media/Bullets/simple.png");
 	textures.load(Textures::PowerfullShot, "media/Bullets/powerfull.png");
 	textures.load(Textures::LaserShot, "media/Bullets/laser.png");
@@ -26,6 +26,9 @@ void Configuration::initTextures() {
 	textures.load(Textures::Collectables, "media/Items/collectables.png");
 	textures.load(Textures::ClassicAlien, "media/Aliens/classicAlien.png");
 	textures.load(Textures::ShooterAlien, "media/Aliens/shooterAlien.png");
+	textures.load(Textures::ExplosionA, "media/Explosion/explosionA.png");
+	textures.load(Textures::ExplosionB, "media/Explosion/explosionB.png");
+	textures.load(Textures::ExplosionC, "media/Explosion/explosionC.png");
 }
 
 void Configuration::initPlayerInputs() {

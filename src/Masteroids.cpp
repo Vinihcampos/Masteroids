@@ -3,18 +3,18 @@
 
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
 	//universe.getPlayers().push_back(new Player(universe));
-	Player * player = new Player(universe);
+	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.1));
 	universe.addEntity(PhysicalEntity::EntityType::Player, player);
-	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::EXPLOSIVE));
+	//MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::EXPLOSIVE));
 	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	newPos = new MathVector {200,200};
-	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
+	//newPos = new MathVector {200,200};
+	//universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 
-	newPos = new MathVector {0,300};
-	universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
+	//newPos = new MathVector {0,300};
+	//universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
 
 	hud = new Hud(player);
 }

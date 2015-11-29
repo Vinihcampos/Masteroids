@@ -59,6 +59,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		int getCurrentLifePoints() const;
 
 	protected:
+		int angleAdjustment;
 		bool alive;
 	private:
 		friend class Universe;

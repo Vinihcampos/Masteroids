@@ -8,7 +8,7 @@
 #include <cmath>
 #include <iostream>
 
-Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(Configuration::playerInputs) {
+Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth, double _frameHeigth, sf::Time _frameDuration) : AnimatedPhysicalEntity(_texture, _universe, _frameWidth, _frameHeigth, _frameDuration), ActionTarget(Configuration::playerInputs) {
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
@@ -16,6 +16,7 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	alive = true;
 	isInHyperspace = false;
 	radius = 200;
+	angleAdjustment = -90;
 	
 	position.vertical = 400;
 	position.horizontal = 600;
@@ -24,11 +25,11 @@ Player::Player(Universe & _universe) : PhysicalEntity(_universe), ActionTarget(C
 	maxLifePoints = 100;
 	score = 0;
 	
-	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
-	
-	sprite.setRotation(0);
+	//sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
+	sprite.setRotation(angleAdjustment);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	
+	play();	
 	// Thrust
 	bind(Configuration::PlayerInputs::Thrust, [this](const sf::Event &) {
 		thrusting = true;	
@@ -65,12 +66,14 @@ void Player::proccessEvents() {
 }
 
 void Player::update(sf::Time deltaTime) {
+	AnimatedPhysicalEntity::update(deltaTime);
+
 	float seconds = deltaTime.asSeconds();
 	
 	timeLastShot += deltaTime;	
 
 	if (thrusting) {
-		angle = sprite.getRotation() / 180 * M_PI; 
+		angle = getRotationRad(); 
 		acceleration.horizontal = std::cos(angle) * .1;
 		acceleration.vertical = std::sin(angle) *.1;
 	} else {

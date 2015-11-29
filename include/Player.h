@@ -2,7 +2,7 @@
 #define _PLAYER_
 
 #include "ActionTarget.h"
-#include "PhysicalEntity.h"
+#include "AnimatedPhysicalEntity.h"
 
 /*! \brief Represents the player of the game.
  *  \details As it reacts to actions, extends from
@@ -16,8 +16,9 @@ class ActionTarget;
 
 class Universe;
 class BulletShip;
+class AnimatedPhysicalEntity;
 
-class Player : public PhysicalEntity, public ActionTarget<int> {
+class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 	public:
 		enum ShotLevel {
 			SIMPLE = 0,
@@ -30,7 +31,7 @@ class Player : public PhysicalEntity, public ActionTarget<int> {
 		Player(const Player &) = delete;
 		Player & operator=(const Player &) = delete;
 
-		Player(Universe &);
+		Player(sf::Texture &, Universe &, double, double, sf::Time);
 
 		virtual void update(sf::Time deltaTime);
 		virtual void proccessEvents();
