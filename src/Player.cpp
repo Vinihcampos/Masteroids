@@ -190,3 +190,43 @@ int Player::getScore() const{
 void Player::increaseScore(int points){
 	score += points;
 }
+
+int Player::getBonusDamage() const {
+	return bonusDamage;
+}
+
+void Player::setBonusDamage(int _bonusDamage) {
+	bonusDamage = _bonusDamage;
+}
+
+int Player::getBonusPrecision() const {
+	return bonusPrecision;
+}
+
+void Player::setBonusPrecision(int _bonusPrecision) {
+	bonusPrecision = _bonusPrecision;
+}
+
+bool Player::isIndestructible() const {
+	return indestructible;
+}
+
+void Player::setIndestructible(bool _indestructible) {
+	indestructible = _indestructible;
+}
+
+bool Player::isSlowingAsteroids() const {
+	return slowingAsteroids;
+}
+
+void Player::setSlowingAsteroids(bool _slowingAsteroids) {
+	slowingAsteroids = _slowingAsteroids;
+}
+
+bool Player::isByPassing() const {
+	return byPassing;
+}
+
+void Player::setByPassing(bool _byPassing) {
+	byPassing = _byPassing;
+}

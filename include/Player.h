@@ -43,7 +43,18 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		void shot();
 		int getScore() const;
 		void increaseScore(int points);
-		
+
+		int getBonusDamage() const;
+		void setBonusDamage(int);
+		int getBonusPrecision() const;
+		void setBonusPrecision(int);
+		bool isIndestructible() const;
+		void setIndestructible(bool);
+		bool isSlowingAsteroids() const;
+		void setSlowingAsteroids(bool);
+		bool isByPassing() const;		
+		void setByPassing(bool);
+
 	private:
 		bool thrusting;	
 		bool hasShot;
@@ -53,6 +64,11 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		sf::Time timeLastShot;
 		int shotLevel;
 		int score;
+		int bonusDamage;
+		int bonusPrecision;
+		bool indestructible;
+		bool slowingAsteroids;
+		bool byPassing;
 
 }; 
 

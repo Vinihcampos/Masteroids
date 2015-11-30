@@ -28,8 +28,21 @@ bool Collectable::isColliding(const PhysicalEntity & other) const {
 }
 
 void Collectable::onCollide(PhysicalEntity & other) {
-	if (dynamic_cast<const Player*>(&other) != nullptr) 
+	if (dynamic_cast<const Player*>(&other) != nullptr) { 
+		switch(type) {
+			case CollectableType::DamageUp:
+			break;
+			case CollectableType::PrecisionUp:
+			break;
+			case CollectableType::Indestructible:
+			break;
+			case CollectableType::SlowAsteroid:
+			break;
+			case CollectableType::ByPass:
+			break;
+		}
 		alive = false;
+	}
 }
 
 bool Collectable::isClosing(const PhysicalEntity & other) const { 

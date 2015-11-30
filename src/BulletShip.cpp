@@ -7,7 +7,7 @@
 
 BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::SpawnPoint _spawnPoint, Universe & _universe) 
 					   : Bullet { player, _universe }, type {_type}, spawnPoint {_spawnPoint} { 
-	damagePoints = (int) type;
+	damagePoints = (int) type + ((int) type * player.getBonusDamage() / 100);
 	_player = &player;
 	switch (spawnPoint) {
 		case BulletShip::SpawnPoint::FRONT:
