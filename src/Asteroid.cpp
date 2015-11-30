@@ -2,6 +2,7 @@
 #include "MathVector.h"
 #include "Universe.h"
 #include "BulletShip.h"
+#include "BulletAlien.h"
 #include "PhysicalEntity.h"
 #include "CollisionTools.h"
 #include "Collectable.h"
@@ -33,6 +34,7 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 			break;
 		case Type::SMALL_CLASSIC:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
+			sprite.setScale(.8,.8);
 			currentLifePoints = maxLifePoints = 2;
 			break;
 		case Type::EXPLOSIVE:
@@ -78,7 +80,9 @@ void Asteroid::update(sf::Time deltaTime) {
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Enemy*>(&other) == nullptr && dynamic_cast<const Collectable*>(&other) == nullptr) {
+	if (dynamic_cast<const Enemy*>(&other) == nullptr && 
+		dynamic_cast<const Collectable*>(&other) == nullptr && 
+		dynamic_cast<const AnimatedPhysicalEntity*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
@@ -87,12 +91,11 @@ bool Asteroid::isColliding(const PhysicalEntity & other) const {
 
 void Asteroid::onCollide(PhysicalEntity & other) {
 	bool bullet = false;
-	if (dynamic_cast<const Bullet*>(&other) != nullptr) {
+	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
-		if(dynamic_cast<const BulletShip*>(&other) != nullptr){
-			std::cout<<"Chegou here!!!\n";
-			bullet = true;
-		}
+		bullet = true;
+	} else if(dynamic_cast<const BulletAlien*>(&other) != nullptr) {
+		currentLifePoints -= other.getDamagePoints();
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
 		currentLifePoints *= 9;
 		currentLifePoints /= 10;
@@ -100,12 +103,15 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 
 	switch(type){
 		case Type::CLASSIC:
-		case Type::SMALL_CLASSIC:
 			if(bullet && currentLifePoints > 0){
 				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal, velocity.vertical * (-1)}));
 				universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(position, universe, Asteroid::Type::SMALL_CLASSIC, {velocity.horizontal * (-1), velocity.vertical}));
-				currentLifePoints = 0;
+				currentLifePoints = 0;						
 			}
+			alive = false;
+			universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
+		break;
+		case Type::SMALL_CLASSIC:
 			alive = false;
 			universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
 		break;

@@ -12,7 +12,7 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	angleVelocity = 0.0;
 	thrusting = false;
 	hasShot = false;
-	shotLevel = Player::ShotLevel::POWERFULL;
+	shotLevel = Player::ShotLevel::SIMPLE;
 	alive = true;
 	isInHyperspace = false;
 	radius = 200;
@@ -28,7 +28,8 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	//sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	sprite.setRotation(angleAdjustment);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-	
+	sprite.setScale(.8,.8);
+
 	setLooping(true);
 	play();	
 	// Thrust
@@ -112,7 +113,9 @@ void Player::update(sf::Time deltaTime) {
 }
 
 bool Player::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Player*>(&other) == nullptr && dynamic_cast<const BulletShip*>(&other) == nullptr) {
+	if (dynamic_cast<const Player*>(&other) == nullptr && 
+		dynamic_cast<const BulletShip*>(&other) == nullptr &&
+		dynamic_cast<const AnimatedPhysicalEntity*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other)) {
 			std::cout << "ola" << std::endl;
 			return true;
