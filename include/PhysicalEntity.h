@@ -30,6 +30,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		enum class EntityType : int {
 			Player,
 			Asteroid,
+			Explosion,
 			Bullet,
 			Collectable,
 			Alien

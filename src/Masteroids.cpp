@@ -3,10 +3,10 @@
 
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
 	//universe.getPlayers().push_back(new Player(universe));
-	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.1));
+	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.08));
 	universe.addEntity(PhysicalEntity::EntityType::Player, player);
-	//MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::EXPLOSIVE));
+	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
+	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::CLASSIC));
 	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
 	//newPos = new MathVector {200,200};

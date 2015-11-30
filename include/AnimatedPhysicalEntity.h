@@ -7,7 +7,7 @@ class AnimatedPhysicalEntity : public PhysicalEntity {
 	public:
 		AnimatedPhysicalEntity(const AnimatedPhysicalEntity &) = delete;
 		AnimatedPhysicalEntity & operator=(const AnimatedPhysicalEntity &) = delete;
-		AnimatedPhysicalEntity(sf::Texture & _texture, Universe &, double, double, sf::Time _frameDuration);
+		AnimatedPhysicalEntity(sf::Texture & _texture, Universe &, double, double, sf::Time _frameDuration, MathVector _position = {0.0, 0.0});
 		void play();
 		void stop();
 		void pause();
@@ -18,7 +18,12 @@ class AnimatedPhysicalEntity : public PhysicalEntity {
 		void setAnimation(sf::Texture & _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration);
 		void setFrameDuration(sf::Time frameDuration);
 		int countFrames() const;
-		virtual void update(sf::Time deltaTime);
+		void update(sf::Time deltaTime);
+		bool isColliding(const PhysicalEntity &) const;
+		void onCollide(PhysicalEntity &);
+		bool isClosing(const PhysicalEntity &) const;
+		void onClose(PhysicalEntity &);
+
 	private:
 		std::vector<sf::IntRect> framesRects;
 		bool on;

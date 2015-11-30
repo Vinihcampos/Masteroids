@@ -29,6 +29,7 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	sprite.setRotation(angleAdjustment);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
 	
+	setLooping(true);
 	play();	
 	// Thrust
 	bind(Configuration::PlayerInputs::Thrust, [this](const sf::Event &) {

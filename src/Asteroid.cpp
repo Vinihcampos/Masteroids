@@ -107,6 +107,7 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 				currentLifePoints = 0;
 			}
 			alive = false;
+			universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
 		break;
 		case Type::EXPLOSIVE:
 			if(currentLifePoints <= 0) {
