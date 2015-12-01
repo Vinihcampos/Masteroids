@@ -30,6 +30,7 @@ class BulletShip : public Bullet {
 		bool isClosing(const PhysicalEntity &) const{ return false;};
 		void onClose(PhysicalEntity &){return;};
 		void setDamage(int _damage);
+		bool slowAsteroidEffect() const;
 
 		Player * _player;
 	private:

@@ -94,3 +94,7 @@ bool AnimatedPhysicalEntity::isClosing(const PhysicalEntity &) const {
 };
 void AnimatedPhysicalEntity::onClose(PhysicalEntity &) {}
 
+
+void AnimatedPhysicalEntity::setCurrentFrame(int _frame) {
+	currentFrame = _frame;
+}

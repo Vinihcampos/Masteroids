@@ -3,15 +3,10 @@
 #include "CollisionTools.h"
 #include "MathVector.h"
 
-Collectable::Collectable(Collectable::CollectableType _type, MathVector & initialPos, Universe & _universe) : PhysicalEntity(_universe), type {_type} {
+Collectable::Collectable(Collectable::CollectableType _type, MathVector & initialPos, sf::Texture & _texture, Universe & _universe, double _frameW, double _frameH, sf::Time _frameDuration) : AnimatedPhysicalEntity(_texture, _universe, _frameW, _frameH, _frameDuration), type {_type} {
 	position = initialPos;
 	MathVector::Point upperLeft {10,10};
-	double spriteWidth = 20;
-	double spriteHeigth = 20;
-	upperLeft.x = spriteWidth * _type + 10; upperLeft.y = spriteHeigth * _type + 10;
-	sprite.setTexture(Configuration::textures.get(Configuration::Textures::Collectables));	
-	//sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
-	sprite.setTextureRect(sf::IntRect(upperLeft.x, upperLeft.y, spriteWidth, spriteHeigth));
+	setCurrentFrame(_type);	
 }
 
 void Collectable::update(sf::Time deltaTime) {
@@ -29,16 +24,22 @@ bool Collectable::isColliding(const PhysicalEntity & other) const {
 
 void Collectable::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const Player*>(&other) != nullptr) { 
+		Player * p = dynamic_cast<Player*>(&other); 
 		switch(type) {
 			case CollectableType::DamageUp:
+				p->setBonusDamage(10);	
 			break;
 			case CollectableType::PrecisionUp:
+				p->setBonusPrecision(10);
 			break;
 			case CollectableType::Indestructible:
+				p->setIndestructible(true);
 			break;
 			case CollectableType::SlowAsteroid:
+				p->setSlowingAsteroids(true);
 			break;
 			case CollectableType::ByPass:
+				p->setByPassing(true);
 			break;
 		}
 		alive = false;

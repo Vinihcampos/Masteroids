@@ -54,14 +54,16 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		void setSlowingAsteroids(bool);
 		bool isByPassing() const;		
 		void setByPassing(bool);
+		bool isUnderEffect() const;
 
 	private:
+		sf::Time timeLastShot;
+		sf::Time timeCollectableEffect;
 		bool thrusting;	
 		bool hasShot;
 		bool isInHyperspace;
 		float randX;
 		float randY;
-		sf::Time timeLastShot;
 		int shotLevel;
 		int score;
 		int bonusDamage;

@@ -17,6 +17,9 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	isInHyperspace = false;
 	radius = 200;
 	angleAdjustment = -90;
+	indestructible = false;
+	slowingAsteroids = false;
+	byPassing = false;
 	
 	position.vertical = 400;
 	position.horizontal = 600;
@@ -83,6 +86,16 @@ void Player::update(sf::Time deltaTime) {
 		acceleration.vertical = 0;
 	} 
 
+	if (isUnderEffect()) 
+		timeCollectableEffect += deltaTime;
+
+	if (timeCollectableEffect >= sf::seconds(5.0)) {
+		setIndestructible(false);
+		setSlowingAsteroids(false);
+		setByPassing(false);
+		timeCollectableEffect = sf::Time::Zero;
+	}	
+
 	// Angle update
 	sprite.rotate(angleVelocity);
 
@@ -112,6 +125,10 @@ void Player::update(sf::Time deltaTime) {
 
 }
 
+bool Player::isUnderEffect() const {
+	return byPassing || slowingAsteroids || indestructible;
+}
+
 bool Player::isColliding(const PhysicalEntity & other) const {
 	if (dynamic_cast<const Player*>(&other) == nullptr && 
 		dynamic_cast<const BulletShip*>(&other) == nullptr &&
@@ -133,13 +150,25 @@ void Player::decreaseShotLevel() {
 void Player::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const Collectable*>(&other) != nullptr) {
 		
-	}else if(dynamic_cast<const BulletAlien*>(&other) != nullptr){
-		decreaseShotLevel();
-		currentLifePoints -= dynamic_cast<const BulletAlien*>(&other)->getType();
-	}else{
-		decreaseShotLevel();
-		currentLifePoints -= 30;
 	} 
+
+	int damage = 0;
+
+	if(dynamic_cast<const BulletAlien*>(&other) != nullptr){
+		decreaseShotLevel();
+		damage = dynamic_cast<const BulletAlien*>(&other)->getType();
+	} else if(dynamic_cast<const Collectable*>(&other) != nullptr) {
+	
+	} else {			
+		if (!byPassing) {
+			decreaseShotLevel();
+			damage = 30;
+		}
+	} 
+	
+	if (!indestructible)
+		currentLifePoints -= damage;
+	
 	if(currentLifePoints <= 0)
 		alive = false;
 }

@@ -1,11 +1,11 @@
 #ifndef _COLLECT_
 #define _COLLECT_
 
-#include "PhysicalEntity.h"
+#include "AnimatedPhysicalEntity.h"
 
 class Universe;
 
-class Collectable : public PhysicalEntity {
+class Collectable : public AnimatedPhysicalEntity {
 	public:
 		enum CollectableType {
 			DamageUp = 0,			/*!< Increase player's damage */
@@ -17,7 +17,7 @@ class Collectable : public PhysicalEntity {
 
 		Collectable(const Collectable &) = delete;	
 		Collectable & operator=(const Collectable &) = delete;
-		Collectable(CollectableType, MathVector &, Universe &);
+		Collectable(CollectableType, MathVector &, sf::Texture &, Universe &, double, double, sf::Time);
 		
 		void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;

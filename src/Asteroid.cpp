@@ -94,11 +94,17 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
 		bullet = true;
+		if (dynamic_cast<const BulletShip*>(&other)->slowAsteroidEffect()) {
+			velocity.horizontal *= .5;
+			velocity.vertical *= .5;
+		}
 	} else if(dynamic_cast<const BulletAlien*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
-		currentLifePoints *= 9;
-		currentLifePoints /= 10;
+		if (!(dynamic_cast<const Player*>(&other)->isByPassing())) {
+			currentLifePoints *= 9;
+			currentLifePoints /= 10;
+		}
 	}
 
 	switch(type){

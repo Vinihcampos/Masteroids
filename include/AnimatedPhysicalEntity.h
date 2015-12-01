@@ -17,6 +17,7 @@ class AnimatedPhysicalEntity : public PhysicalEntity {
 		bool isLooping() const;
 		void setAnimation(sf::Texture & _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration);
 		void setFrameDuration(sf::Time frameDuration);
+		void setCurrentFrame(int);
 		int countFrames() const;
 		void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;

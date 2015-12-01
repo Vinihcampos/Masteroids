@@ -75,4 +75,6 @@ void BulletShip::onCollide(PhysicalEntity & other) {
 	alive = false;
 }
 
-
+bool BulletShip::slowAsteroidEffect() const {
+	return (_player)->isSlowingAsteroids();
+}
