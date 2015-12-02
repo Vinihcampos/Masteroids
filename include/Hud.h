@@ -10,11 +10,12 @@ class Player;
 
 class Hud : public sf::Drawable{
 
-	private:
+	protected:
 
 		Player * player;
 		sf::RectangleShape maxLife;
 		sf::RectangleShape currentLife;
+		int scorePoints;
 		sf::Text score;
 		sf::Font font;
 

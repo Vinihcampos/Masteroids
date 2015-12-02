@@ -5,8 +5,8 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.getPlayers().push_back(new Player(universe));
 	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.08));
 	universe.addEntity(PhysicalEntity::EntityType::Player, player);
-	MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
-	universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::CLASSIC));
+	//MathVector * newPos = new MathVector {rand() % 200, rand() % 400};
+	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::CLASSIC));
 	//universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
@@ -18,6 +18,7 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
 
 	hud = new Hud(player);
+	stage = new Stage(&universe, Stage::Stages::EARTH, player);
 }
 
 void Masteroids::run(int minFramesPerSec) {
@@ -54,6 +55,7 @@ void Masteroids::proccessEvents() {
 void Masteroids::update (sf::Time deltaTime) {
 	universe.update(deltaTime);
 	hud->update();
+	stage->update();
 }
 
 void Masteroids::render() {

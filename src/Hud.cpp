@@ -18,8 +18,9 @@ Hud::Hud(Player * _player){
 
 	font.loadFromFile("media/Colleged.ttf");
 
+	scorePoints = player->getScore();
 	score.setFont(font);
-	score.setString(std::string("Score: " + std::to_string(player->getScore())));
+	score.setString(std::string("Score: " + std::to_string(scorePoints)));
 	score.setPosition(600, 5);
 	score.setColor(sf::Color::White);
 	score.setCharacterSize(24);
@@ -34,6 +35,7 @@ void Hud::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 
 void Hud::update(){ 
 	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
-	score.setString(std::string("Score: " + std::to_string(player->getScore())));
+	scorePoints = player->getScore();
+	score.setString(std::string("Score: " + std::to_string(scorePoints)));
 }
 
