@@ -54,8 +54,8 @@ void Masteroids::proccessEvents() {
 
 void Masteroids::update (sf::Time deltaTime) {
 	universe.update(deltaTime);
-	hud->update();
-	stage->update();
+	stage->update(deltaTime);
+	hud->update();	
 }
 
 void Masteroids::render() {

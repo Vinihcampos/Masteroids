@@ -15,7 +15,9 @@ class Stage{
 		sf::Texture background;
 		Universe * universe;
 		int type;
+		int deadAliens;
 		Player * player;
+		sf::Time currentDuration;
 
 	public:
 		enum Stages{
@@ -26,7 +28,7 @@ class Stage{
 
 		Stage();
 		Stage(Universe * _universe, int _type, Player * _player);
-		virtual void update();
+		virtual void update(sf::Time deltaTime);
 
 };
 
