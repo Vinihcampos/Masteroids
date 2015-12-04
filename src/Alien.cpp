@@ -93,6 +93,9 @@ void Alien::onCollide(PhysicalEntity & other) {
 	if(bullet && currentLifePoints <= 0){
 		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
+
+	if(currentLifePoints <= 0)
+		alive = false;
 }
 
 bool Alien::isClosing(const PhysicalEntity & other) const {
@@ -108,7 +111,7 @@ bool Alien::isClosing(const PhysicalEntity & other) const {
 }
 
 void Alien::onClose(PhysicalEntity & other) {
-	if (dynamic_cast<const Player*>(&other) != nullptr) {
+	if (dynamic_cast<const Player*>(&other) != nullptr && type == Type::SHOOTER) {
 		toFollow = dynamic_cast<const Player*>(&other);
 		isFollowing = true;
 	}

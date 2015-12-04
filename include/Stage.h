@@ -15,7 +15,7 @@ class Stage{
 		sf::Texture background;
 		Universe * universe;
 		int type;
-		int deadAliens;
+		int createdAliens;
 		Player * player;
 		sf::Time currentDuration;
 
