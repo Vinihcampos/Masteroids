@@ -84,6 +84,7 @@ void Alien::onCollide(PhysicalEntity & other) {
 	bool bullet = false;
 	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
+		if(currentLifePoints < 0) currentLifePoints = 0;
 		bullet = true;
 	} else if (dynamic_cast<const Player*>(&other) != nullptr) {
 		currentLifePoints *= 9;

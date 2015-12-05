@@ -55,7 +55,7 @@ void Stage::updateEarth(sf::Time deltaTime){
 		newVel->horizontal = std::cos(_angle) * 1;
 		newVel->vertical = std::sin(_angle) * 1;
 
-		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(2), *newVel));
+		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(80), *newVel));
 		currentDuration = sf::seconds(1);
 
 		if(player->getScore() / 100 > createdAliens){
@@ -108,7 +108,7 @@ void Stage::updateMoon(sf::Time deltaTime){
 		newVel->horizontal = std::cos(_angle) * 1;
 		newVel->vertical = std::sin(_angle) * 1;
 
-		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(3), *newVel));
+		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(85), *newVel));
 		currentDuration = sf::seconds(1);
 
 		if(player->getScore() / 100 > createdAliens){
@@ -145,16 +145,13 @@ void Stage::updateMars(sf::Time deltaTime){
 
 int Stage::getAsteroid(int max){
 	int random = rand() % max;
-	switch(random){
-		case 0:
-			return Asteroid::Type::CLASSIC;
-		case 1:
-			return Asteroid::Type::INDESTRUCTIBLE;
-		case 2:
-			return Asteroid::Type::EXPLOSIVE;
-		case 3:
-			return Asteroid::Type::FOLLOWER;
-		default:
-			return Asteroid::Type::CLASSIC;
+	if(random < 50){
+		return Asteroid::Type::CLASSIC;
+	}else if(random < 80){
+		return Asteroid::Type::EXPLOSIVE;
+	}else if(random < 95){		
+		return Asteroid::Type::FOLLOWER;
+	}else{
+		return Asteroid::Type::INDESTRUCTIBLE;
 	}
 }
