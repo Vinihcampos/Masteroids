@@ -10,12 +10,12 @@ class PhysicalEntity;
 
 class Asteroid : public Enemy {
 	public:
-		enum Type{
-			CLASSIC = 4,
-			SMALL_CLASSIC = 2,
+		enum Type{			
+			CLASSIC = 4,			
+			INDESTRUCTIBLE = 500,
 			EXPLOSIVE = 6,
 			FOLLOWER = 3,
-			INDESTRUCTIBLE = 500
+			SMALL_CLASSIC = 2
 		};
 
 		Asteroid(const Asteroid &) = delete;
