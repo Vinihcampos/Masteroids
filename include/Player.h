@@ -22,10 +22,10 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 	public:
 		enum ShotLevel {
 			SIMPLE = 0,
-			DOUBLE,
-			TRIPLE,
-			POWERFULL,
-			LASER
+			DOUBLE = 1,
+			TRIPLE = 2,
+			POWERFULL = 3,
+			LASER = 4
 		};
 
 		Player(const Player &) = delete;
@@ -39,9 +39,11 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
+		void increaseShotLevel();
 		void decreaseShotLevel();
 		void shot();
 		int getScore() const;
+		int getShotLevel() const;
 		void increaseScore(int points);
 
 		int getBonusDamage() const;

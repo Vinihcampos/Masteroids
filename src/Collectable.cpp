@@ -5,10 +5,12 @@
 
 Collectable::Collectable(Collectable::CollectableType _type, MathVector & initialPos, sf::Texture & _texture, Universe & _universe, double _frameW, double _frameH, sf::Time _frameDuration) : AnimatedPhysicalEntity(_texture, _universe, _frameW, _frameH, _frameDuration), type {_type} {
 	position = initialPos;
-	setCurrentFrame(_type);	
+	setCurrentFrame(type);	
+	stop();
 }
 
 void Collectable::update(sf::Time deltaTime) {
+	AnimatedPhysicalEntity::update(deltaTime);
 	sprite.setPosition(position.horizontal, position.vertical);
 }
 
@@ -39,6 +41,8 @@ void Collectable::onCollide(PhysicalEntity & other) {
 			break;
 			case CollectableType::ByPass:
 				p->setByPassing(true);
+			case CollectableType::WeaponUp:
+				p->increaseShotLevel();
 			break;
 		}
 		alive = false;

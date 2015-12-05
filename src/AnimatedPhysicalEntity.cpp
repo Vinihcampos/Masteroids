@@ -4,7 +4,6 @@ AnimatedPhysicalEntity::AnimatedPhysicalEntity(sf::Texture & _texture, Universe 
 	on = true;
 	paused = false;
 	looping = false;	
-	currentFrame = 0;
 	currentTime = sf::Time::Zero;
 	setAnimation(_texture, _frameWidth, _frameHeigth, _frameDuration);
 	position = _position;
@@ -79,6 +78,7 @@ void AnimatedPhysicalEntity::update(sf::Time deltaTime) {
 			alive = false;
 		}
 	}
+	sprite.setTextureRect(framesRects[currentFrame]);
 }
 
 void AnimatedPhysicalEntity::draw(sf::RenderTarget & target, sf::RenderStates states) const {

@@ -32,11 +32,12 @@ class AnimatedPhysicalEntity : public PhysicalEntity {
 		bool looping;
 		double frameWidth;
 		double frameHeigth;
-		int currentFrame;
 		sf::Time currentTime;
 		sf::Time frameDuration;
 
 		void draw(sf::RenderTarget & target, sf::RenderStates states) const;
+	protected:
+		int currentFrame;
 };
 
 #endif

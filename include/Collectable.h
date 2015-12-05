@@ -9,10 +9,11 @@ class Collectable : public AnimatedPhysicalEntity {
 	public:
 		enum CollectableType {
 			DamageUp = 0,			/*!< Increase player's damage */
-			PrecisionUp,			/*!< Increase bullet's precision */
-			Indestructible,			/*!< Makes players indestructible */
-			SlowAsteroid,			/*!< Slow asteroids */
-			ByPass				/*!< Player can pass through asteroids */
+			PrecisionUp = 1,			/*!< Increase bullet's precision */
+			Indestructible = 2,			/*!< Makes players indestructible */
+			SlowAsteroid = 3,			/*!< Slow asteroids */
+			ByPass = 4,
+			WeaponUp = 5				/*!< Player can pass through asteroids */
 		};
 
 		Collectable(const Collectable &) = delete;	

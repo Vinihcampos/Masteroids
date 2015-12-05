@@ -17,6 +17,7 @@ class Hud : public sf::Drawable{
 		sf::RectangleShape currentLife;
 		int scorePoints;
 		sf::Text score;
+		sf::Text weaponLevel;
 		sf::Font font;
 
 		void draw(sf::RenderTarget & target, 

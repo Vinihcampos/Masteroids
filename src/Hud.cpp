@@ -25,17 +25,25 @@ Hud::Hud(Player * _player){
 	score.setColor(sf::Color::White);
 	score.setCharacterSize(24);
 	
+	weaponLevel.setFont(font);
+	weaponLevel.setString(std::string(std::to_string(player->getShotLevel())));
+	weaponLevel.setPosition(600, 50);
+	weaponLevel.setColor(sf::Color::White);
+	weaponLevel.setCharacterSize(24);
+	
 }
 
 void Hud::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 	target.draw(maxLife, states);
 	target.draw(currentLife, states);
 	target.draw(score, states);
+	target.draw(weaponLevel, states);
 }
 
 void Hud::update(){ 
 	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
 	scorePoints = player->getScore();
 	score.setString(std::string("Score: " + std::to_string(scorePoints)));
+	weaponLevel.setString(std::string(std::to_string(player->getShotLevel())));
 }
 

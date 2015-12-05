@@ -145,7 +145,11 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 void Player::decreaseShotLevel() {
 	if (shotLevel > 0)
 		shotLevel--;
+}
 
+void Player::increaseShotLevel() {
+	if (shotLevel < 5)
+		shotLevel++;
 }
 
 void Player::onCollide(PhysicalEntity & other) {
@@ -260,4 +264,8 @@ bool Player::isByPassing() const {
 
 void Player::setByPassing(bool _byPassing) {
 	byPassing = _byPassing;
+}
+
+int Player::getShotLevel() const {
+	return shotLevel;
 }
