@@ -23,8 +23,10 @@ void Stage::update(sf::Time deltaTime){
 			updateEarth(deltaTime);		
 		break;
 		case Stages::MOON:
+			updateMoon(deltaTime);	
 		break;
 		case Stages::MARS:
+			updateMars(deltaTime);	
 		break;
 		default:
 		break;
@@ -53,7 +55,7 @@ void Stage::updateEarth(sf::Time deltaTime){
 		newVel->horizontal = std::cos(_angle) * 1;
 		newVel->vertical = std::sin(_angle) * 1;
 
-		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, Asteroid::Type::CLASSIC, *newVel));
+		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(2), *newVel));
 		currentDuration = sf::seconds(1);
 
 		if(player->getScore() / 100 > createdAliens){
@@ -72,7 +74,7 @@ void Stage::updateEarth(sf::Time deltaTime){
 
 			std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
 			
-			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::SHOOTER, *auxVel));
+			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::CLASSIC, *auxVel));
 			++createdAliens;
 		}
 
@@ -81,5 +83,78 @@ void Stage::updateEarth(sf::Time deltaTime){
 		delete newVel;
 	}else{
 		currentDuration -= deltaTime;
+	}
+}
+
+void Stage::updateMoon(sf::Time deltaTime){
+	if(currentDuration <= sf::Time::Zero){
+		MathVector * newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+		while(std::sqrt(std::pow(newPos->horizontal - player->getPosition().horizontal, 2) + 
+						std::pow(newPos->vertical - player->getPosition().vertical, 2)) < 2 * player->getHeigth()){
+			newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+		}
+		
+		MathVector * auxVel = new MathVector {rand() % 2, rand() % 2};
+		MathVector * newVel = new MathVector {1.0 / (rand() % 10) + .5, 1.0 / (rand() % 10) + .5};
+				//std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
+		if((int)auxVel->horizontal % 2 != 0)
+			newVel->horizontal *= -1;
+		if((int)auxVel->vertical % 2 != 0)
+			newVel->vertical *= -1;
+
+		double _angle = std::atan2(player->getPosition().vertical - newPos->vertical,
+								   player->getPosition().horizontal - newPos->horizontal);
+				
+		newVel->horizontal = std::cos(_angle) * 1;
+		newVel->vertical = std::sin(_angle) * 1;
+
+		universe->addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, *universe, getAsteroid(3), *newVel));
+		currentDuration = sf::seconds(1);
+
+		if(player->getScore() / 100 > createdAliens){
+			newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+			while(std::sqrt(std::pow(newPos->horizontal - player->getPosition().horizontal, 2) + 
+		            		std::pow(newPos->vertical - player->getPosition().vertical, 2)) < 2 * player->getHeigth()){
+				newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+			}
+			auxVel = new MathVector {rand() % 2, rand() % 2};
+			newVel = new MathVector {1.0 / (rand() % 10) + .5, 1.0 / (rand() % 10) + .5};
+			
+			if((int)auxVel->horizontal % 2 != 0)
+				newVel->horizontal *= -1.0;
+			if((int)auxVel->vertical % 2 != 0)
+				newVel->vertical *= -1.0;
+
+			std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
+			
+			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::CLASSIC, *auxVel));
+			++createdAliens;
+		}
+
+		delete newPos;
+		delete auxVel;
+		delete newVel;
+	}else{
+		currentDuration -= deltaTime;
+	}
+}
+
+void Stage::updateMars(sf::Time deltaTime){
+
+}
+
+int Stage::getAsteroid(int max){
+	int random = rand() % max;
+	switch(random){
+		case 0:
+			return Asteroid::Type::CLASSIC;
+		case 1:
+			return Asteroid::Type::INDESTRUCTIBLE;
+		case 2:
+			return Asteroid::Type::EXPLOSIVE;
+		case 3:
+			return Asteroid::Type::FOLLOWER;
+		default:
+			return Asteroid::Type::CLASSIC;
 	}
 }

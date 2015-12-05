@@ -8,6 +8,7 @@
 
 class Universe;
 class Player;
+class Asteroid;
 
 class Stage{
 
@@ -30,6 +31,9 @@ class Stage{
 		Stage(Universe * _universe, int _type, Player * _player);
 		virtual void update(sf::Time deltaTime);
 		void updateEarth(sf::Time deltaTime);
+		void updateMoon(sf::Time deltaTime);
+		void updateMars(sf::Time deltaTime);
+		int getAsteroid(int max);
 };
 
 #endif
