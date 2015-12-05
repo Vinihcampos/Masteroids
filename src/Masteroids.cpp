@@ -20,7 +20,7 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
 
 	hud = new Hud(player);
-	stage = new Stage(&universe, Stage::Stages::MOON, player);
+	stage = new Stage(&universe, Stage::Stages::EARTH, player);
 }
 
 void Masteroids::run(int minFramesPerSec) {
@@ -62,6 +62,7 @@ void Masteroids::update (sf::Time deltaTime) {
 
 void Masteroids::render() {
 	clear();
+	draw(*stage);
 	draw(universe);
 	draw(*hud);
 	display();

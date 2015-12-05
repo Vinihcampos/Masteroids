@@ -38,7 +38,10 @@ class Configuration {
 			SimpleAlienShot,
 			ExplosionA,
 			ExplosionB,
-			ExplosionC
+			ExplosionC,
+			Earth,
+			Kepler,
+			Blue
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

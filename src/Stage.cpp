@@ -15,6 +15,22 @@ Stage::Stage(Universe * _universe, int _type, Player * _player) :
 universe {_universe}, type {_type}, player{_player}{
 	createdAliens = 0;
 	currentDuration = sf::Time::Zero;
+
+	switch(type){
+		case Stages::EARTH:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::Earth));
+		break;
+		case Stages::KEPLER:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::Kepler));
+		break;
+		case Stages::BLUE:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::Blue));
+		break;
+		default:
+			sprite.setTexture(Configuration::textures.get(Configuration::Textures::Earth));
+		break;
+	}
+
 }
 
 void Stage::update(sf::Time deltaTime){
@@ -22,11 +38,11 @@ void Stage::update(sf::Time deltaTime){
 		case Stages::EARTH:
 			updateEarth(deltaTime);		
 		break;
-		case Stages::MOON:
-			updateMoon(deltaTime);	
+		case Stages::KEPLER:
+			updateKepler(deltaTime);	
 		break;
-		case Stages::MARS:
-			updateMars(deltaTime);	
+		case Stages::BLUE:
+			updateBlue(deltaTime);		
 		break;
 		default:
 		break;
@@ -86,7 +102,7 @@ void Stage::updateEarth(sf::Time deltaTime){
 	}
 }
 
-void Stage::updateMoon(sf::Time deltaTime){
+void Stage::updateKepler(sf::Time deltaTime){
 	if(currentDuration <= sf::Time::Zero){
 		MathVector * newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
 		while(std::sqrt(std::pow(newPos->horizontal - player->getPosition().horizontal, 2) + 
@@ -139,7 +155,7 @@ void Stage::updateMoon(sf::Time deltaTime){
 	}
 }
 
-void Stage::updateMars(sf::Time deltaTime){
+void Stage::updateBlue(sf::Time deltaTime){
 
 }
 
@@ -154,4 +170,8 @@ int Stage::getAsteroid(int max){
 	}else{
 		return Asteroid::Type::INDESTRUCTIBLE;
 	}
+}
+
+void Stage::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+	target.draw(sprite, states);
 }

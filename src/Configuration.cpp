@@ -29,6 +29,9 @@ void Configuration::initTextures() {
 	textures.load(Textures::ExplosionA, "media/Explosion/explosionA.png");
 	textures.load(Textures::ExplosionB, "media/Explosion/explosionB.png");
 	textures.load(Textures::ExplosionC, "media/Explosion/explosionC.png");
+	textures.load(Textures::Earth, "media/Bg/earth.png");
+	textures.load(Textures::Kepler, "media/Bg/kepler.png");
+	textures.load(Textures::Blue, "media/Bg/blue.png");
 }
 
 void Configuration::initPlayerInputs() {
