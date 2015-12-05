@@ -3,6 +3,7 @@
 #include "Collectable.h"
 #include "Universe.h"
 #include "CollisionTools.h"
+#include "AnimatedPhysicalEntity.h"
 #include <cmath>
 
 BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::SpawnPoint _spawnPoint, Universe & _universe) 
@@ -64,7 +65,10 @@ void BulletShip::update(sf::Time deltaTime) {
 }
 
 bool BulletShip::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const BulletShip*>(&other) == nullptr && dynamic_cast<const Collectable*>(&other) == nullptr) {
+	if (dynamic_cast<const BulletShip*>(&other) == nullptr && 
+		dynamic_cast<const Collectable*>(&other) == nullptr &&
+		dynamic_cast<const Player*>(&other) == nullptr &&
+		dynamic_cast<const AnimatedPhysicalEntity*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}

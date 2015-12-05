@@ -29,7 +29,7 @@ class Stage{
 		Stage();
 		Stage(Universe * _universe, int _type, Player * _player);
 		virtual void update(sf::Time deltaTime);
-
+		void updateEarth(sf::Time deltaTime);
 };
 
 #endif

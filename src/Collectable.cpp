@@ -14,7 +14,6 @@ void Collectable::update(sf::Time deltaTime) {
 
 bool Collectable::isColliding(const PhysicalEntity & other) const {
 	if (dynamic_cast<const Player*>(&other) != nullptr) {
-		std::cout << "colidindo" << std::endl;
 		if (CollisionTools::circleCollision(*this, other)) {
 			return true;
 		}

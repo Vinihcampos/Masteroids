@@ -25,8 +25,8 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	position.vertical = 400;
 	position.horizontal = 600;
 
-	currentLifePoints = 100;
-	maxLifePoints = 100;
+	currentLifePoints = 500;
+	maxLifePoints = 500;
 	score = 1;
 	
 	//sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
