@@ -4,6 +4,7 @@
 
 PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Drawable(), universe (_universe) { 
 	alive = true;
+	collidable = true;
 	exploded = false;
 	angleAdjustment = 0;
 };

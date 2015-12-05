@@ -3,6 +3,7 @@
 
 #include "ActionTarget.h"
 #include "AnimatedPhysicalEntity.h"
+#include <deque>
 
 /*! \brief Represents the player of the game.
  *  \details As it reacts to actions, extends from
@@ -17,6 +18,7 @@ class ActionTarget;
 class Universe;
 class BulletShip;
 class AnimatedPhysicalEntity;
+class Collectable;
 
 class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 	public:
@@ -57,6 +59,9 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		bool isByPassing() const;		
 		void setByPassing(bool);
 		bool isUnderEffect() const;
+		void collectPower(Collectable *);
+		void activateEffect(Collectable* powerUpType);
+		std::deque<Collectable *> powersToUse;
 
 	private:
 		sf::Time timeLastShot;

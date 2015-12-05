@@ -63,6 +63,10 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 		position.horizontal = rand() % 800;
 		position.vertical = rand() % 600;
 	});
+	
+	bind(Configuration::PlayerInputs::ActivatePowerUp, [this](const sf::Event &) {
+		activateEffect(powersToUse.front());
+	});
 }
 
 void Player::proccessEvents() {
@@ -148,7 +152,7 @@ void Player::decreaseShotLevel() {
 }
 
 void Player::increaseShotLevel() {
-	if (shotLevel < 5)
+	if (shotLevel < 4)
 		shotLevel++;
 }
 
@@ -268,4 +272,38 @@ void Player::setByPassing(bool _byPassing) {
 
 int Player::getShotLevel() const {
 	return shotLevel;
+}
+
+void Player::collectPower(Collectable * power) {
+	if (powersToUse.size() < 3) {
+		powersToUse.push_back(power);	
+	} else if (powersToUse.size() == 3) {
+		delete powersToUse.back();
+		powersToUse.pop_back();
+		powersToUse.push_back(power);
+	}	
+}
+
+void Player::activateEffect(Collectable* powerToUse) {
+	switch(powerToUse->type) {
+		case Collectable::CollectableType::DamageUp:
+			setBonusDamage(10);
+		break;
+		case Collectable::CollectableType::PrecisionUp:
+			setBonusPrecision(10);
+		break;
+		case Collectable::CollectableType::Indestructible:
+			setIndestructible(true);
+		break;
+		case Collectable::CollectableType::SlowAsteroid:
+			setSlowingAsteroids(true);
+		break;
+		case Collectable::CollectableType::ByPass:
+			setByPassing(true);
+		case Collectable::CollectableType::WeaponUp:
+			increaseShotLevel();
+		break;
+	}
+	delete powerToUse;
+	powersToUse.pop_front();
 }
