@@ -64,7 +64,7 @@ void Universe::update(sf::Time deltaTime) {
 		while (j != end) {	
 			PhysicalEntity & je = *((*j).second);
 			//std::cout << ie.isAlive() << std::endl;
-			if (ie.isAlive() && je.isAlive() && ie.isColliding(je)) {
+			if (ie.isAlive() && je.isAlive() && (ie.isColliding(je) || je.isColliding(ie))) {
 				ie.onCollide(je);
 				je.onCollide(ie);
 			}

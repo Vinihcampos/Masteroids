@@ -10,9 +10,11 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//newPos = new MathVector {rand() % 200 + 100, rand() % 400};
 	//universe.addEntity(PhysicalEntity::EntityType::Asteroid, new Asteroid(*newPos, universe, Asteroid::Type::FOLLOWER));
-	//newPos = new MathVector {200,200};
+	MathVector * newPos = new MathVector {200,200};
 	//universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable(Collectable::CollectableType::DamageUp, *newPos, universe));
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
+
+	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable (Collectable::CollectableType::DamageUp, *newPos, Configuration::textures.get(Configuration::Textures::Collectables), universe, 35, 35, sf::seconds(1)));
 
 	//newPos = new MathVector {0,300};
 	//universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));

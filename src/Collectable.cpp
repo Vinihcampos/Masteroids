@@ -5,7 +5,6 @@
 
 Collectable::Collectable(Collectable::CollectableType _type, MathVector & initialPos, sf::Texture & _texture, Universe & _universe, double _frameW, double _frameH, sf::Time _frameDuration) : AnimatedPhysicalEntity(_texture, _universe, _frameW, _frameH, _frameDuration), type {_type} {
 	position = initialPos;
-	MathVector::Point upperLeft {10,10};
 	setCurrentFrame(_type);	
 }
 
@@ -15,6 +14,7 @@ void Collectable::update(sf::Time deltaTime) {
 
 bool Collectable::isColliding(const PhysicalEntity & other) const {
 	if (dynamic_cast<const Player*>(&other) != nullptr) {
+		std::cout << "colidindo" << std::endl;
 		if (CollisionTools::circleCollision(*this, other)) {
 			return true;
 		}
