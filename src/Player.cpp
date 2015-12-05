@@ -28,6 +28,8 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	currentLifePoints = 500;
 	maxLifePoints = 500;
 	score = 1;
+
+	bonusDamage = 0;
 	
 	//sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	sprite.setRotation(angleAdjustment);

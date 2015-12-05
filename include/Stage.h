@@ -10,29 +10,32 @@ class Universe;
 class Player;
 class Asteroid;
 
-class Stage{
+class Stage : public sf::Drawable{
 
 	protected:
-		sf::Texture background;
+		sf::Sprite sprite;
 		Universe * universe;
 		int type;
 		int createdAliens;
 		Player * player;
 		sf::Time currentDuration;
 
+		void draw(sf::RenderTarget & target, 
+				  sf::RenderStates states) const override;
+
 	public:
 		enum Stages{
 			EARTH,
-			MOON,
-			MARS
+			KEPLER,
+			BLUE
 		};
 
 		Stage();
 		Stage(Universe * _universe, int _type, Player * _player);
 		virtual void update(sf::Time deltaTime);
 		void updateEarth(sf::Time deltaTime);
-		void updateMoon(sf::Time deltaTime);
-		void updateMars(sf::Time deltaTime);
+		void updateKepler(sf::Time deltaTime);
+		void updateBlue(sf::Time deltaTime);
 		int getAsteroid(int max);
 };
 

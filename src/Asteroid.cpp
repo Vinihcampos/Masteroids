@@ -93,7 +93,6 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 	bool bullet = false;
 	if (dynamic_cast<const BulletShip*>(&other) != nullptr) {
 		currentLifePoints -= other.getDamagePoints();
-		if(currentLifePoints < 0) currentLifePoints = 0; 
 		bullet = true;
 		if (dynamic_cast<const BulletShip*>(&other)->slowAsteroidEffect()) {
 			velocity.horizontal *= .5;
@@ -124,12 +123,15 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 		break;
 		case Type::EXPLOSIVE:
 			if(currentLifePoints <= 0) {
+				std::cout<<"Chegou here OKKKKK\n";
 				exploded = true;
+				universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
 			}
 		break;
 		case Type::FOLLOWER:
 			if(currentLifePoints <= 0){
 				alive = false;
+				universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
 			}
 		break;
 		case Type::INDESTRUCTIBLE:
@@ -146,9 +148,9 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 bool Asteroid::isClosing(const PhysicalEntity & other) const {
 	float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
 						  	   std::pow(position.vertical - other.getPosition().vertical, 2));	
-	if (type == Type::FOLLOWER || type == Type::EXPLOSIVE) {
+	if (type == Type::FOLLOWER || (type == Type::EXPLOSIVE && exploded)) {
 		if(dist <= radius){
-			std::cout<<"Estrou nessa parada!!!"<<std::endl;
+			//std::cout<<"Estrou nessa parada!!!"<<std::endl;
 			return true;	
 		}
 	}
@@ -166,6 +168,7 @@ void Asteroid::onClose(PhysicalEntity & other) {
 			break;
 		case Type::EXPLOSIVE:
 			if(exploded){
+				std::cout<<"matouuuu!!!\n";
 				other.killEntity();
 			}
 			break;
