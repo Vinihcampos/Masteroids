@@ -21,7 +21,12 @@ class Hud : public sf::Drawable{
 		int scorePoints;
 		sf::Text powerTime;
 		sf::Text score;
+		sf::Text weaponText;
 		sf::Text weaponLevel;
+		sf::Text attackText;
+		sf::Text attackIncrease;
+		sf::Text precisionText;
+		sf::Text precisionIncrease;
 		sf::Text damageIncrease;
 		sf::Font font;
 
