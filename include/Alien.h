@@ -18,7 +18,7 @@ class Alien : public Enemy {
 		Alien(const Alien &) = delete;
 		Alien & operator=(const Alien &) = delete;
 
-		Alien(MathVector position, Universe & _universe, int _type, MathVector _velocity = {1.0, 0}, int _lifePoint = 0);
+		Alien(MathVector position, Universe & _universe, int _type, MathVector _velocity = {1.0, 1.0}, int _lifePoint = 0);
 		Alien(int h, int v, Universe & _universe, int _type, float _velX, float _velY, int _life);
 
 		void update(sf::Time deltaTime);

@@ -37,12 +37,14 @@ BulletAlien::BulletAlien(Alien & alien, BulletAlien::Type _type, BulletAlien::Sp
 	velocity.horizontal = std::cos(getRotationRad()) * 5;
 	velocity.vertical = std::sin(getRotationRad()) * 5;
 	// Setting duration
-	currentDuration = sf::seconds(0.5);
+	currentDuration = sf::seconds(1);
+	std::cout<<"criou!\n";
 }
 
 void BulletAlien::update(sf::Time deltaTime) {
 	currentDuration -= deltaTime;
 	if (currentDuration < sf::Time::Zero) {
+		std::cout<<"Morreu\n";
 		alive = false;
 	}
 	// Updating position

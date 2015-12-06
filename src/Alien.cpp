@@ -48,6 +48,8 @@ Alien::Alien(MathVector _position, Universe & _universe, int _type, MathVector _
 }
 
 void Alien::update(sf::Time deltaTime) {
+	timeLastShot += deltaTime;
+
 	if (isFollowing) {
 		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
 							   toFollow->getPosition().horizontal - position.horizontal);
@@ -59,7 +61,6 @@ void Alien::update(sf::Time deltaTime) {
 		shot();
 	}
 
-	timeLastShot += deltaTime;
 	// Updating position
 	position.horizontal += velocity.horizontal; //* angle.horizontal; //% Configuration::WINDOW_WIDTH;// * seconds;
 	position.vertical += velocity.vertical; //* angle.vertical; //% Configuration::WINDOW_HEIGHT;// seconds;
@@ -73,7 +74,9 @@ void Alien::update(sf::Time deltaTime) {
 }
 
 bool Alien::isColliding(const PhysicalEntity & other) const {
-	if (dynamic_cast<const Enemy*>(&other) == nullptr && dynamic_cast<const Collectable*>(&other) == nullptr) {
+	if (dynamic_cast<const Enemy*>(&other) == nullptr && 
+		dynamic_cast<const Collectable*>(&other) == nullptr && 
+		dynamic_cast<const BulletAlien*>(&other) == nullptr) {
 		if (CollisionTools::circleCollision(*this, other))
 			return true;
 	}
@@ -124,6 +127,7 @@ void Alien::shot () {
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::LEFT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::RIGHT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::FRONT, universe});	
+			std::cout<<"Chegou no tiro!!\n";
 		break;
 		default: return;
 	}

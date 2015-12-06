@@ -74,22 +74,20 @@ void Stage::updateEarth(sf::Time deltaTime){
 		currentDuration = sf::seconds(1);
 
 		if(player->getScore() / 100 > createdAliens){
-			newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+			newPos = new MathVector {rand() % 500 + 100, rand() % 300 + 100};
 			while(std::sqrt(std::pow(newPos->horizontal - player->getPosition().horizontal, 2) + 
 		            		std::pow(newPos->vertical - player->getPosition().vertical, 2)) < 2 * player->getHeigth()){
 				newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
 			}
 			auxVel = new MathVector {rand() % 2, rand() % 2};
-			newVel = new MathVector {1.0 / (rand() % 10) + .5, 1.0 / (rand() % 10) + .5};
+			newVel = new MathVector {(rand() % 10 + 1)/ 10.0 , (rand() % 10 + 1)/ 10.0 };
 			
 			if((int)auxVel->horizontal % 2 != 0)
 				newVel->horizontal *= -1.0;
 			if((int)auxVel->vertical % 2 != 0)
 				newVel->vertical *= -1.0;
 
-			std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
-			
-			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::CLASSIC, *auxVel));
+			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::CLASSIC, *newVel));
 			++createdAliens;
 		}
 
@@ -127,22 +125,20 @@ void Stage::updateKepler(sf::Time deltaTime){
 		currentDuration = sf::seconds(1);
 
 		if(player->getScore() / 100 > createdAliens){
-			newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
+			newPos = new MathVector {rand() % 500 + 100, rand() % 300 + 100};
 			while(std::sqrt(std::pow(newPos->horizontal - player->getPosition().horizontal, 2) + 
 		            		std::pow(newPos->vertical - player->getPosition().vertical, 2)) < 2 * player->getHeigth()){
 				newPos = new MathVector {rand() % 700 + 100, rand() % 500 + 100};
 			}
 			auxVel = new MathVector {rand() % 2, rand() % 2};
-			newVel = new MathVector {1.0 / (rand() % 10) + .5, 1.0 / (rand() % 10) + .5};
+			newVel = new MathVector {(rand() % 10 + 1)/ 10.0 , (rand() % 10 + 1)/ 10.0 };
 			
 			if((int)auxVel->horizontal % 2 != 0)
 				newVel->horizontal *= -1.0;
 			if((int)auxVel->vertical % 2 != 0)
 				newVel->vertical *= -1.0;
-
-			std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
-			
-			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::SHOOTER, *auxVel));
+							
+			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::SHOOTER, *newVel));
 			++createdAliens;
 		}
 

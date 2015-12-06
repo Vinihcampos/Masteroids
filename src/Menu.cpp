@@ -4,7 +4,7 @@
 
 Menu::Menu(Universe * _universe, int _type, Player * _player) : ActionTarget(Configuration::playerInputs) {
 	type = Menu::Type::INITIAL;
-	level = -1;
+	level = Stage::Stages::EARTH;
 	universe = _universe;
 	player = _player;
 	stage = new Stage(_universe, level, _player);
