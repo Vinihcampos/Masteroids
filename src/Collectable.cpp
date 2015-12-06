@@ -24,28 +24,22 @@ bool Collectable::isColliding(const PhysicalEntity & other) const {
 }
 
 void Collectable::onCollide(PhysicalEntity & other) {
+	if (not collidable) return;
 	if (dynamic_cast<const Player*>(&other) != nullptr) { 
 		Player * p = dynamic_cast<Player*>(&other); 
 		switch(type) {
 			case CollectableType::DamageUp:
-				p->setBonusDamage(10);	
-			break;
 			case CollectableType::PrecisionUp:
-				p->setBonusPrecision(10);
-			break;
 			case CollectableType::Indestructible:
-				p->setIndestructible(true);
-			break;
 			case CollectableType::SlowAsteroid:
-				p->setSlowingAsteroids(true);
-			break;
 			case CollectableType::ByPass:
-				p->setByPassing(true);
+				p->collectPower(this);
+			break;
 			case CollectableType::WeaponUp:
 				p->increaseShotLevel();
 			break;
 		}
-		alive = false;
+		collidable = false;
 	}
 }
 

@@ -26,8 +26,9 @@ class Collectable : public AnimatedPhysicalEntity {
 		void onClose(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		
+		CollectableType type;
+		
 		private:
-			CollectableType type;
 				
 };
 

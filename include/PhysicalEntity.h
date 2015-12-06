@@ -55,13 +55,13 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		void killEntity();
 		int getDamagePoints() const;
 		bool isInsideWindow();
-
 		int getMaxLifePoints() const;
 		int getCurrentLifePoints() const;
 
 	protected:
 		int angleAdjustment;
 		bool alive;
+		bool collidable;
 	private:
 		friend class Universe;
 		virtual void draw(sf::RenderTarget & target, 

@@ -51,7 +51,8 @@ class Configuration {
 			TurnLeft, 
 			TurnRight, 
 			Shoot,
-			Hyperspace
+			Hyperspace,
+			ActivatePowerUp
 		};
 
 		static ActionMap<int> playerInputs;

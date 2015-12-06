@@ -24,6 +24,9 @@ class AnimatedPhysicalEntity : public PhysicalEntity {
 		void onCollide(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
 		void onClose(PhysicalEntity &);
+		double getFrameWidth() const;
+		double getFrameHeigth() const;
+		sf::Time getFrameDuration() const;
 
 	private:
 		std::vector<sf::IntRect> framesRects;

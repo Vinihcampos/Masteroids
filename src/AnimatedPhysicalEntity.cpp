@@ -98,3 +98,15 @@ void AnimatedPhysicalEntity::onClose(PhysicalEntity &) {}
 void AnimatedPhysicalEntity::setCurrentFrame(int _frame) {
 	currentFrame = _frame;
 }
+
+double AnimatedPhysicalEntity::getFrameWidth() const {
+	return frameWidth;
+}
+
+double AnimatedPhysicalEntity::getFrameHeigth() const {
+	return frameHeigth;
+}
+
+sf::Time AnimatedPhysicalEntity::getFrameDuration() const {
+	return frameDuration;
+}
