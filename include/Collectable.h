@@ -13,7 +13,8 @@ class Collectable : public AnimatedPhysicalEntity {
 			Indestructible = 2,			/*!< Makes players indestructible */
 			SlowAsteroid = 3,			/*!< Slow asteroids */
 			ByPass = 4,
-			WeaponUp = 5				/*!< Player can pass through asteroids */
+			WeaponUp = 5,
+			None = 6				/*!< Player can pass through asteroids */
 		};
 
 		Collectable(const Collectable &) = delete;	
@@ -25,6 +26,7 @@ class Collectable : public AnimatedPhysicalEntity {
 		void onCollide(PhysicalEntity &);
 		void onClose(PhysicalEntity &);
 		bool isClosing(const PhysicalEntity &) const;
+		CollectableType static randCollectable();
 		
 		CollectableType type;
 		

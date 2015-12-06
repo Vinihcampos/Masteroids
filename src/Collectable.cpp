@@ -51,3 +51,23 @@ bool Collectable::isClosing(const PhysicalEntity & other) const {
 void Collectable::onClose(PhysicalEntity & other) {
 	return;
 }
+
+Collectable::CollectableType Collectable::randCollectable() {
+	int randomic = rand() % 500;	
+	if (randomic >= 0 && randomic <= 10) {
+		return Collectable::CollectableType::ByPass;	
+	} else if (randomic <= 20) {
+		return Collectable::CollectableType::Indestructible;	
+	} else if (randomic <= 30) {
+		return Collectable::CollectableType::SlowAsteroid;	
+	} else if (randomic <= 40) {
+		return Collectable::CollectableType::PrecisionUp;	
+	} else if (randomic <= 50) {
+		return Collectable::CollectableType::DamageUp;	
+	} else if (randomic <= 70) {
+		return Collectable::CollectableType::DamageUp;	
+	} else if (randomic <= 90) {
+		return Collectable::CollectableType::WeaponUp;	
+	} else 
+		return Collectable::CollectableType::None;
+}

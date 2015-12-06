@@ -129,7 +129,6 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 		break;
 		case Type::EXPLOSIVE:
 			if(currentLifePoints <= 0) {
-				std::cout<<"Chegou here OKKKKK\n";
 				exploded = true;
 				universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
 			}
@@ -146,7 +145,14 @@ void Asteroid::onCollide(PhysicalEntity & other) {
 			alive = false;
 	}
 
-	if(bullet && currentLifePoints <= 0){	
+	if(bullet && currentLifePoints <= 0){
+		Collectable::CollectableType toDrop = Collectable::randCollectable();
+		if (toDrop != Collectable::CollectableType::None) {	
+			universe.addEntity(PhysicalEntity::EntityType::Collectable, 
+					   new Collectable (toDrop, 
+					   position, Configuration::textures.get(Configuration::Textures::Collectables), 
+				           universe, 35, 35, sf::seconds(1)));
+		}
 		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
 }
