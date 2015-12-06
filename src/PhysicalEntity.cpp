@@ -9,6 +9,10 @@ PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Draw
 	angleAdjustment = 0;
 };
 
+void PhysicalEntity::setPosition(MathVector pos) {
+	position = pos;
+}
+
 MathVector PhysicalEntity::getPosition() const {
 	//std::cout<<"Problem here!!! getPosition"<<std::endl;
 	//std::cout<<"wwProblem here!!! getPosition"<<std::endl;

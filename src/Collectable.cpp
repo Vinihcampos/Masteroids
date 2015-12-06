@@ -36,6 +36,7 @@ void Collectable::onCollide(PhysicalEntity & other) {
 				p->collectPower(this);
 			break;
 			case CollectableType::WeaponUp:
+				alive = false;
 				p->increaseShotLevel();
 			break;
 		}

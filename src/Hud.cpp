@@ -1,5 +1,6 @@
 #include "Hud.h"
 #include "Player.h"
+#include "Collectable.h"
 #include <string>
 #include <iostream>
 
@@ -45,5 +46,13 @@ void Hud::update(){
 	scorePoints = player->getScore();
 	score.setString(std::string("Score: " + std::to_string(scorePoints)));
 	weaponLevel.setString(std::string(std::to_string(player->getShotLevel())));
+	if (player->isAlive()) {
+		if ((player->powersToUse).size() > 0) {
+			((player->powersToUse).front())->setPosition({740, 5});
+		}
+		if ((player->powersToUse).size() > 1) {
+			((player->powersToUse).back())->setPosition({700, 5});
+		}
+	}
 }
 

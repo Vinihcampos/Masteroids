@@ -67,7 +67,8 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	});
 	
 	bind(Configuration::PlayerInputs::ActivatePowerUp, [this](const sf::Event &) {
-		activateEffect(powersToUse.front());
+		if(!powersToUse.empty()) 
+			activateEffect(powersToUse.front());
 	});
 }
 
@@ -277,16 +278,16 @@ int Player::getShotLevel() const {
 }
 
 void Player::collectPower(Collectable * power) {
-	if (powersToUse.size() < 3) {
+	if (powersToUse.size() < 2) {
 		powersToUse.push_back(power);	
-	} else if (powersToUse.size() == 3) {
+	} else if (powersToUse.size() == 2) {
 		delete powersToUse.back();
 		powersToUse.pop_back();
 		powersToUse.push_back(power);
 	}	
 }
 
-void Player::activateEffect(Collectable* powerToUse) {
+void Player::activateEffect(Collectable* & powerToUse) {
 	switch(powerToUse->type) {
 		case Collectable::CollectableType::DamageUp:
 			setBonusDamage(10);
@@ -306,6 +307,6 @@ void Player::activateEffect(Collectable* powerToUse) {
 			increaseShotLevel();
 		break;
 	}
-	delete powerToUse;
+	powerToUse->killEntity();
 	powersToUse.pop_front();
 }

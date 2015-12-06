@@ -7,6 +7,7 @@
 #include <cstdlib>
 
 class Player;
+class Collectable;
 
 class Hud : public sf::Drawable{
 

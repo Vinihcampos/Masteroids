@@ -60,7 +60,7 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		void setByPassing(bool);
 		bool isUnderEffect() const;
 		void collectPower(Collectable *);
-		void activateEffect(Collectable* powerUpType);
+		void activateEffect(Collectable * & powerUpType);
 		std::deque<Collectable *> powersToUse;
 
 	private:

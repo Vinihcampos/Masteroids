@@ -41,6 +41,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		MathVector getVelocity() const;
 		double getRotationRad() const;
 		double getRotationDegree() const;
+		void setPosition(MathVector);
 		double getWidth() const;
 		double getHeigth() const;
 		virtual void update(sf::Time deltaTime) = 0;
