@@ -282,7 +282,7 @@ void Player::collectPower(Collectable * power) {
 	if (powersToUse.size() < 2) {
 		powersToUse.push_back(power);	
 	} else if (powersToUse.size() == 2) {
-		delete powersToUse.back();
+		powersToUse.back()->killEntity();
 		powersToUse.pop_back();
 		powersToUse.push_back(power);
 	}	

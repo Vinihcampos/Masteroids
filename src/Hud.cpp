@@ -42,11 +42,11 @@ void Hud::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 }
 
 void Hud::update(){ 
-	currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
-	scorePoints = player->getScore();
-	score.setString(std::string("Score: " + std::to_string(scorePoints)));
-	weaponLevel.setString(std::string(std::to_string(player->getShotLevel())));
 	if (player->isAlive()) {
+		currentLife.setSize(sf::Vector2f(player->getCurrentLifePoints(), 10));
+		scorePoints = player->getScore();
+		score.setString(std::string("Score: " + std::to_string(scorePoints)));
+		weaponLevel.setString(std::string(std::to_string(player->getShotLevel())));
 		if ((player->powersToUse).size() > 0) {
 			((player->powersToUse).front())->setPosition({740, 5});
 		}
