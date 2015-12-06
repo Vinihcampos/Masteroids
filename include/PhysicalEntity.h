@@ -24,7 +24,7 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 		Universe & universe;		
 
 		sf::Sprite sprite;
-
+		sf::Time exploding;
 	public:
 	
 		enum class EntityType : int {

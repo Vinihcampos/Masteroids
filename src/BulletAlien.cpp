@@ -37,7 +37,7 @@ BulletAlien::BulletAlien(Alien & alien, BulletAlien::Type _type, BulletAlien::Sp
 	velocity.horizontal = std::cos(getRotationRad()) * 5;
 	velocity.vertical = std::sin(getRotationRad()) * 5;
 	// Setting duration
-	currentDuration = sf::seconds(3);
+	currentDuration = sf::seconds(0.5);
 }
 
 void BulletAlien::update(sf::Time deltaTime) {

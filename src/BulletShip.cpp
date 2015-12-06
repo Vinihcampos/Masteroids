@@ -76,7 +76,7 @@ bool BulletShip::isColliding(const PhysicalEntity & other) const {
 }
 
 void BulletShip::onCollide(PhysicalEntity & other) {
-	exploded = true;
+	alive = false;
 }
 
 bool BulletShip::slowAsteroidEffect() const {

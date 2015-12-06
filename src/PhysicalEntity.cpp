@@ -7,6 +7,7 @@ PhysicalEntity::PhysicalEntity(Universe & _universe) : GeneralEntity(), sf::Draw
 	collidable = true;
 	exploded = false;
 	angleAdjustment = 0;
+	exploding = sf::seconds(0.5);
 };
 
 void PhysicalEntity::setPosition(MathVector pos) {
