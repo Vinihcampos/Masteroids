@@ -7,7 +7,7 @@ Menu::Menu(Universe * _universe, int _type, Player * _player) : ActionTarget(Con
 	level = -1;
 	universe = _universe;
 	player = _player;
-	stage = new Stage(_universe, _type, _player);
+	stage = new Stage(_universe, level, _player);
 	hud = new Hud(_player);
 
 	logo.setTexture(Configuration::textures.get(Configuration::Textures::MenuLogo));
