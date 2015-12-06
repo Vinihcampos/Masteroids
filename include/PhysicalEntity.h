@@ -52,6 +52,8 @@ class PhysicalEntity : public GeneralEntity, public sf::Drawable {
 
 		virtual bool isClosing(const PhysicalEntity &) const = 0;
 		virtual void onClose(PhysicalEntity &) = 0;
+		
+		void decreaseLifePoints(int _delta);
 		bool isExploded() const;
 		void killEntity();
 		int getDamagePoints() const;

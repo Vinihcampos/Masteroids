@@ -79,3 +79,7 @@ int PhysicalEntity::getMaxLifePoints() const{
 int PhysicalEntity::getCurrentLifePoints() const{
 	return currentLifePoints;
 }
+
+void PhysicalEntity::decreaseLifePoints(int _delta) {
+	currentLifePoints = std::max(0, currentLifePoints - _delta);
+}

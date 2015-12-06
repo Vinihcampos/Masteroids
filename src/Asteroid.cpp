@@ -27,6 +27,7 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 	radius = 200;
 	angle.horizontal = 1;
 	angle.vertical = 1;
+	exploding = sf::Time::Zero;
 	switch(type){
 		case Type::CLASSIC:
 			sprite.setTexture(Configuration::textures.get(Configuration::Textures::ClassicAsteroid));
@@ -60,12 +61,6 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 }
 
 void Asteroid::update(sf::Time deltaTime) {
-	if(exploded){
-		exploding -= deltaTime;
-		if(exploding <= sf::Time::Zero){
-			alive = false;
-		}
-	}
 	sprite.rotate(angleVelocity);
 	if (isFollowing) {
 		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
@@ -82,7 +77,19 @@ void Asteroid::update(sf::Time deltaTime) {
 	lifeBar.setPosition(position.horizontal, position.vertical + 30);	
 	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/maxLifePoints, 3)); // curLife * BAR_SIZE / MAX_LIFE
 
-	if (currentLifePoints <= 0) alive = false;
+	if (type != Type::EXPLOSIVE && currentLifePoints <= 0) {
+		universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
+		alive = false;
+	}
+	
+	if(exploded){
+		if(exploding >= deltaTime){
+			exploded = false;
+			alive = false;
+			exploding = sf::Time::Zero;
+		}
+		exploding += deltaTime;
+	}
 }
 
 bool Asteroid::isColliding(const PhysicalEntity & other) const {
@@ -162,7 +169,6 @@ bool Asteroid::isClosing(const PhysicalEntity & other) const {
 						  	   std::pow(position.vertical - other.getPosition().vertical, 2));	
 	if (type == Type::FOLLOWER || (type == Type::EXPLOSIVE && exploded)) {
 		if(dist <= radius){
-			std::cout<<"Estrou nessa parada!!!"<<std::endl;
 			return true;	
 		}
 	}
@@ -180,7 +186,7 @@ void Asteroid::onClose(PhysicalEntity & other) {
 			break;
 		case Type::EXPLOSIVE:
 			if(exploded){
-				other.killEntity();
+				other.decreaseLifePoints(2);
 			}
 			break;
 		default:
