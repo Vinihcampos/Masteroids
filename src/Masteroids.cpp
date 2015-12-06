@@ -36,7 +36,7 @@ void Masteroids::proccessEvents() {
 		for (auto ip (range.first); ip != range.second; ip++) {
 			((Player*)((*ip)).second)->proccessEvent(e);
 		}
-
+		menu->proccessEvent(e);
 		//switch (e) {
 			
 		//}

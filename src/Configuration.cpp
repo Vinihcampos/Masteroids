@@ -45,5 +45,5 @@ void Configuration::initPlayerInputs() {
 	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::Space));
 	playerInputs.map(PlayerInputs::Hyperspace, Action(sf::Keyboard::H, Action::Type::Pressed));
 	playerInputs.map(PlayerInputs::ActivatePowerUp, Action(sf::Keyboard::P, Action::Type::Pressed));
-	playerInputs.map(PlayerInputs::Click, Action(sf::Mouse::Left));
+	playerInputs.map(PlayerInputs::Click, Action(sf::Mouse::Left, Action::Type::Pressed));
 }
