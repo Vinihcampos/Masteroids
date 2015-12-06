@@ -4,8 +4,7 @@
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
 	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.08));
 	universe.addEntity(PhysicalEntity::EntityType::Player, player);
-	hud = new Hud(player);
-	stage = new Stage(&universe, Stage::Stages::KEPLER, player);
+	menu = new Menu(&universe, Stage::Stages::KEPLER, player);
 }
 
 void Masteroids::run(int minFramesPerSec) {
@@ -46,14 +45,12 @@ void Masteroids::proccessEvents() {
 
 void Masteroids::update (sf::Time deltaTime) {
 	universe.update(deltaTime);
-	stage->update(deltaTime);
-	hud->update();	
+	menu->update(deltaTime);
 }
 
 void Masteroids::render() {
 	clear();
-	draw(*stage);
+	draw(*menu);
 	draw(universe);
-	draw(*hud);
 	display();
 }

@@ -32,6 +32,10 @@ void Configuration::initTextures() {
 	textures.load(Textures::Earth, "media/Bg/earth.png");
 	textures.load(Textures::Kepler, "media/Bg/kepler.png");
 	textures.load(Textures::Blue, "media/Bg/blue.png");
+	textures.load(Textures::MenuLogo, "media/Menu/logo.png");
+	textures.load(Textures::MenuStart, "media/Menu/start.png");
+	textures.load(Textures::MenuExit, "media/Menu/exit.png");
+
 }
 
 void Configuration::initPlayerInputs() {
@@ -41,4 +45,5 @@ void Configuration::initPlayerInputs() {
 	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::Space));
 	playerInputs.map(PlayerInputs::Hyperspace, Action(sf::Keyboard::H, Action::Type::Pressed));
 	playerInputs.map(PlayerInputs::ActivatePowerUp, Action(sf::Keyboard::P, Action::Type::Pressed));
+	playerInputs.map(PlayerInputs::Click, Action(sf::Mouse::Left));
 }

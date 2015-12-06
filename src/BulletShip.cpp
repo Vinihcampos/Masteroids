@@ -55,10 +55,7 @@ BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::Spaw
 	currentDuration = sf::seconds(0.5);
 }
 
-void BulletShip::update(sf::Time deltaTime) {
-
-	std::cout << damagePoints << std::endl;
-	
+void BulletShip::update(sf::Time deltaTime) {	
 	if (isFollowing && toFollow->isAlive()) {
 		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
 							   toFollow->getPosition().horizontal - position.horizontal);

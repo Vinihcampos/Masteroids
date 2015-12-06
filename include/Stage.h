@@ -20,9 +20,6 @@ class Stage : public sf::Drawable{
 		Player * player;
 		sf::Time currentDuration;
 
-		void draw(sf::RenderTarget & target, 
-				  sf::RenderStates states) const override;
-
 	public:
 		enum Stages{
 			EARTH,
@@ -37,6 +34,9 @@ class Stage : public sf::Drawable{
 		void updateKepler(sf::Time deltaTime);
 		void updateBlue(sf::Time deltaTime);
 		int getAsteroid(int max);
+
+		void draw(sf::RenderTarget & target, 
+				  sf::RenderStates states) const override;
 };
 
 #endif

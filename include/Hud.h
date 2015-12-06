@@ -30,14 +30,16 @@ class Hud : public sf::Drawable{
 		sf::Text damageIncrease;
 		sf::Font font;
 
-		void draw(sf::RenderTarget & target, 
-				  sf::RenderStates states) const override;
 
 	public:
 
 		Hud();
 		Hud(Player * _player);
 		void update();
+
+		
+		void draw(sf::RenderTarget & target, 
+				  sf::RenderStates states) const override;
 
 };
 

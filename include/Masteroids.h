@@ -6,6 +6,7 @@
 
 #include "Universe.h"
 #include "Hud.h"
+#include "Menu.h"
 #include "Collectable.h"
 #include "Stage.h"
 
@@ -23,8 +24,7 @@ class Masteroids : public GameEntity {
 	
 	private:
 		Universe universe;
-		Hud * hud;
-		Stage * stage;
+		Menu * menu;
 };
 
 #endif

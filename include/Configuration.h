@@ -41,7 +41,10 @@ class Configuration {
 			ExplosionC,
 			Earth,
 			Kepler,
-			Blue
+			Blue,
+			MenuLogo,
+			MenuStart,
+			MenuExit
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;
@@ -52,7 +55,8 @@ class Configuration {
 			TurnRight, 
 			Shoot,
 			Hyperspace,
-			ActivatePowerUp
+			ActivatePowerUp,
+			Click
 		};
 
 		static ActionMap<int> playerInputs;
