@@ -15,6 +15,8 @@ Masteroids::Masteroids(int width, int height, std::string const & title) : GameE
 	//universe.getAsteroids().push_back(new Asteroid(*newPos, universe));
 
 	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable (Collectable::CollectableType::DamageUp, *newPos, Configuration::textures.get(Configuration::Textures::Collectables), universe, 35, 35, sf::seconds(1)));
+	newPos = new MathVector {300,300};
+	universe.addEntity(PhysicalEntity::EntityType::Collectable, new Collectable (Collectable::CollectableType::ByPass, *newPos, Configuration::textures.get(Configuration::Textures::Collectables), universe, 35, 35, sf::seconds(1)));
 
 	//newPos = new MathVector {0,300};
 	//universe.addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, universe, Alien::Type::SHOOTER));
@@ -42,6 +44,7 @@ void Masteroids::run(int minFramesPerSec) {
 }
 
 void Masteroids::proccessEvents() {
+	universe.proccessEvents();
 	sf::Event e;
 	while (pollEvent(e)) {
 		if((e.type == sf::Event::Closed) || ((e.type == sf::Event::KeyPressed) && (e.key.code == sf::Keyboard::Escape))){
@@ -56,7 +59,6 @@ void Masteroids::proccessEvents() {
 			
 		//}
 	}
-	universe.proccessEvents();
 }
 
 void Masteroids::update (sf::Time deltaTime) {

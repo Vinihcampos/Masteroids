@@ -61,15 +61,17 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 		}
 	});
 
+	bind(Configuration::PlayerInputs::ActivatePowerUp, [this](const sf::Event &) {
+		std::cout << "EFEITO!!" << std::endl;
+		if(!powersToUse.empty()) 
+			activateEffect(powersToUse.front());
+	});
+
 	bind(Configuration::PlayerInputs::Hyperspace, [this](const sf::Event &) {
 		position.horizontal = rand() % 800;
 		position.vertical = rand() % 600;
 	});
 	
-	bind(Configuration::PlayerInputs::ActivatePowerUp, [this](const sf::Event &) {
-		if(!powersToUse.empty()) 
-			activateEffect(powersToUse.front());
-	});
 }
 
 void Player::proccessEvents() {
@@ -141,8 +143,7 @@ bool Player::isColliding(const PhysicalEntity & other) const {
 	if (dynamic_cast<const Player*>(&other) == nullptr && 
 		dynamic_cast<const BulletShip*>(&other) == nullptr &&
 		dynamic_cast<const AnimatedPhysicalEntity*>(&other) == nullptr) {
-		if (CollisionTools::circleCollision(*this, other)) {
-			std::cout << "ola" << std::endl;
+		if (!byPassing && CollisionTools::circleCollision(*this, other)) {
 			return true;
 		}
 	}
@@ -303,6 +304,7 @@ void Player::activateEffect(Collectable* & powerToUse) {
 		break;
 		case Collectable::CollectableType::ByPass:
 			setByPassing(true);
+		break;
 		case Collectable::CollectableType::WeaponUp:
 			increaseShotLevel();
 		break;

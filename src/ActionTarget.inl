@@ -14,8 +14,8 @@ bool ActionTarget<T>::proccessEvent(const sf::Event & event) const {
 			res = true;
 			break;
 		}
-		return res;
 	}
+	return res;
 }
 
 template <typename T>

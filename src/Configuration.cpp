@@ -39,6 +39,6 @@ void Configuration::initPlayerInputs() {
 	playerInputs.map(PlayerInputs::TurnLeft, Action(sf::Keyboard::Left));
 	playerInputs.map(PlayerInputs::TurnRight, Action(sf::Keyboard::Right));
 	playerInputs.map(PlayerInputs::Shoot, Action(sf::Keyboard::Space));
-	playerInputs.map(PlayerInputs::Hyperspace, Action(sf::Keyboard::H));
-	playerInputs.map(PlayerInputs::ActivatePowerUp, Action(sf::Keyboard::P, Action::Type::Released));
+	playerInputs.map(PlayerInputs::Hyperspace, Action(sf::Keyboard::H, Action::Type::Pressed));
+	playerInputs.map(PlayerInputs::ActivatePowerUp, Action(sf::Keyboard::P, Action::Type::Pressed));
 }
