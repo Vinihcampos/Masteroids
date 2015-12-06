@@ -16,9 +16,13 @@ class Hud : public sf::Drawable{
 		Player * player;
 		sf::RectangleShape maxLife;
 		sf::RectangleShape currentLife;
+		sf::RectangleShape curPower;
+		sf::RectangleShape nextPower;
 		int scorePoints;
+		sf::Text powerTime;
 		sf::Text score;
 		sf::Text weaponLevel;
+		sf::Text damageIncrease;
 		sf::Font font;
 
 		void draw(sf::RenderTarget & target, 

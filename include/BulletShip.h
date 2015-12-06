@@ -3,6 +3,7 @@
 
 #include "Bullet.h"
 
+class Asteroid;
 
 class BulletShip : public Bullet {
 
@@ -27,12 +28,14 @@ class BulletShip : public Bullet {
 		virtual void update(sf::Time deltaTime);
 		bool isColliding(const PhysicalEntity &) const;
 		void onCollide(PhysicalEntity &);
-		bool isClosing(const PhysicalEntity &) const{ return false;};
-		void onClose(PhysicalEntity &){return;};
+		bool isClosing(const PhysicalEntity &) const;
+		void onClose(PhysicalEntity &);
 		void setDamage(int _damage);
 		bool slowAsteroidEffect() const;
 
 		Player * _player;
+		Asteroid * toFollow;
+		bool isFollowing;
 	private:
 		Type type;
 		SpawnPoint spawnPoint;

@@ -30,7 +30,7 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	score = 1;
 
 	bonusDamage = 0;
-	
+	bonusPrecision = 0;	
 	//sprite.setTexture(Configuration::textures.get(Configuration::Textures::Player));
 	sprite.setRotation(angleAdjustment);
 	sprite.setOrigin(sprite.getGlobalBounds().width / 2, sprite.getGlobalBounds().height / 2);
@@ -62,8 +62,7 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 	});
 
 	bind(Configuration::PlayerInputs::ActivatePowerUp, [this](const sf::Event &) {
-		std::cout << "EFEITO!!" << std::endl;
-		if(!powersToUse.empty()) 
+		if(!isUnderEffect() && !powersToUse.empty()) 
 			activateEffect(powersToUse.front());
 	});
 
@@ -81,6 +80,7 @@ void Player::proccessEvents() {
 }
 
 void Player::update(sf::Time deltaTime) {
+
 	AnimatedPhysicalEntity::update(deltaTime);
 
 	float seconds = deltaTime.asSeconds();
@@ -104,6 +104,8 @@ void Player::update(sf::Time deltaTime) {
 		setSlowingAsteroids(false);
 		setByPassing(false);
 		timeCollectableEffect = sf::Time::Zero;
+		(powersToUse.front())->killEntity();
+		powersToUse.pop_front();
 	}	
 
 	// Angle update
@@ -169,12 +171,16 @@ void Player::onCollide(PhysicalEntity & other) {
 
 	if(dynamic_cast<const BulletAlien*>(&other) != nullptr){
 		decreaseShotLevel();
+		setBonusPrecision(0);
+		setBonusDamage(0);
 		damage = dynamic_cast<const BulletAlien*>(&other)->getType();
 	} else if(dynamic_cast<const Collectable*>(&other) != nullptr) {
 	
 	} else {			
 		if (!byPassing) {
 			decreaseShotLevel();
+			setBonusDamage(0);
+			setBonusPrecision(0);
 			damage = 30;
 		}
 	} 
@@ -291,10 +297,10 @@ void Player::collectPower(Collectable * power) {
 void Player::activateEffect(Collectable* & powerToUse) {
 	switch(powerToUse->type) {
 		case Collectable::CollectableType::DamageUp:
-			setBonusDamage(10);
+			setBonusDamage(getBonusDamage() + 10);
 		break;
 		case Collectable::CollectableType::PrecisionUp:
-			setBonusPrecision(10);
+			setBonusPrecision(getBonusPrecision() + 70);
 		break;
 		case Collectable::CollectableType::Indestructible:
 			setIndestructible(true);
@@ -309,6 +315,16 @@ void Player::activateEffect(Collectable* & powerToUse) {
 			increaseShotLevel();
 		break;
 	}
-	powerToUse->killEntity();
-	powersToUse.pop_front();
+	if (!isUnderEffect()) {
+		powerToUse->killEntity();
+		powersToUse.pop_front();
+	}
+}
+
+sf::Time Player::getTimeLastShot() const {
+	return timeLastShot;
+}
+
+sf::Time Player::getTimeCollectableEffect() const {
+	return timeCollectableEffect;
 }

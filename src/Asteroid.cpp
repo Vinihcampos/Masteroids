@@ -174,7 +174,6 @@ void Asteroid::onClose(PhysicalEntity & other) {
 			break;
 		case Type::EXPLOSIVE:
 			if(exploded){
-				std::cout<<"matouuuu!!!\n";
 				other.killEntity();
 			}
 			break;

@@ -61,6 +61,8 @@ class Player : public AnimatedPhysicalEntity, public ActionTarget<int> {
 		bool isUnderEffect() const;
 		void collectPower(Collectable *);
 		void activateEffect(Collectable * & powerUpType);
+		sf::Time getTimeLastShot() const;
+		sf::Time getTimeCollectableEffect() const;
 		std::deque<Collectable *> powersToUse;
 
 	private:

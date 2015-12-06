@@ -1,5 +1,6 @@
 #include "BulletShip.h"
 #include "Player.h"
+#include "Asteroid.h"
 #include "Collectable.h"
 #include "Universe.h"
 #include "CollisionTools.h"
@@ -8,7 +9,8 @@
 
 BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::SpawnPoint _spawnPoint, Universe & _universe) 
 					   : Bullet { player, _universe }, type {_type}, spawnPoint {_spawnPoint} { 
-	damagePoints = (int) type + ((int) type * player.getBonusDamage() / 100);
+	isFollowing = false;
+	damagePoints = (int) type +  (player.getBonusDamage() / 10);
 	_player = &player;
 	switch (spawnPoint) {
 		case BulletShip::SpawnPoint::FRONT:
@@ -54,6 +56,17 @@ BulletShip::BulletShip(Player & player, BulletShip::Type _type, BulletShip::Spaw
 }
 
 void BulletShip::update(sf::Time deltaTime) {
+
+	std::cout << damagePoints << std::endl;
+	
+	if (isFollowing && toFollow->isAlive()) {
+		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
+							   toFollow->getPosition().horizontal - position.horizontal);
+		sprite.setRotation(180 * _angle / M_PI);
+		velocity.horizontal = std::cos(_angle) * 5;
+		velocity.vertical = std::sin(_angle) * 5;
+	}
+
 	currentDuration -= deltaTime;
 	if (currentDuration < sf::Time::Zero) {
 		alive = false;
@@ -81,4 +94,26 @@ void BulletShip::onCollide(PhysicalEntity & other) {
 
 bool BulletShip::slowAsteroidEffect() const {
 	return (_player)->isSlowingAsteroids();
+}
+
+bool BulletShip::isClosing(const PhysicalEntity & other) const {
+	if (dynamic_cast<const Asteroid*>(&other) != nullptr) {
+		float dist = std::sqrt(std::pow(position.horizontal - other.getPosition().horizontal, 2) + 
+		     						std::pow(position.vertical - other.getPosition().vertical, 2));	
+		if (_player->getBonusPrecision() > 0) {
+			if(dist <= _player->getBonusPrecision()){
+				return true;	
+			}
+		}
+	}
+	return false;
+}
+
+void BulletShip::onClose(PhysicalEntity & other) {
+	if (dynamic_cast<const Asteroid*>(&other) != nullptr) {
+		if (!isFollowing)  {
+			toFollow = dynamic_cast<Asteroid*>(&other);
+			isFollowing = true;
+		}	
+	}
 }
