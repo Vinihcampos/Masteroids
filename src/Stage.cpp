@@ -14,7 +14,6 @@ Stage::Stage(){
 Stage::Stage(Universe * _universe, int _type, Player * _player) : 
 universe {_universe}, type {_type}, player{_player}{
 	createdAliens = 0;
-	currentDuration = sf::Time::Zero;
 
 	switch(type){
 		case Stages::EARTH:
@@ -143,7 +142,7 @@ void Stage::updateKepler(sf::Time deltaTime){
 
 			std::cout<<"X: "<<newVel->horizontal<<", Y: "<<newVel->vertical<<std::endl;
 			
-			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::CLASSIC, *auxVel));
+			universe->addEntity(PhysicalEntity::EntityType::Alien, new Alien(*newPos, *universe, Alien::Type::SHOOTER, *auxVel));
 			++createdAliens;
 		}
 

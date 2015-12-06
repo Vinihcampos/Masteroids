@@ -60,6 +60,12 @@ Asteroid::Asteroid(MathVector _position, Universe & _universe, int _type, MathVe
 }
 
 void Asteroid::update(sf::Time deltaTime) {
+	if(exploded){
+		exploding -= deltaTime;
+		if(exploding <= sf::Time::Zero){
+			alive = false;
+		}
+	}
 	sprite.rotate(angleVelocity);
 	if (isFollowing) {
 		double _angle = std::atan2(toFollow->getPosition().vertical - position.vertical,
@@ -150,7 +156,7 @@ bool Asteroid::isClosing(const PhysicalEntity & other) const {
 						  	   std::pow(position.vertical - other.getPosition().vertical, 2));	
 	if (type == Type::FOLLOWER || (type == Type::EXPLOSIVE && exploded)) {
 		if(dist <= radius){
-			//std::cout<<"Estrou nessa parada!!!"<<std::endl;
+			std::cout<<"Estrou nessa parada!!!"<<std::endl;
 			return true;	
 		}
 	}
