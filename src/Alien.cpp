@@ -71,6 +71,16 @@ void Alien::update(sf::Time deltaTime) {
 	lifeBar.setSize(sf::Vector2f(currentLifePoints*30/maxLifePoints, 3)); // curLife * BAR_SIZE / MAX_LIFE
 
 	if (currentLifePoints <= 0) alive = false;
+
+	if (position.horizontal <= sprite.getGlobalBounds().width / 2) 
+		position.horizontal = Configuration::WINDOW_WIDTH - sprite.getGlobalBounds().width / 2; 
+	else if (position.horizontal >= Configuration::WINDOW_WIDTH - sprite.getGlobalBounds().width / 2) 
+		position.horizontal = sprite.getGlobalBounds().width / 2; 
+
+	if (position.vertical <= sprite.getGlobalBounds().height / 2) 
+		position.vertical =  Configuration::WINDOW_HEIGHT - sprite.getGlobalBounds().height / 2; 
+	else if (position.vertical >= Configuration::WINDOW_HEIGHT - sprite.getGlobalBounds().height / 2) 
+		position.vertical = sprite.getGlobalBounds().height / 2;
 }
 
 bool Alien::isColliding(const PhysicalEntity & other) const {

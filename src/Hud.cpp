@@ -112,6 +112,7 @@ void Hud::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 }
 
 void Hud::update(){ 
+	if(dynamic_cast<Player*>(player) == nullptr) return;
 	if (player->isAlive()) {
 		if (player->isUnderEffect()) 
 			nextPower.setOutlineColor(sf::Color::Blue);

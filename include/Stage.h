@@ -34,6 +34,7 @@ class Stage : public sf::Drawable{
 		void updateKepler(sf::Time deltaTime);
 		void updateBlue(sf::Time deltaTime);
 		int getAsteroid(int max);
+		int getNumberAliens();
 
 		void draw(sf::RenderTarget & target, 
 				  sf::RenderStates states) const override;

@@ -25,7 +25,7 @@ class Menu : public sf::Drawable, public ActionTarget<int>{
 			PLAYERWINS
 		};
 
-		Menu(Universe * _universe, int _type, Player * _player);
+		Menu(Universe * _universe, int _type, sf::Texture & _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration);
 		bool isInside(const sf::Event & _mouse, sf::Sprite & sprite);
 		void update(sf::Time deltaTime);
 
@@ -50,6 +50,13 @@ class Menu : public sf::Drawable, public ActionTarget<int>{
 		Hud * hud;	
 		void draw(sf::RenderTarget & target, 
 				  sf::RenderStates states) const override;
+
+		//Player informations
+		sf::Texture texture;
+		double frameWidth;
+		double frameHeigth;
+		sf::Time frameDuration;
+
 };
 
 #endif

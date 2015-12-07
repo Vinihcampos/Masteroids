@@ -27,7 +27,7 @@ Player::Player(sf::Texture & _texture, Universe & _universe, double _frameWidth,
 
 	currentLifePoints = 500;
 	maxLifePoints = 500;
-	score = 1;
+	score = 0;
 
 	bonusDamage = 0;
 	bonusPrecision = 0;	

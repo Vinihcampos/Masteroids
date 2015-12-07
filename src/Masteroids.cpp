@@ -2,9 +2,7 @@
 #include "Collectable.h"
 
 Masteroids::Masteroids(int width, int height, std::string const & title) : GameEntity(width, height, title) { 
-	Player * player = new Player(Configuration::textures.get(Configuration::Textures::Player), universe, 128, 128, sf::seconds(0.08));
-	universe.addEntity(PhysicalEntity::EntityType::Player, player);
-	menu = new Menu(&universe, Stage::Stages::KEPLER, player);
+	menu = new Menu(&universe, Stage::Stages::EARTH, Configuration::textures.get(Configuration::Textures::Player), 128, 128, sf::seconds(0.08));
 }
 
 void Masteroids::run(int minFramesPerSec) {

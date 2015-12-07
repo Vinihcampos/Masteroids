@@ -83,14 +83,17 @@ void Universe::update(sf::Time deltaTime) {
 	}
 
 	for (auto i = entitiesList.begin(); i != entitiesList.end();) {
-		//if((((*i).second)->isExploded())){
-		//	(((*i).second)->killEntity());
-		//	std::cout<<"passou aqui\n";
-		//}
 		if (not (((*i).second)->isAlive())) {
 			delete (*i).second;
 			i = entitiesList.erase(i);
 		} else i++;
+	}
+}
+
+void Universe::clear() {
+	for (auto i = entitiesList.begin(); i != entitiesList.end();) {
+		delete (*i).second;
+		i = entitiesList.erase(i);
 	}
 }
 
