@@ -36,6 +36,10 @@ class Menu : public sf::Drawable, public ActionTarget<int>{
 		sf::Sprite _exit;
 		sf::Sprite gameover;
 		sf::Sprite playerwins;
+		sf::Sprite earth;
+		sf::Sprite kepler;
+		sf::Sprite blue;
+		sf::Sprite bg;
 
 		Universe * universe;
 		Player * player;

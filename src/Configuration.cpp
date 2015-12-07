@@ -35,7 +35,10 @@ void Configuration::initTextures() {
 	textures.load(Textures::MenuLogo, "media/Menu/logo.png");
 	textures.load(Textures::MenuStart, "media/Menu/start.png");
 	textures.load(Textures::MenuExit, "media/Menu/exit.png");
-
+	textures.load(Textures::IconEarth, "media/Menu/earthIcon.png");
+	textures.load(Textures::IconKepler, "media/Menu/keplerIcon.png");
+	textures.load(Textures::IconBlue, "media/Menu/blueIcon.png");
+	textures.load(Textures::StagesBg, "media/Bg/stages.png");
 }
 
 void Configuration::initPlayerInputs() {

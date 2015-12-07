@@ -44,7 +44,11 @@ class Configuration {
 			Blue,
 			MenuLogo,
 			MenuStart,
-			MenuExit
+			MenuExit,
+			IconEarth,
+			IconKepler,
+			IconBlue,
+			StagesBg
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;
