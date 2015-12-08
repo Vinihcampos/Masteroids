@@ -4,19 +4,17 @@
 
 Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _frameWidth, double _frameHeigth, sf::Time _frameDuration) : ActionTarget(Configuration::playerInputs) {
 	type = Menu::Type::INITIAL;
-	level = -1;
+	level = -2;
 	
 	universe = _universe;
 	texture = _texture;
 	frameWidth = _frameWidth;
 	frameHeigth = _frameHeigth;
 	frameDuration = _frameDuration;
-
-	player = new Player(texture, *universe, frameWidth, frameHeigth, frameDuration);
+	stage = nullptr;
+	hud = nullptr;
 
 	logo.setTexture(Configuration::textures.get(Configuration::Textures::MenuLogo));
-	logo.setOrigin(logo.getGlobalBounds().width / 2, logo.getGlobalBounds().height / 2);	
-	logo.setPosition(400, 200);
 
 	start.setTexture(Configuration::textures.get(Configuration::Textures::MenuStart));
 	start.setPosition(250, 400);
@@ -36,27 +34,46 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 	bg.setTexture(Configuration::textures.get(Configuration::Textures::StagesBg));
 	bg.setPosition(0, 0);
 
+	font.loadFromFile("media/Fonts/Colleged.ttf");
+
+	finalText.setFont(font);
+	finalText.setString("You Win");
+	finalText.setPosition(200, 200);
+	finalText.setColor(sf::Color::White);
+	finalText.setCharacterSize(70);
+
 	bind(Configuration::PlayerInputs::Click, [this](const sf::Event & e) {
 		switch(type){
 			case Menu::Type::INITIAL:
 				if(isInside(e, start)){
 					type = Menu::Type::STAGE;
+				}else if(isInside(e, _exit)){
+					Configuration::toClose = true;
 				}
 			break;
 			case Menu::Type::STAGE:
 				if(isInside(e, earth)){
 					level = Stage::Stages::EARTH;
+					if(stage != nullptr) delete stage;
+					if(hud != nullptr) delete hud;
+
 					player = new Player(texture, *universe, frameWidth, frameHeigth, frameDuration);
 					universe->addEntity(PhysicalEntity::EntityType::Player, player);
 					stage = new Stage(universe, level, player);
 					hud = new Hud(player);
 				}else if(isInside(e, kepler)){
+					if(stage != nullptr) delete stage;
+					if(hud != nullptr) delete hud;
+
 					level = Stage::Stages::KEPLER;
 					player = new Player(texture, *universe, frameWidth, frameHeigth, frameDuration);
 					universe->addEntity(PhysicalEntity::EntityType::Player, player);
 					stage = new Stage(universe, level, player);
 					hud = new Hud(player);
 				}else if(isInside(e, blue)){
+					if(stage != nullptr) delete stage;
+					if(hud != nullptr) delete hud;
+
 					level = Stage::Stages::BLUE;
 					player = new Player(texture, *universe, frameWidth, frameHeigth, frameDuration);
 					universe->addEntity(PhysicalEntity::EntityType::Player, player);
@@ -65,12 +82,13 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 				}
 			break;
 			case Menu::Type::GAMEOVER:
-				delete stage;
-				delete hud;
-				universe->clear();
-			break;
 			case Menu::Type::PLAYERWINS:
-				type = Menu::Type::INITIAL;				
+				if(isInside(e, start)){
+					type = Menu::Type::STAGE;
+					level = -1;
+				}else if(isInside(e, _exit)){
+					Configuration::toClose = true;
+				}				
 			break;
 			default:
 			break;
@@ -79,48 +97,60 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 }
 
 void Menu::update(sf::Time deltaTime){
-	if(level != -1){
-		stage->update(deltaTime);
-		hud->update();
-		switch(level){
-			case Stage::Stages::EARTH:
-				if(player->getScore() > 500 && stage->getNumberAliens() >= 5){
-					level = -1;
-					delete stage;
-					delete hud;
-					universe->clear();
-					type = Menu::Type::INITIAL;
-				}
-			break;
-			case Stage::Stages::KEPLER:
-				if(player->getScore() > 1000 && stage->getNumberAliens() >= 10){
-					level = -1;
-					delete stage;
-					delete hud;
-					universe->clear();
-					type = Menu::Type::INITIAL;
-				}
-			break;
-			case Stage::Stages::BLUE:
-				if(player->getScore() > 1500 && stage->getNumberAliens() >= 15){
-					level = -1;
-					delete stage;
-					delete hud;
-					universe->clear();
-					type = Menu::Type::INITIAL;
-				}
-			break;
-			default:
-			return;
+	if(level > -1){
+		if(!universe->existPlayer()){
+			level = -1;
+			finalText.setPosition(150, 200);
+			finalText.setString("GAME OVER");
+			type = Menu::Type::GAMEOVER;
+			Configuration::musics.get(Configuration::Musics::GameOver).play();
+		}else{
+			stage->update(deltaTime);
+			hud->update();
+			switch(level){
+				case Stage::Stages::EARTH:
+					if(player->getScore() > 500 && stage->getNumberAliens() >= 5){
+						level = -1;					
+						finalText.setPosition(200, 200);
+						finalText.setString("You Win");
+						type = Menu::Type::PLAYERWINS;
+					}
+				break;
+				case Stage::Stages::KEPLER:
+					if(player->getScore() > 1000 && stage->getNumberAliens() >= 10){
+						level = -1;
+						finalText.setPosition(200, 200);
+						finalText.setString("You Win");
+						type = Menu::Type::PLAYERWINS;
+					}
+				break;
+				case Stage::Stages::BLUE:
+					if(player->getScore() > 1500 && stage->getNumberAliens() >= 15){
+						level = -1;
+						finalText.setPosition(200, 200);
+						finalText.setString("You Win");
+						type = Menu::Type::PLAYERWINS;
+					}
+				break;
+				default:
+				return;
+			}
 		}
+		
+	}else{
+		universe->clear();
 	}
+	
 }
 
 void Menu::draw(sf::RenderTarget & target, sf::RenderStates states) const {
-	if(level != -1){
+	if(level > -1){
 		stage->draw(target, states);
 		hud->draw(target, states);
 	}else{
+		if(level == -1){
+			stage->draw(target, states);
+		}
 		switch(type){
 			case Menu::Type::INITIAL:
 				target.draw(logo, states);
@@ -134,8 +164,8 @@ void Menu::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 				target.draw(blue, states);
 			break;
 			case Menu::Type::GAMEOVER:
-			break;
 			case Menu::Type::PLAYERWINS:
+				target.draw(finalText, states);
 				target.draw(start, states);
 				target.draw(_exit, states);
 			break;
@@ -144,7 +174,6 @@ void Menu::draw(sf::RenderTarget & target, sf::RenderStates states) const {
 		}
 	}
 	
-	std::cout<<type<<"\n";
 }
 
 bool Menu::isInside(const sf::Event & _mouse, sf::Sprite & sprite){

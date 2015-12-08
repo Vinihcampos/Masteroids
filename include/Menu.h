@@ -41,6 +41,9 @@ class Menu : public sf::Drawable, public ActionTarget<int>{
 		sf::Sprite blue;
 		sf::Sprite bg;
 
+		sf::Text finalText;
+		sf::Font font;
+
 		Universe * universe;
 		Player * player;
 

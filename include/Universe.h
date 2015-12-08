@@ -18,6 +18,7 @@ class Universe : public sf::Drawable {
 		void proccessEvents();
 		void update(sf::Time deltaTime);
 		void clear();
+		bool existPlayer();
 
 		void addEntity(PhysicalEntity::EntityType, PhysicalEntity * newEntity);
 

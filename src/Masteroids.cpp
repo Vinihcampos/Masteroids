@@ -27,7 +27,7 @@ void Masteroids::proccessEvents() {
 	universe.proccessEvents();
 	sf::Event e;
 	while (pollEvent(e)) {
-		if((e.type == sf::Event::Closed) || ((e.type == sf::Event::KeyPressed) && (e.key.code == sf::Keyboard::Escape))){
+		if(Configuration::toClose || (e.type == sf::Event::Closed) || ((e.type == sf::Event::KeyPressed) && (e.key.code == sf::Keyboard::Escape))){
 			close();
 		}
 		auto range = universe.getEntities().equal_range(PhysicalEntity::EntityType::Player);

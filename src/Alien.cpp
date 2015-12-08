@@ -108,8 +108,11 @@ void Alien::onCollide(PhysicalEntity & other) {
 		dynamic_cast<const BulletShip*>(&other)->_player->increaseScore(maxLifePoints);
 	}
 
-	if(currentLifePoints <= 0)
+	if(currentLifePoints <= 0){
 		alive = false;
+		universe.addEntity(PhysicalEntity::EntityType::Explosion, new AnimatedPhysicalEntity(Configuration::textures.get(Configuration::Textures::ExplosionA), universe, 128, 128, sf::seconds(0.01), position));
+		Configuration::musics.get(Configuration::Musics::Explosion).play();
+	}
 }
 
 bool Alien::isClosing(const PhysicalEntity & other) const {
@@ -137,7 +140,6 @@ void Alien::shot () {
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::LEFT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::RIGHT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletAlien {*this, BulletAlien::Type::SIMPLE, BulletAlien::SpawnPoint::FRONT, universe});	
-			std::cout<<"Chegou no tiro!!\n";
 		break;
 		default: return;
 	}

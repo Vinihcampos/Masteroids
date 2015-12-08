@@ -210,23 +210,28 @@ void Player::onClose(PhysicalEntity & other) {
 void Player::shot () {
 	switch(shotLevel) {
 		case ShotLevel::SIMPLE:
+			Configuration::musics.get(Configuration::Musics::Shot).play();
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		case ShotLevel::DOUBLE:
+			Configuration::musics.get(Configuration::Musics::Shot).play();
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::LEFT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::RIGHT, universe});	
 		break;
 		case ShotLevel::TRIPLE:
+			Configuration::musics.get(Configuration::Musics::Shot).play();
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::LEFT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::RIGHT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::SIMPLE, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		case ShotLevel::POWERFULL:
+			Configuration::musics.get(Configuration::Musics::Shot).play();
 			//universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::LEFT, universe});	
 			//universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::RIGHT, universe});	
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::POWERFULL, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		case ShotLevel::LASER:
+			Configuration::musics.get(Configuration::Musics::Shot).play();
 			universe.addEntity(PhysicalEntity::EntityType::Bullet, new BulletShip {*this, BulletShip::Type::LASER, BulletShip::SpawnPoint::FRONT, universe});	
 		break;
 		default: return;

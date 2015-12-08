@@ -26,6 +26,7 @@ bool Collectable::isColliding(const PhysicalEntity & other) const {
 void Collectable::onCollide(PhysicalEntity & other) {
 	if (not collidable) return;
 	if (dynamic_cast<const Player*>(&other) != nullptr) { 
+		Configuration::musics.get(Configuration::Musics::PowerUp).play();
 		Player * p = dynamic_cast<Player*>(&other); 
 		switch(type) {
 			case CollectableType::DamageUp:

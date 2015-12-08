@@ -97,3 +97,14 @@ void Universe::clear() {
 	}
 }
 
+bool Universe::existPlayer(){
+	for (auto i = entitiesList.begin(); i != entitiesList.end();) {
+		if((*i).first == PhysicalEntity::EntityType::Player){
+			return true;
+		}else{
+			++i;
+		}
+	}
+	return false;
+}
+

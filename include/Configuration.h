@@ -12,6 +12,7 @@ class Configuration {
 		static int WINDOW_HEIGHT;
 		static std::string GAME_TITLE;
 		static int GAME_FPS;
+		static bool toClose;
 
 		Configuration() = delete;
 		Configuration(const Configuration &) = delete;
@@ -50,8 +51,18 @@ class Configuration {
 			IconBlue,
 			StagesBg
 		};
+
+		enum Musics : int{
+			Stage,
+			Shot,
+			PowerUp,
+			GameOver,
+			YouWin,
+			Explosion
+		};
 		
 		static ResourceManager<sf::Texture, int> textures;
+		static ResourceManager<sf::Music, int> musics;
 
 		enum PlayerInputs : int { 
 			Thrust, 
@@ -68,6 +79,7 @@ class Configuration {
 
 	private:
 		static void initTextures();
+		static void initMusics();
 		static void initPlayerInputs();
 
 };

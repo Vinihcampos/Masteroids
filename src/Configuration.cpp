@@ -4,12 +4,15 @@ int Configuration::WINDOW_WIDTH = 800;
 int Configuration::WINDOW_HEIGHT = 600;
 std::string Configuration::GAME_TITLE = "Masteroids";
 int Configuration::GAME_FPS = 60;
+bool Configuration::toClose = false;
 
 ResourceManager<sf::Texture, int> Configuration::textures;
+ResourceManager<sf::Music, int> Configuration::musics;
 ActionMap<int> Configuration::playerInputs;
 
 void Configuration::initialize() {
 	initTextures();
+	initMusics();
 	initPlayerInputs();
 }
 
@@ -39,6 +42,13 @@ void Configuration::initTextures() {
 	textures.load(Textures::IconKepler, "media/Menu/keplerIcon.png");
 	textures.load(Textures::IconBlue, "media/Menu/blueIcon.png");
 	textures.load(Textures::StagesBg, "media/Bg/stages.png");
+}
+
+void Configuration::initMusics(){
+	musics.load(Musics::Shot, "media/Musics/shot.wav");
+	musics.load(Musics::Explosion, "media/Musics/explosion.wav");
+	musics.load(Musics::GameOver, "media/Musics/gameover.wav");
+	musics.load(Musics::PowerUp, "media/Musics/powerup.wav");
 }
 
 void Configuration::initPlayerInputs() {
