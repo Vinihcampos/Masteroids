@@ -42,6 +42,10 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 	finalText.setColor(sf::Color::White);
 	finalText.setCharacterSize(70);
 
+	Configuration::musics.get(Configuration::Musics::InitialStage).setPlayingOffset(sf::seconds(2));
+	Configuration::musics.get(Configuration::Musics::InitialStage).setLoop(true);
+	Configuration::musics.get(Configuration::Musics::InitialStage).play();
+
 	bind(Configuration::PlayerInputs::Click, [this](const sf::Event & e) {
 		switch(type){
 			case Menu::Type::INITIAL:
@@ -53,6 +57,13 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 			break;
 			case Menu::Type::STAGE:
 				if(isInside(e, earth)){
+					Configuration::musics.get(Configuration::Musics::InitialStage).stop();
+					
+					Configuration::musics.get(Configuration::Musics::Stages).setPlayingOffset(sf::seconds(7));
+					Configuration::musics.get(Configuration::Musics::Stages).setLoop(true);
+					Configuration::musics.get(Configuration::Musics::Stages).setVolume(50);
+					Configuration::musics.get(Configuration::Musics::Stages).play();
+
 					level = Stage::Stages::EARTH;
 					if(stage != nullptr) delete stage;
 					if(hud != nullptr) delete hud;
@@ -62,6 +73,13 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 					stage = new Stage(universe, level, player);
 					hud = new Hud(player);
 				}else if(isInside(e, kepler)){
+					Configuration::musics.get(Configuration::Musics::InitialStage).stop();
+					
+					Configuration::musics.get(Configuration::Musics::Stages).setPlayingOffset(sf::seconds(7));
+					Configuration::musics.get(Configuration::Musics::Stages).setLoop(true);
+					Configuration::musics.get(Configuration::Musics::Stages).setVolume(50);
+					Configuration::musics.get(Configuration::Musics::Stages).play();
+
 					if(stage != nullptr) delete stage;
 					if(hud != nullptr) delete hud;
 
@@ -71,6 +89,13 @@ Menu::Menu(Universe * _universe, int _type, sf::Texture & _texture, double _fram
 					stage = new Stage(universe, level, player);
 					hud = new Hud(player);
 				}else if(isInside(e, blue)){
+					Configuration::musics.get(Configuration::Musics::InitialStage).stop();
+					
+					Configuration::musics.get(Configuration::Musics::Stages).setPlayingOffset(sf::seconds(7));
+					Configuration::musics.get(Configuration::Musics::Stages).setLoop(true);
+					Configuration::musics.get(Configuration::Musics::Stages).setVolume(50);
+					Configuration::musics.get(Configuration::Musics::Stages).play();
+
 					if(stage != nullptr) delete stage;
 					if(hud != nullptr) delete hud;
 
@@ -103,7 +128,11 @@ void Menu::update(sf::Time deltaTime){
 			finalText.setPosition(150, 200);
 			finalText.setString("GAME OVER");
 			type = Menu::Type::GAMEOVER;
+			Configuration::musics.get(Configuration::Musics::Stages).stop();
 			Configuration::musics.get(Configuration::Musics::GameOver).play();
+			Configuration::musics.get(Configuration::Musics::InitialStage).setPlayingOffset(sf::seconds(2));
+			Configuration::musics.get(Configuration::Musics::InitialStage).setLoop(true);
+			Configuration::musics.get(Configuration::Musics::InitialStage).play();
 		}else{
 			stage->update(deltaTime);
 			hud->update();
@@ -114,6 +143,11 @@ void Menu::update(sf::Time deltaTime){
 						finalText.setPosition(200, 200);
 						finalText.setString("You Win");
 						type = Menu::Type::PLAYERWINS;
+						Configuration::musics.get(Configuration::Musics::Stages).stop();
+						Configuration::musics.get(Configuration::Musics::YouWin).play();
+						Configuration::musics.get(Configuration::Musics::InitialStage).setPlayingOffset(sf::seconds(2));
+						Configuration::musics.get(Configuration::Musics::InitialStage).setLoop(true);
+						Configuration::musics.get(Configuration::Musics::InitialStage).play();
 					}
 				break;
 				case Stage::Stages::KEPLER:
@@ -122,6 +156,11 @@ void Menu::update(sf::Time deltaTime){
 						finalText.setPosition(200, 200);
 						finalText.setString("You Win");
 						type = Menu::Type::PLAYERWINS;
+						Configuration::musics.get(Configuration::Musics::Stages).stop();
+						Configuration::musics.get(Configuration::Musics::YouWin).play();
+						Configuration::musics.get(Configuration::Musics::InitialStage).setPlayingOffset(sf::seconds(2));
+						Configuration::musics.get(Configuration::Musics::InitialStage).setLoop(true);
+						Configuration::musics.get(Configuration::Musics::InitialStage).play();
 					}
 				break;
 				case Stage::Stages::BLUE:
@@ -130,6 +169,11 @@ void Menu::update(sf::Time deltaTime){
 						finalText.setPosition(200, 200);
 						finalText.setString("You Win");
 						type = Menu::Type::PLAYERWINS;
+						Configuration::musics.get(Configuration::Musics::Stages).stop();
+						Configuration::musics.get(Configuration::Musics::YouWin).play();
+						Configuration::musics.get(Configuration::Musics::InitialStage).setPlayingOffset(sf::seconds(2));
+						Configuration::musics.get(Configuration::Musics::InitialStage).setLoop(true);
+						Configuration::musics.get(Configuration::Musics::InitialStage).play();
 					}
 				break;
 				default:

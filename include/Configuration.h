@@ -53,12 +53,13 @@ class Configuration {
 		};
 
 		enum Musics : int{
-			Stage,
+			InitialStage,
 			Shot,
 			PowerUp,
 			GameOver,
 			YouWin,
-			Explosion
+			Explosion,
+			Stages
 		};
 		
 		static ResourceManager<sf::Texture, int> textures;

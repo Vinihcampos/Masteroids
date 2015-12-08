@@ -49,6 +49,9 @@ void Configuration::initMusics(){
 	musics.load(Musics::Explosion, "media/Musics/explosion.wav");
 	musics.load(Musics::GameOver, "media/Musics/gameover.wav");
 	musics.load(Musics::PowerUp, "media/Musics/powerup.wav");
+	musics.load(Musics::YouWin, "media/Musics/win.wav");
+	musics.load(Musics::InitialStage, "media/Musics/initial_stages.wav");
+	musics.load(Musics::Stages, "media/Musics/stage.wav");
 }
 
 void Configuration::initPlayerInputs() {
